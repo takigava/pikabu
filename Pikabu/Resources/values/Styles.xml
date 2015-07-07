@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+  <style name="Theme.NoActionBar" parent="@android:style/Theme.Material.Light.NoActionBar">
+    <!--<item name="android:windowBackground">@drawable/splash</item>-->
+    <item name="android:actionBarSize">0dp</item>
+    <item name="android:windowFullscreen">false</item> 
+    <item name="colorAccent">#2196f3</item>
+  </style>
+</resources>
+
