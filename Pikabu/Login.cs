@@ -48,7 +48,7 @@ namespace Pikabu
 				Insights.Identify (acc [0].Name, Insights.Traits.Email, acc [0].Name);
 			}
 			// Set our view from the "main" layout resource
-			SetContentView (Resource.Layout.Main);
+			SetContentView (Resource.Layout.Login);
 
 			// Get our button from the layout resource,
 			// and attach an event to it

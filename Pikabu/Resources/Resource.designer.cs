@@ -1564,19 +1564,22 @@ namespace Pikabu
 			public const int abc_simple_dropdown_hint = 2130903062;
 			
 			// aapt resource value: 0x7f030017
-			public const int Main = 2130903063;
+			public const int Login = 2130903063;
 			
 			// aapt resource value: 0x7f030018
-			public const int mr_media_route_chooser_dialog = 2130903064;
+			public const int LoginSplash = 2130903064;
 			
 			// aapt resource value: 0x7f030019
-			public const int mr_media_route_controller_dialog = 2130903065;
+			public const int mr_media_route_chooser_dialog = 2130903065;
 			
 			// aapt resource value: 0x7f03001a
-			public const int mr_media_route_list_item = 2130903066;
+			public const int mr_media_route_controller_dialog = 2130903066;
 			
 			// aapt resource value: 0x7f03001b
-			public const int support_simple_spinner_dropdown_item = 2130903067;
+			public const int mr_media_route_list_item = 2130903067;
+			
+			// aapt resource value: 0x7f03001c
+			public const int support_simple_spinner_dropdown_item = 2130903068;
 			
 			static Layout()
 			{
