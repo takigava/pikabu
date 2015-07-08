@@ -10,6 +10,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using System.Threading.Tasks;
+using Android.Preferences;
 
 namespace Pikabu
 {
@@ -21,7 +23,8 @@ namespace Pikabu
 			base.OnCreate (bundle);
 			SetContentView (Resource.Layout.LoginSplash);
 			// Create your application here
-			ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo",FileCreationMode.Private);
+			//ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo",FileCreationMode.Private);
+			ISharedPreferences pref = PreferenceManager.GetDefaultSharedPreferences(this);
 			var userName = pref.GetString ("UserName", String.Empty);
 			var password = pref.GetString ("Password", String.Empty);
 
@@ -31,26 +34,45 @@ namespace Pikabu
 			} 
 			else 
 			{
-				var result = WebClient.Authorize(new LoginInfo(){
-					mode = "login",
-					password = password,
-					username = userName,
-					remember = "0"
-				}).Result;
+				LoginResponse result = new LoginResponse();
+				Task.Factory.StartNew (async() => {
+					try
+					{
+						WebClient.Initialize();
+						result = await WebClient.Authorize(new LoginInfo(){
+							mode = "login",
+							password = password,
+							username = userName,
+							remember = "0"
+						});
+						if (result.logined == 1) 
+						{
+							//успешно
+							Intent intent = new Intent (this, typeof(MainView));
+							this.StartActivity (intent);
+							this.Finish ();
+						} 
+						else 
+						{
+							ISharedPreferencesEditor editor = pref.Edit();
+							editor.Clear ();
+							editor.Apply ();
+							Intent intent = new Intent (this, typeof(Login));
+							this.StartActivity (intent);
+							this.Finish ();
+						}
+					}
+					catch(Exception ex)
+					{
+						Intent intent = new Intent (this, typeof(Login));
+						this.StartActivity (intent);
+						this.Finish ();
+					}
 
-				if (result.logined == 1) 
-				{
-					//успешно
-				} 
-				else 
-				{
-					ISharedPreferencesEditor editor = pref.Edit();
-					editor.Clear ();
-					editor.Apply ();
-					Intent intent = new Intent (this, typeof(Login));
-					this.StartActivity (intent);
-					this.Finish ();
-				}
+				});
+
+
+
 			}
 		}
 	}

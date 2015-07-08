@@ -24,6 +24,7 @@ using System.Net.Http.Headers;
 using Xamarin;
 using System.Threading;
 using Android.Accounts;
+using Android.Preferences;
 
 
 
@@ -78,11 +79,14 @@ namespace Pikabu
 						var message = String.Empty;
 						if(result.logined==1)
 						{
-							ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo",FileCreationMode.Private);
+							//ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo",FileCreationMode.Private);
+							ISharedPreferences pref = PreferenceManager.GetDefaultSharedPreferences(this);
 							ISharedPreferencesEditor editor = pref.Edit();
 							editor.PutString("UserName",userName);
 							editor.PutString("Password",password);
 							editor.Apply();
+							//Intent intent = new Intent (this, typeof(LoginSplash));
+							//this.StartActivity (intent);
 						}
 						else
 						{

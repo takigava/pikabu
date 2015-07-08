@@ -73,6 +73,7 @@
     <Compile Include="WebClient.cs" />
     <Compile Include="LoginSplash.cs" />
     <Compile Include="Login.cs" />
+    <Compile Include="MainView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -95,6 +96,7 @@
     <AndroidResource Include="Resources\drawable-hdpi\pikabu_cake.png" />
     <AndroidResource Include="Resources\layout\Login.axml" />
     <AndroidResource Include="Resources\layout\LoginSplash.axml" />
+    <AndroidResource Include="Resources\layout\MainView.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
