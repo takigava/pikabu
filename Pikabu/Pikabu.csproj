@@ -43,21 +43,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
-    <Reference Include="Xamarin.Android.Support.v7.MediaRouter">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.MediaRouter.20.0.0\lib\MonoAndroid10\Xamarin.Android.Support.v7.MediaRouter.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v4">
-      <HintPath>..\packages\Xamarin.Android.Support.v4.21.0.3.0\lib\MonoAndroid10\Xamarin.Android.Support.v4.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v7.AppCompat">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.AppCompat.21.0.3.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v7.CardView">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.CardView.21.0.3.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.CardView.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Android.Support.v7.RecyclerView">
-      <HintPath>..\packages\Xamarin.Android.Support.v7.RecyclerView.21.0.3.0\lib\MonoAndroid403\Xamarin.Android.Support.v7.RecyclerView.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -66,6 +51,9 @@
     <Reference Include="Xamarin.Insights">
       <HintPath>..\packages\Xamarin.Insights.1.10.4.112\lib\MonoAndroid10\Xamarin.Insights.dll</HintPath>
     </Reference>
+    <Reference Include="AndHUD">
+      <HintPath>..\Components\AndHUD-1.3.1\lib\android\AndHUD.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -73,7 +61,11 @@
     <Compile Include="WebClient.cs" />
     <Compile Include="LoginSplash.cs" />
     <Compile Include="Login.cs" />
+    <Compile Include="DrawerToggle.cs" />
     <Compile Include="MainView.cs" />
+    <Compile Include="Post.cs" />
+    <Compile Include="PostViewAdapter.cs" />
+    <Compile Include="PostViewHolder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -83,38 +75,96 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
-    <AndroidResource Include="Resources\drawable-hdpi\Icon.png" />
-    <AndroidResource Include="Resources\drawable-mdpi\Icon.png" />
-    <AndroidResource Include="Resources\drawable-xhdpi\Icon.png" />
-    <AndroidResource Include="Resources\drawable-xxhdpi\Icon.png" />
-    <AndroidResource Include="Resources\drawable-xxxhdpi\Icon.png" />
     <AndroidResource Include="Resources\values\Styles.xml" />
-    <AndroidResource Include="Resources\drawable-hdpi\ColorCursor.xml" />
-    <AndroidResource Include="Resources\drawable-hdpi\Edit_text_bottom_border.xml" />
-    <AndroidResource Include="Resources\drawable-hdpi\LoginButton.xml" />
-    <AndroidResource Include="Resources\drawable-hdpi\LoginButtonAnonymus.xml" />
-    <AndroidResource Include="Resources\drawable-hdpi\pikabu_cake.png" />
     <AndroidResource Include="Resources\layout\Login.axml" />
     <AndroidResource Include="Resources\layout\LoginSplash.axml" />
     <AndroidResource Include="Resources\layout\MainView.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_camera_64.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_comments_64.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_give_way_64.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_menu_64.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_minus_64.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_plus_64.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_search_64.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_star_64.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_star_filled_64.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_camera_64.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_comments_64.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_give_way_64.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_menu_64.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_minus_64.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_plus_64.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_search_64.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_star_64.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_star_filled_64.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_camera_64.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_comments_64.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_give_way_64.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_menu_64.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_minus_64.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_plus_64.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_search_64.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_star_64.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_star_filled_64.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_camera_64.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_comments_64.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_give_way_64.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_menu_64.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_minus_64.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_plus_64.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_search_64.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_star_64.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_star_filled_64.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_camera_64.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_comments_64.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_give_way_64.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_menu_64.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_minus_64.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_plus_64.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_search_64.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_star_64.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_star_filled_64.png" />
+    <AndroidResource Include="Resources\mipmap-hdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-mdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
+    <AndroidResource Include="Resources\layout\PostTextCard.axml" />
+    <AndroidResource Include="Resources\drawable-hdpi\fon.9.png">
+      <DeployService-Deploy>True</DeployService-Deploy>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable-mdpi\fon.9.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\fon.9.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\fon.9.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\fon.9.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\keks_pikabu.9.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\keks_pikabu.9.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\keks_pikabu.9.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\keks_pikabu.9.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\keks_pikabu.9.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ColorCursor.xml" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\Edit_text_bottom_border.xml" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\LoginButton.xml" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\LoginButtonAnonymus.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
-    <XamarinComponentReference Include="xamandroidsupportv7appcompat">
-      <Version>21.0.3.0</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="xamandroidsupportv7cardview">
-      <Version>21.0.3.0</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="xamandroidsupportv7recyclerview">
-      <Version>21.0.3.0</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
     <XamarinComponentReference Include="json.net">
       <Version>6.0.8.1</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable-mdpi\" />
+    <Folder Include="Resources\drawable-xhdpi\" />
+    <Folder Include="Resources\drawable-xxhdpi\" />
+    <Folder Include="Resources\drawable-xxxhdpi\" />
+    <Folder Include="Resources\drawable-hdpi\" />
+    <Folder Include="Resources\mipmap-hdpi\" />
+    <Folder Include="Resources\mipmap-mdpi\" />
+    <Folder Include="Resources\mipmap-xhdpi\" />
+    <Folder Include="Resources\mipmap-xxhdpi\" />
+    <Folder Include="Resources\mipmap-xxxhdpi\" />
   </ItemGroup>
 </Project>

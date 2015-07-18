@@ -15,7 +15,7 @@ using Android.Preferences;
 
 namespace Pikabu
 {
-	[Activity (Label = "LoginSplash",MainLauncher = true, Icon = "@drawable/icon",Theme="@style/Theme.NoActionBar")]			
+	[Activity (Label = "LoginSplash",MainLauncher = true, Icon = "@mipmap/ic_launcher",Theme="@style/Theme.NoActionBar")]			
 	public class LoginSplash : Activity
 	{
 		protected override void OnCreate (Bundle bundle)

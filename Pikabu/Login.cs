@@ -30,8 +30,8 @@ using Android.Preferences;
 
 namespace Pikabu
 {
-	[Activity (Label = "Login", Icon = "@drawable/icon",Theme="@style/Theme.NoActionBar",
-		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+	[Activity (Label = "Login",Theme="@style/Theme.NoActionBar",
+		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,ScreenOrientation=ScreenOrientation.Portrait)]
 	public class Login : Activity
 	{
 
