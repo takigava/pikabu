@@ -217,8 +217,9 @@ namespace Pikabu
 
 						(recyclerView.GetAdapter()as PostViewAdapter)._Posts.AddRange(newPostList);
 						//recyclerView.GetAdapter().HasStableIds = true;
-						recyclerView.GetAdapter().NotifyDataSetChanged();
 
+
+						Application.SynchronizationContext.Post (_ => {recyclerView.GetAdapter().NotifyDataSetChanged();}, null);
 						//recyclerView.GetAdapter().NotifyItemRangeInserted(recyclerView.GetAdapter().ItemCount,newPostList.Count);
 					}catch(Exception ex){
 						var text = ex.Message;
@@ -249,6 +250,7 @@ namespace Pikabu
 				picasso.PauseTag(Android.App.Application.Context);
 				break;
 			}
+
 		}
 
 

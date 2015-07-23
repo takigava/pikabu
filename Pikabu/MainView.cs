@@ -33,16 +33,11 @@ namespace Pikabu
 		private ArrayAdapter mLeftAdapter;
 
 		private List<string> mLeftDataSet;
-
-		private FrameLayout mFragmentContainer;
-		private SupportFragment mCurrentFragment;
-		private RecyclerViewFragment mFragment1;
-		//private Fragment2 mFragment2;
-		//private Fragment3 mFragment3;
-		private Stack<SupportFragment> mStackFragments;
+		private RecyclerView _RecyclerView;
 
 		private List<Post> _Posts;
 		private PostViewAdapter _Adapter;
+		private LinearLayout container;
 
 
 		//private RecyclerView mRecyclerView;
@@ -85,54 +80,32 @@ namespace Pikabu
 
 			mDrawerToggle.SyncState();
 
-			mFragmentContainer = FindViewById<FrameLayout>(Resource.Id.fragmentContainer);
+			container = FindViewById<LinearLayout>(Resource.Id.fragmentContainer);
 
-			//mEmails = new List<Email>();
+
 			_Posts = new List<Post>();
-			/*_Posts.Add (new Post {
-				AuthorName = "takigava",
-				Comments = 1224,
-				Description = "Некоторое описание",
-				PostTime = "7 ч назад",
-				Rating = 1234,
-				Text = "Собственно сам текст поста",
-				Title = "Заголовок"
-			});
-			_Posts.Add (new Post {
-				AuthorName = "takigava",
-				Comments = 1224,
-				Description = "Некоторое описание",
-				PostTime = "7 ч назад",
-				Rating = 1234,
-				Text = "Собственно сам текст поста",
-				Title = "Заголовок"
-			});
-			_Posts.Add (new Post {
-				AuthorName = "takigava",
-				Comments = 1224,
-				Description = "Некоторое описание",
-				PostTime = "7 ч назад",
-				Rating = 1234,
-				Text = "Собственно сам текст поста",
-				Title = "Заголовок"
-			});
-			_Posts.Add (new Post {
-				AuthorName = "takigava",
-				Comments = 1224,
-				Description = "Некоторое описание",
-				PostTime = "7 ч назад",
-				Rating = 1234,
-				Text = "Собственно сам текст поста",
-				Title = "Заголовок"
-			});*/
-			//var recyclerView = FindViewById<RecyclerView>(Resource.Id.recycler_view);
-			//mAdapter = new RecyclerViewAdapter(mEmails, recyclerView, this);
 
 
+			var root2 = LayoutInflater.Inflate(Resource.Layout.PostFragmentRecycleView,container, false);
 
-			mFragment1 = new RecyclerViewFragment(_Posts,_Adapter);
-			//mFragment2 = new Fragment2();
-			// = new Fragment3();
+			var recyclerView = root2.FindViewById<Android.Support.V7.Widget.RecyclerView>(Resource.Id.postRecycleView);
+			container.AddView (root2);
+			_RecyclerView = recyclerView;
+			//recyclerView.HasFixedSize = true;
+			//recyclerView.SetItemAnimator(new DefaultItemAnimator());
+			_RecyclerView.SetLayoutManager(new LinearLayoutManager(this));
+			//recyclerView.AddItemDecoration(new DividerItemDecoration(Activity, DividerItemDecoration.HorizontalList));
+
+
+			//mEmails.Add(new Email() { Name = "tom", Subject = "Wanna hang out?", Message = "I'll be around tomorrow!!" });
+
+			var adapter = new PostViewAdapter(_Posts,_RecyclerView,this);
+			_Adapter = adapter;
+			_Adapter.HasStableIds = true;
+
+			_RecyclerView.SetAdapter (_Adapter);
+			_RecyclerView.AddOnScrollListener (new MyScrollListener());	
+
 			Task.Factory.StartNew (async () => {
 				try{
 					var htmlPage = String.Empty;
@@ -177,7 +150,7 @@ namespace Pikabu
 						//_Posts.Add(newPost);
 						//_RecyclerView.GetAdapter().NotifyItemInserted(_Posts.Count);
 					}
-
+					_Posts.AddRange(newPostList);
 
 
 					//(_RecyclerView.GetAdapter()as PostViewAdapter)._Posts.AddRange(newPostList);
@@ -187,7 +160,7 @@ namespace Pikabu
 					//recyclerView.GetAdapter().NotifyDataSetChanged();
 					//_RecyclerView.GetAdapter().NotifyDataSetChanged();
 					RunOnUiThread(()=>{
-						mFragment1._Adapter.NotifyDataSetChanged();
+						_Adapter.NotifyDataSetChanged();
 					});
 				}
 				catch(Exception ex)
@@ -198,19 +171,6 @@ namespace Pikabu
 			});
 
 
-			mStackFragments = new Stack<SupportFragment>();
-
-			var trans = SupportFragmentManager.BeginTransaction();
-			//trans.Add(Resource.Id.fragmentContainer, mFragment3, "Fragment3");
-			//trans.Hide(mFragment3);
-
-			//trans.Add(Resource.Id.fragmentContainer, mFragment2, "Fragment2");
-			//trans.Hide(mFragment2);
-
-			trans.Add(Resource.Id.fragmentContainer, mFragment1, "Fragment1");
-			trans.Commit();
-
-			mCurrentFragment = mFragment1;
 
 
 
@@ -230,25 +190,7 @@ namespace Pikabu
 
 
 
-			/*if (bundle != null)
-			{
-				if (bundle.GetString("DrawerState") == "Opened")
-				{
-					SupportActionBar.SetTitle(Resource.String.app_name);
-				}
 
-				else
-				{
-					SupportActionBar.SetTitle(Resource.String.host);
-				}
-			}
-
-			else
-			{
-				//This is the first the time the activity is ran
-				SupportActionBar.SetTitle(Resource.String.host);
-			}
-*/
 
 		}
 
@@ -261,44 +203,9 @@ namespace Pikabu
 
 		}
 
-		private void ShowFragment (SupportFragment fragment)
-		{
-			if (fragment.IsVisible){
-				return;
-			}
 
-			var trans = SupportFragmentManager.BeginTransaction();
 
-			//trans.SetCustomAnimations(Resource.Animation.slide_in, Resource.Animation.slide_out, Resource.Animation.slide_in, Resource.Animation.slide_out);
 
-			fragment.View.BringToFront();
-			mCurrentFragment.View.BringToFront();
-
-			trans.Hide(mCurrentFragment);
-			trans.Show(fragment);
-
-			trans.AddToBackStack(null);
-			mStackFragments.Push(mCurrentFragment);
-			trans.Commit();
-
-			mCurrentFragment = fragment;
-
-		}
-
-		public override void OnBackPressed ()
-		{
-
-			if (SupportFragmentManager.BackStackEntryCount > 0)
-			{
-				SupportFragmentManager.PopBackStack();
-				mCurrentFragment = mStackFragments.Pop();
-			}
-
-			else
-			{
-				base.OnBackPressed();
-			}				
-		}
 
 		public override bool OnCreateOptionsMenu (IMenu menu)
 		{
@@ -334,43 +241,7 @@ namespace Pikabu
 		}
 	}
 
-	public class RecyclerViewFragment : Android.Support.V4.App.Fragment
-	{
-		public List<Post> _Posts;
-		public PostViewAdapter _Adapter;
-		private RecyclerView _RecyclerView;
 
-		public RecyclerViewFragment(List<Post> posts,PostViewAdapter adapter)
-		{
-			_Posts = posts;
-			_Adapter = adapter;
-		}
-		public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-		{
-			var root2 = inflater.Inflate(Resource.Layout.PostFragmentRecycleView, container, false);
-
-			var recyclerView = root2.FindViewById<Android.Support.V7.Widget.RecyclerView>(Resource.Id.postRecycleView);
-			_RecyclerView = recyclerView;
-			//recyclerView.HasFixedSize = true;
-			//recyclerView.SetItemAnimator(new DefaultItemAnimator());
-			_RecyclerView.SetLayoutManager(new LinearLayoutManager(Activity));
-			//recyclerView.AddItemDecoration(new DividerItemDecoration(Activity, DividerItemDecoration.HorizontalList));
-
-
-			//mEmails.Add(new Email() { Name = "tom", Subject = "Wanna hang out?", Message = "I'll be around tomorrow!!" });
-
-			var adapter = new PostViewAdapter(_Posts,_RecyclerView,Activity);
-			_Adapter = adapter;
-			_Adapter.HasStableIds = true;
-			_RecyclerView.SetAdapter (_Adapter);
-			_RecyclerView.AddOnScrollListener (new MyScrollListener());	
-			//_RecyclerView.OnScrollStateChanged(onScrollChanged);
-
-			return root2;
-		}
-
-
-	}
 
 
 }
