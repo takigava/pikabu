@@ -3,8 +3,10 @@
 	<string name="app_name">Pikabu</string>
 	<string name="host">pikabu.ru</string>
 	<string name="origin">http://pikabu.ru/</string>
+	<string name="hot_url">http://pikabu.ru/hot?page=</string>
 	<string name="loginPath">ajax/ajax_login.php</string>
 	<string name="hot_title">Горячее</string>
 	<string name="best_title">Лучшее</string>
 	<string name="new_title">Свежее</string>
+	<string name="profile">Профиль</string>
 </resources>

@@ -15,13 +15,14 @@ using Android.Preferences;
 
 namespace Pikabu
 {
-	[Activity (Label = "LoginSplash",MainLauncher = true, Icon = "@mipmap/ic_launcher",Theme="@style/Theme.NoActionBar")]			
+	[Activity (Label = "Pikabu",MainLauncher = true, Icon = "@mipmap/ic_launcher",Theme="@style/Theme.NoActionBar")]			
 	public class LoginSplash : Activity
 	{
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
 			SetContentView (Resource.Layout.LoginSplash);
+
 			// Create your application here
 			//ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo",FileCreationMode.Private);
 			ISharedPreferences pref = PreferenceManager.GetDefaultSharedPreferences(this);

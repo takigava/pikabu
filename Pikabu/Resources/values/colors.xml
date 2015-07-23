@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+	<color name="darkGray">#A5A5A5</color>
+	<color name="gray">#999999</color>
+	<color name="lightGray">#A9A9A9</color>
+	<color name="mainGreen">#23AF22</color>
+	<color name="statusBar">#1C8C1B</color>
+	<color name="red">#C00009</color>
+	<color name="activeProfile">#4D4D4D</color>
+	<color name="inactiveProfile">#ACACAC</color>
+	<color name="lightGreen">#009C00</color>
+	<color name="loginButtonBackground">#FFE462</color>
+	<color name="loginButtonColor">#626262</color>
+	<color name="badge">#F7B518</color>
+	<color name="blue">#2196F3</color>
+	<color name="lightBlue">#87C2F1</color>
+</resources>
+

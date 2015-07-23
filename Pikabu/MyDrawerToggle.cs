@@ -5,18 +5,22 @@ using Android.Support.V4.Widget;
 
 namespace Pikabu
 {
-	public class DrawerToggle : SupportActionBarDrawerToggle
+	public class MyDrawerToggle : SupportActionBarDrawerToggle
 	{
-		private ActionBarActivity mHostActivity;
+		private AppCompatActivity mHostActivity;
 		private int mOpenedResource;
 		private int mClosedResource;
 
-		public DrawerToggle (ActionBarActivity host, DrawerLayout drawerLayout, int openedResource, int closedResource) 
+		public MyDrawerToggle (AppCompatActivity host, DrawerLayout drawerLayout, int openedResource, int closedResource) 
 			: base(host, drawerLayout, openedResource, closedResource)
 		{
 			mHostActivity = host;
 			mOpenedResource = openedResource;
 			mClosedResource = closedResource;
+		}
+		public void SetOpenedMessage(int openedResource)
+		{
+			mOpenedResource = openedResource;
 		}
 
 		public override void OnDrawerOpened (Android.Views.View drawerView)

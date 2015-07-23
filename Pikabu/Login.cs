@@ -85,8 +85,9 @@ namespace Pikabu
 							editor.PutString("UserName",userName);
 							editor.PutString("Password",password);
 							editor.Apply();
-							//Intent intent = new Intent (this, typeof(LoginSplash));
-							//this.StartActivity (intent);
+							Intent intent = new Intent (this, typeof(MainView));
+							this.StartActivity (intent);
+							this.Finish();
 						}
 						else
 						{

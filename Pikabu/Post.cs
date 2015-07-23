@@ -5,8 +5,9 @@ namespace Pikabu
 {
 	public enum PostType
 	{
-		Text =0,
-		Image =1,
+		
+		Image =0,
+		Text =1,
 		Gif =2,
 		Video =3,
 		Coub =4
@@ -24,6 +25,7 @@ namespace Pikabu
 		public string Text{ get; set; }
 		public string Url{ get; set; }
 		public int Comments{ get; set; }
+		public Android.Graphics.Bitmap Bitmap{ get; set; }
 	}
 }
 

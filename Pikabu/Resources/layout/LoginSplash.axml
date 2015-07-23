@@ -3,11 +3,13 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#23af22">
+    android:fitsSystemWindows="true"
+    android:background="@drawable/loginbackground">
     <ImageView
+        android:id="@+id/splashImage"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scaleType="centerInside"
-        android:src="@drawable/keks_pikabu"
+        android:src="@drawable/keksPikabu"
         android:padding="80dp" />
 </LinearLayout>

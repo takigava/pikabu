@@ -79,6 +79,39 @@ namespace Pikabu
 
 			return result;
 		}
+
+		public static async Task<string> GetHot(int page)
+		{
+			var result = String.Empty;
+			var context = Android.App.Application.Context;
+			var uri = new Uri (context.GetString (Resource.String.hot_url)+page);
+
+			HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create (uri);
+			request.Headers.Add("Accept-Language","en-US,en;q=0.8");
+			request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+			request.ContentType = "text/html; charset=windows-1251";
+			request.Method = "GET";
+			request.Timeout = 3000;
+			request.CookieContainer = CookieContainer;
+			request.Host = context.GetString (Resource.String.host);
+			request.Referer = context.GetString (Resource.String.origin)+"/hot";
+			request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+			using (var response = await request.GetResponseAsync ()) {
+				CookieContainer = ((HttpWebRequest)request).CookieContainer;
+				using (var reader = new StreamReader(response.GetResponseStream(),Encoding.GetEncoding(1251))) {
+					var responseResult = reader.ReadToEnd();
+					Encoding utf8 = Encoding.GetEncoding("UTF-8");
+					Encoding win1251 = Encoding.GetEncoding("Windows-1251");
+
+					byte[] win1251Bytes = win1251.GetBytes(responseResult);
+					byte[] utf8Bytes = Encoding.Convert(win1251, utf8, win1251Bytes);
+					//result = utf8.GetString(utf8Bytes);
+					result = responseResult;
+				}
+			}
+			return result;
+		}
 	}
 
 	public class LoginInfo

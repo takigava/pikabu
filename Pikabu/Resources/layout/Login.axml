@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/mainGreen">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -9,12 +10,12 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/fon"
+            android:background="@drawable/loginBackground"
             android:padding="40dp">
             <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/keks_pikabu"
+                android:src="@drawable/keksPikabu"
                 android:id="@+id/imageView1"
                 android:paddingTop="70dp" />
             <android.support.v7.widget.CardView
@@ -55,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:text="Войти"
                 android:background="@drawable/loginbutton"
-                android:textColor="#000000"
+                android:textColor="@color/loginButtonColor"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp" />
             <TextView

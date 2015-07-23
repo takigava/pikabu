@@ -94,16 +94,15 @@
                     android:padding="3dp"
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
-            <TextView
-                android:id="@+id/postText"
-                android:text="RelativeLayout is a ViewGroup that displays child View elements in relative positions. The position of a View can be specified as relative to sibling elements (such as to the left-of or below a given element) or in positions relative to the RelativeLayout area (such as aligned to the bottom, left of center)."
+            <ImageView
+                android:id="@+id/postImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/black"
-                android:gravity="left"
+                android:gravity="center"
+                android:maxHeight="400dp"
+                android:scaleType="centerInside"
                 android:paddingTop="5dp"
-                android:paddingBottom="5dp"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:paddingBottom="5dp" />
             <RelativeLayout
                 android:background="@drawable/bordertop"
                 android:layout_width="match_parent"

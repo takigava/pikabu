@@ -5,9 +5,9 @@
         <shape android:shape="rectangle">
             <stroke
                 android:width="2dp"
-                android:color="#ffe462" />
+                android:color="@color/loginButtonBackground" />
 
-            <solid android:color="#ffe462" />
+            <solid android:color="@color/loginButtonBackground" />
             <corners android:radius="2dp" />
         </shape>
     </item>
