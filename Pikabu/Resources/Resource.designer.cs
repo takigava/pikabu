@@ -1423,52 +1423,55 @@ namespace Pikabu
 			public const int BorderTop = 2130837564;
 			
 			// aapt resource value: 0x7f02003d
-			public const int ColorCursor = 2130837565;
+			public const int CardButton = 2130837565;
 			
 			// aapt resource value: 0x7f02003e
-			public const int Edit_text_bottom_border = 2130837566;
+			public const int ColorCursor = 2130837566;
 			
 			// aapt resource value: 0x7f02003f
-			public const int ic_camera_64 = 2130837567;
+			public const int Edit_text_bottom_border = 2130837567;
 			
 			// aapt resource value: 0x7f020040
-			public const int ic_comments_64 = 2130837568;
+			public const int ic_camera_64 = 2130837568;
 			
 			// aapt resource value: 0x7f020041
-			public const int ic_give_way_64 = 2130837569;
+			public const int ic_comments_64 = 2130837569;
 			
 			// aapt resource value: 0x7f020042
-			public const int ic_menu_64 = 2130837570;
+			public const int ic_give_way_64 = 2130837570;
 			
 			// aapt resource value: 0x7f020043
-			public const int ic_minus_64 = 2130837571;
+			public const int ic_menu_64 = 2130837571;
 			
 			// aapt resource value: 0x7f020044
-			public const int ic_plus_64 = 2130837572;
+			public const int ic_minus_64 = 2130837572;
 			
 			// aapt resource value: 0x7f020045
-			public const int ic_search_64 = 2130837573;
+			public const int ic_plus_64 = 2130837573;
 			
 			// aapt resource value: 0x7f020046
-			public const int ic_star_64 = 2130837574;
+			public const int ic_search_64 = 2130837574;
 			
 			// aapt resource value: 0x7f020047
-			public const int ic_star_filled_64 = 2130837575;
+			public const int ic_star_64 = 2130837575;
 			
 			// aapt resource value: 0x7f020048
-			public const int kekspikabu = 2130837576;
+			public const int ic_star_filled_64 = 2130837576;
 			
 			// aapt resource value: 0x7f020049
-			public const int loginbackground = 2130837577;
+			public const int kekspikabu = 2130837577;
 			
 			// aapt resource value: 0x7f02004a
-			public const int LoginButton = 2130837578;
+			public const int loginbackground = 2130837578;
 			
 			// aapt resource value: 0x7f02004b
-			public const int LoginButtonAnonymus = 2130837579;
+			public const int LoginButton = 2130837579;
 			
 			// aapt resource value: 0x7f02004c
-			public const int WatchButton = 2130837580;
+			public const int LoginButtonAnonymus = 2130837580;
+			
+			// aapt resource value: 0x7f02004d
+			public const int WatchButton = 2130837581;
 			
 			static Drawable()
 			{
@@ -1519,17 +1522,17 @@ namespace Pikabu
 			// aapt resource value: 0x7f070042
 			public const int action_context_bar = 2131165250;
 			
-			// aapt resource value: 0x7f070067
-			public const int action_fragment1 = 2131165287;
+			// aapt resource value: 0x7f07006a
+			public const int action_fragment1 = 2131165290;
+			
+			// aapt resource value: 0x7f07006b
+			public const int action_fragment2 = 2131165291;
+			
+			// aapt resource value: 0x7f07006c
+			public const int action_fragment3 = 2131165292;
 			
 			// aapt resource value: 0x7f070068
-			public const int action_fragment2 = 2131165288;
-			
-			// aapt resource value: 0x7f070069
-			public const int action_fragment3 = 2131165289;
-			
-			// aapt resource value: 0x7f070065
-			public const int action_help = 2131165285;
+			public const int action_help = 2131165288;
 			
 			// aapt resource value: 0x7f070003
 			public const int action_menu_divider = 2131165187;
@@ -1549,8 +1552,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070027
 			public const int activity_chooser_view_content = 2131165223;
 			
-			// aapt resource value: 0x7f070066
-			public const int add = 2131165286;
+			// aapt resource value: 0x7f070069
+			public const int add = 2131165289;
 			
 			// aapt resource value: 0x7f070031
 			public const int alertTitle = 2131165233;
@@ -1629,6 +1632,9 @@ namespace Pikabu
 			
 			// aapt resource value: 0x7f070050
 			public const int imageView1 = 2131165264;
+			
+			// aapt resource value: 0x7f070067
+			public const int imageView2 = 2131165287;
 			
 			// aapt resource value: 0x7f070000
 			public const int item_touch_helper_previous_elevation = 2131165184;
@@ -1776,6 +1782,12 @@ namespace Pikabu
 			
 			// aapt resource value: 0x7f070034
 			public const int textSpacerNoButtons = 2131165236;
+			
+			// aapt resource value: 0x7f070066
+			public const int thumbsDown = 2131165286;
+			
+			// aapt resource value: 0x7f070065
+			public const int thumbsUp = 2131165285;
 			
 			// aapt resource value: 0x7f07002d
 			public const int title = 2131165229;

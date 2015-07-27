@@ -176,6 +176,7 @@
     <AndroidResource Include="Resources\menu\action_menu.xml" />
     <AndroidResource Include="Resources\drawable\appIcon.png" />
     <AndroidResource Include="Resources\layout\PostImageCard.axml" />
+    <AndroidResource Include="Resources\drawable\CardButton.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
