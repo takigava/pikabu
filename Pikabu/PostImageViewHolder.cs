@@ -14,7 +14,7 @@ namespace Pikabu
 		public TextView _PostTime{ get; private set; }
 		public TextView _Title{ get; private set; }
 		public TextView _Description{ get; private set; }
-		public List<string> _Tags{ get; private set; }
+		public TextView _Tags{ get; private set; }
 		public TextView _Text{ get; private set; }
 		//public WebView _Url{ get; private set; }
 		public TextView _Comments{ get; private set; }
@@ -30,6 +30,7 @@ namespace Pikabu
 			_Description = itemView.FindViewById<TextView> (Resource.Id.postDescription);
 			_Image = itemView.FindViewById<ImageView> (Resource.Id.postImage);
 			_Comments = itemView.FindViewById<TextView> (Resource.Id.postComments);
+			_Tags = itemView.FindViewById<TextView> (Resource.Id.postTags);
 		}
 	}
 }

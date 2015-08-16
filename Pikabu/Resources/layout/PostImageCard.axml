@@ -6,10 +6,10 @@
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="#00FFFFFF"
         card_view:cardCornerRadius="5dp"
         card_view:cardUseCompatPadding="true"
-        card_view:cardElevation="4dp">
+        card_view:cardElevation="2dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,17 +28,6 @@
                     android:textColor="@color/darkGray"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
                 <TextView
-                    android:id="@+id/postUserName"
-                    android:text="\@takigawa"
-                    android:layout_gravity="right"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:textColor="@color/gray"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="100dp" />
-                <TextView
                     android:id="@+id/postTime"
                     android:text="17 ч назад"
                     android:layout_gravity="right"
@@ -48,6 +37,17 @@
                     android:textColor="@color/lightGray"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_alignParentRight="true" />
+                <TextView
+                    android:id="@+id/postUserName"
+                    android:text="\@takigawa"
+                    android:layout_gravity="right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:textColor="@color/gray"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_toLeftOf="@id/postTime"
+                    android:paddingRight="10dp" />
             </RelativeLayout>
             <TextView
                 android:id="@+id/postHeader"
@@ -68,32 +68,14 @@
                 android:gravity="left"
                 android:textColor="@color/gray"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/postTags"
+                android:text="дополнительное описание которое тоже может быть длинным"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/postTags"
-                    android:text="дополнительное описание которое тоже может быть длинным"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:textColor="@color/mainGreen"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:layout_marginRight="70dp" />
-                <TextView
-                    android:text=""
-                    android:layout_gravity="right"
-                    android:minWidth="50dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:drawableLeft="@drawable/ic_camera_64"
-                    android:drawableRight="@drawable/ic_minus_64"
-                    android:background="@drawable/watchbutton"
-                    android:padding="3dp"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
+                android:gravity="left"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
             <ImageView
                 android:id="@+id/postImage"
                 android:layout_width="match_parent"
@@ -103,59 +85,72 @@
                 android:scaleType="centerInside"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp" />
-            <RelativeLayout
+            <LinearLayout
                 android:background="@drawable/bordertop"
                 android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:id="@+id/postComments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_comments_64"
+                    android:drawablePadding="8dp"
+                    android:text="4543"
+                    android:background="@drawable/cardbutton"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/darkGray"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:scaleType="centerInside" />
                 <ImageView
+                    android:id="@+id/thumbsUp"
                     android:src="@drawable/ic_give_way_64"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:rotation="180"
+                    android:scaleType="centerInside" />
                 <TextView
                     android:id="@+id/postBottomRating"
                     android:text="+1934"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/darkGray"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="2dp"
-                    android:layout_marginLeft="25dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_alignParentLeft="true" />
+                    android:layout_toRightOf="@id/thumbsUp" />
                 <ImageView
+                    android:id="@+id/thumbsDown"
                     android:src="@drawable/ic_give_way_64"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:rotation="180"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="100dp" />
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:gravity="center_vertical"
+                    android:layout_toRightOf="@id/postBottomRating"
+                    android:scaleType="centerInside" />
                 <ImageView
                     android:src="@drawable/ic_star_64"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="140dp" />
-                <ImageView
-                    android:src="@drawable/ic_comments_64"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true" />
-                <TextView
-                    android:id="@+id/postComments"
-                    android:text="1934"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/darkGray"
-                    android:gravity="center"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="2dp"
-                    android:layout_marginRight="25dp"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:layout_alignParentRight="true" />
+                    android:gravity="center_vertical"
+                    android:id="@+id/imageView2"
+                    android:layout_toRightOf="@id/thumbsDown"
+                    android:layout_toLeftOf="@id/postComments"
+                    android:scaleType="centerInside" />
             </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

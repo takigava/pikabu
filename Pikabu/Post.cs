@@ -26,6 +26,7 @@ namespace Pikabu
 		public string Url{ get; set; }
 		public int Comments{ get; set; }
 		public Android.Graphics.Bitmap Bitmap{ get; set; }
+		public List<Tuple<string,string>> FormattedDescription{ get; set; }
 	}
 }
 

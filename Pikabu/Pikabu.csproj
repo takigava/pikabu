@@ -78,6 +78,9 @@
     <Reference Include="Square.Picasso">
       <HintPath>..\packages\Square.Picasso.2.5.2.1\lib\MonoAndroid\Square.Picasso.dll</HintPath>
     </Reference>
+    <Reference Include="Rivets">
+      <HintPath>..\Components\rivets-1.0.5.1\lib\android\Rivets.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -91,6 +94,7 @@
     <Compile Include="MyDrawerToggle.cs" />
     <Compile Include="PostImageViewHolder.cs" />
     <Compile Include="PostTextViewHolder.cs" />
+    <Compile Include="ImageViewer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -177,6 +181,7 @@
     <AndroidResource Include="Resources\drawable\appIcon.png" />
     <AndroidResource Include="Resources\layout\PostImageCard.axml" />
     <AndroidResource Include="Resources\drawable\CardButton.xml" />
+    <AndroidResource Include="Resources\layout\ImageViewer.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
@@ -186,6 +191,10 @@
     </XamarinComponentReference>
     <XamarinComponentReference Include="square.picasso">
       <Version>2.5.2.1</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
+    <XamarinComponentReference Include="rivets">
+      <Version>1.0.5.1</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>

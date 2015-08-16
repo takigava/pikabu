@@ -134,6 +134,7 @@ namespace Pikabu
 
 						var desc = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("short"));
 						newPost.Description = desc!=null?desc.InnerHtml:String.Empty;
+						newPost.Tags = header.Descendants().Where(s=>s.GetAttributeValue("class","").Equals("tag no_ch")).Select(s=>s.InnerText).ToList();
 						var textType = post.Descendants().Where(s=>s.GetAttributeValue("id","").Equals("textDiv"+newPost.Id)).FirstOrDefault();
 						if(textType!=null){
 							newPost.PostType = PostType.Text;

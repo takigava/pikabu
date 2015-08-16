@@ -14,5 +14,6 @@
 	<color name="badge">#F7B518</color>
 	<color name="blue">#2196F3</color>
 	<color name="lightBlue">#87C2F1</color>
+	<color name="iconColor">#B9B9B9</color>
 </resources>
 

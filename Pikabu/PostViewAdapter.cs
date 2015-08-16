@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Android.Text;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -14,11 +14,14 @@ using System.Threading.Tasks;
 using HtmlAgilityPack;
 using Square.Picasso;
 using Android.Graphics;
+using Android.Text.Style;
+
 
 namespace Pikabu
 {
 	public class PostViewAdapter : Android.Support.V7.Widget.RecyclerView.Adapter
 	{
+		
 		public List<Post> _Posts{ get; set; }
 		public RecyclerView _RecyclerView { get; set; }
 		private Context _Context;
@@ -75,36 +78,162 @@ namespace Pikabu
 			if (holder is PostTextViewHolder)
 			{
 				PostTextViewHolder vh = holder as PostTextViewHolder;
+				try{
 				vh._AuthorName.Text = _Posts[position].AuthorName;
-				vh._HeaderRating.Text = _Posts[position].Rating.ToString();
-				vh._BottomRating.Text = _Posts[position].Rating.ToString();
+				var context = Android.App.Application.Context;
+				vh._HeaderRating.Text = _Posts [position].Rating.ToString ();
+				vh._BottomRating.Text = _Posts [position].Rating.ToString ();
+				if (_Posts [position].Rating > 0) {
+					vh._HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
+					vh._BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
+					var text = " + "+_Posts[position].Rating;
+					vh._HeaderRating.Text = text;
+					vh._BottomRating.Text = text;
+				}
+				if (_Posts [position].Rating < 0) {
+					vh._HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
+					vh._BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
+					var text = " - "+_Posts[position].Rating;
+					vh._HeaderRating.Text = text;
+					vh._BottomRating.Text = text;
+				}
 				vh._PostTime.Text = _Posts[position].PostTime;
 				vh._Title.Text = _Posts[position].Title;
-				vh._Description.Text = _Posts[position].Description;
+					if(_Posts[position].FormattedDescription!=null && _Posts[position].FormattedDescription.Count>0){
+						SpannableStringBuilder descriptionBulder = new SpannableStringBuilder();
+						Color descTextColor = context.Resources.GetColor(Resource.Color.mainGreen);
+						Color descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
+						Color descBackgroundColor = new Color(255,255,255,0);
+						foreach(var des in _Posts[position].FormattedDescription){
+							if(des.Item1 == "text"){
+								SpannableString tag1 = new SpannableString(des.Item2);
+								descriptionBulder.Append(tag1);
+								descriptionBulder.SetSpan(new TagSpan(descBackgroundColor, descTextColor), descriptionBulder.Length() - tag1.Length(), descriptionBulder.Length(), SpanTypes.ExclusiveExclusive);
+							}
+							if(des.Item1 == "textLink"){
+								SpannableString tag2 = new SpannableString(des.Item2);
+								descriptionBulder.Append(tag2);
+								descriptionBulder.SetSpan(new TagSpan(descBackgroundColor, descTextColor), descriptionBulder.Length() - tag2.Length(), descriptionBulder.Length(), SpanTypes.ExclusiveExclusive);
+							}
+						}
+						vh._Description.TextFormatted = descriptionBulder;
+					}else{
+						//vh._Description.Visibility = ViewStates.Invisible;
+					}
+					//vh._Description.Text = _Posts[position].Description;
+				SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
+					Color textColor = context.Resources.GetColor(Resource.Color.mainGreen);
+					Color backgroundColor = new Color(255,255,255,0);
+					foreach (var tag in _Posts[position].Tags) {
+						SpannableString tag1 = new SpannableString("#"+tag);
+						stringBuilder.Append(tag1);
+						stringBuilder.SetSpan(new TagSpan(backgroundColor, textColor), stringBuilder.Length() - tag1.Length(), stringBuilder.Length(), SpanTypes.ExclusiveExclusive);
 
-					vh._Text.Text = _Posts [position].Text;
-
-
+						SpannableString tag2 = new SpannableString("");
+						stringBuilder.Append(tag2);
+						stringBuilder.SetSpan(new TagSpan(backgroundColor, backgroundColor), stringBuilder.Length() - tag2.Length(), stringBuilder.Length(), SpanTypes.ExclusiveExclusive);
+					}
+				vh._Tags.TextFormatted = stringBuilder;
 				vh._Comments.Text = _Posts[position].Comments.ToString();
+				vh._Text.Text = _Posts [position].Text;
+				}catch(Exception ex){
+					var text = ex.Message;
+				}
 			}
 			if (holder is PostImageViewHolder) {
 				PostImageViewHolder vh = holder as PostImageViewHolder;
+				try{
 				vh._AuthorName.Text = _Posts[position].AuthorName;
-				vh._HeaderRating.Text = _Posts[position].Rating.ToString();
-				vh._BottomRating.Text = _Posts[position].Rating.ToString();
+				var context = Android.App.Application.Context;
+				vh._HeaderRating.Text = _Posts [position].Rating.ToString ();
+				vh._BottomRating.Text = _Posts [position].Rating.ToString ();
+				if (_Posts [position].Rating > 0) {
+					vh._HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
+					vh._BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
+					var text = " + "+_Posts[position].Rating;
+					vh._HeaderRating.Text = text;
+					vh._BottomRating.Text = text;
+				}
+				if (_Posts [position].Rating < 0) {
+					vh._HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
+					vh._BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
+					var text = " - "+_Posts[position].Rating;
+					vh._HeaderRating.Text = text;
+					vh._BottomRating.Text = text;
+				}
 				vh._PostTime.Text = _Posts[position].PostTime;
 				vh._Title.Text = _Posts[position].Title;
-				vh._Description.Text = _Posts[position].Description;
+					if(_Posts[position].FormattedDescription!=null && _Posts[position].FormattedDescription.Count>0){
+						SpannableStringBuilder descriptionBulder = new SpannableStringBuilder();
+						Color descTextColor = context.Resources.GetColor(Resource.Color.mainGreen);
+						Color descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
+						Color descBackgroundColor = new Color(255,255,255,0);
+						foreach(var des in _Posts[position].FormattedDescription){
+							if(des.Item1 == "text"){
+								SpannableString tag1 = new SpannableString(des.Item2);
+								descriptionBulder.Append(tag1);
+								descriptionBulder.SetSpan(new TagSpan(descBackgroundColor, descTextColor), descriptionBulder.Length() - tag1.Length(), descriptionBulder.Length(), SpanTypes.ExclusiveExclusive);
+							}
+							if(des.Item1 == "textLink"){
+								SpannableString tag2 = new SpannableString(des.Item2);
+								descriptionBulder.Append(tag2);
+								descriptionBulder.SetSpan(new TagSpan(descBackgroundColor, descTextColor), descriptionBulder.Length() - tag2.Length(), descriptionBulder.Length(), SpanTypes.ExclusiveExclusive);
+							}
+						}
+						vh._Description.TextFormatted = descriptionBulder;
+					}else{
+						//vh._Description.Visibility = ViewStates.Invisible;
+					}
+				//vh._Description.Text = _Posts[position].Description;
+				SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
+					Color textColor = context.Resources.GetColor(Resource.Color.mainGreen);
+					Color backgroundColor = new Color(255,255,255,0);
 
+				foreach (var tag in _Posts[position].Tags) {
+					SpannableString tag1 = new SpannableString("#"+tag);
+					stringBuilder.Append(tag1);
+						stringBuilder.SetSpan(new TagSpan(backgroundColor, textColor), stringBuilder.Length() - tag1.Length(), stringBuilder.Length(), SpanTypes.ExclusiveExclusive);
+
+					SpannableString tag2 = new SpannableString("");
+					stringBuilder.Append(tag2);
+						stringBuilder.SetSpan(new TagSpan(backgroundColor, backgroundColor), stringBuilder.Length() - tag2.Length(), stringBuilder.Length(), SpanTypes.ExclusiveExclusive);
+				}
+				vh._Tags.TextFormatted = stringBuilder;
 				vh._Comments.Text = _Posts[position].Comments.ToString();
-				Picasso.With(Android.App.Application.Context)
-					.Load(_Posts[position].Url)
-					.Transform(new CropSquareTransformation())
-					.Into(vh._Image);
+				if (vh._Image != null) {
+					vh._Image.SetTag (Resource.String.currentPosition, vh.AdapterPosition.ToString ());
+					vh._Image.SetTag (Resource.String.imageUrl, _Posts [vh.AdapterPosition].Url);
+					EventHandler handler = (object sender, EventArgs e) => {
+						var image = sender as ImageView;
+							//Rivets.AppLinks.Navigator.Navigate("http://static.kremlin.ru/media/events/video/ru/video_high/QVrS7FkL9R89xxB9frxsAtnvu9ANx6Od.mp4");
+						Intent intent = new Intent (_Context, typeof(ImageViewer));
+						intent.PutExtra ("url", image.GetTag (Resource.String.imageUrl).ToString ());
+						_Context.StartActivity (intent);
+
+
+
+
+					};
+					vh._Image.Click -= handler;
+					vh._Image.Click += handler;
+					Picasso.With(Android.App.Application.Context)
+						.Load(_Posts[position].Url)
+						.Transform(new CropSquareTransformation())
+						.Into(vh._Image);
+				}
+
+
+				}catch(Exception ex){
+					var text = ex.Message;
+				}
+
+
+
 			}
 		}
 
-
+		public void ShowImage(object sender, EventArgs e){
+		}
 		public override int ItemCount
 		{
 			get { return _Posts.Count; }
@@ -113,6 +242,53 @@ namespace Pikabu
 		{
 			return _Posts [position].Id;
 		}
+		public static SpannableString BuildBackgroundColorSpan(SpannableString spannableString,
+			String text, String searchString, Color color) {
+
+			int indexOf = text.ToUpperInvariant().IndexOf(searchString.ToUpperInvariant());
+
+			try {
+				spannableString.SetSpan(new BackgroundColorSpan(color), indexOf,
+					(indexOf + searchString.Length),SpanTypes.ExclusiveExclusive);
+			} catch (Exception e) {
+
+			}
+
+
+			return spannableString;
+		}
+
+	}
+	public class TagSpan: ReplacementSpan {
+		private static float PADDING = 25.0f;
+		private RectF mRect;
+		private Color mBackgroundColor;
+		private Color mForegroundColor;
+
+		public TagSpan(Color backgroundColor, Color foregroundColor) {
+			this.mRect = new RectF();
+			this.mBackgroundColor = backgroundColor;
+			this.mForegroundColor = foregroundColor;
+		}
+		public override void Draw (Canvas canvas, Java.Lang.ICharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
+		{
+			mRect.Set(x, top, x + paint.MeasureText(text, start, end) + PADDING, bottom);
+			paint.Color = mBackgroundColor;
+			canvas.DrawRect(mRect, paint);
+
+			// Text
+			paint.Color = mForegroundColor;
+			int xPos = (int)Math.Round(x + (PADDING / 2));
+			int yPos = (int) ((canvas.Height / 2) - ((paint.Descent() + paint.Ascent()) / 2)) ;
+			canvas.DrawText(text, start, end, xPos, yPos, paint);
+		}
+
+		public override int GetSize (Paint paint, Java.Lang.ICharSequence text, int start, int end, Paint.FontMetricsInt fm)
+		{
+			return (int)Math.Round(paint.MeasureText(text, start, end) + PADDING);
+		}
+
+
 
 	}
 	public class CropSquareTransformation : Java.Lang.Object, ITransformation
@@ -181,9 +357,36 @@ namespace Pikabu
 
 							newPost.Comments = Int32.Parse(header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("b-link b-link_type_open-story")).InnerHtml.Split(' ')[0]);
 
-							newPost.Title = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("b-story__header-info story_head")).ChildNodes[1].InnerHtml.Replace("\n","").Replace("\t","");
+							newPost.Title = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("b-story__header-info story_head")).ChildNodes[1].InnerText.Replace("\n","").Replace("\t","").Replace("&quot;","\"");
 							var desc = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("short"));
-							newPost.Description = desc!=null?desc.InnerHtml:String.Empty;
+							if(desc!=null){
+								//newPost.Description = String.Empty;
+								newPost.FormattedDescription = new List<Tuple<string, string>>();
+								if(desc.ChildNodes.Count>1){
+									
+									foreach(var d in desc.ChildNodes){
+										if(d.Name=="a"){
+											//newPost.FormattedDescription.Add("textLink",d.InnerText);
+											//newPost.FormattedDescription.Add("url",
+											newPost.FormattedDescription.Add(new Tuple<string, string>("textLink",d.InnerText));
+											newPost.FormattedDescription.Add(new Tuple<string, string>("url",d.Attributes["href"].Value));
+										}else{
+											//newPost.FormattedDescription.Add("text",d.InnerHtml);
+											newPost.FormattedDescription.Add(new Tuple<string, string>("text",d.InnerHtml));
+										}
+										if(d.Name=="#text"){
+											newPost.FormattedDescription.Add(new Tuple<string, string>("text",d.InnerHtml));
+										}
+									}
+								}else{
+									newPost.FormattedDescription.Add(new Tuple<string, string>("text",desc.InnerHtml));
+								}
+							}
+
+							newPost.Tags = header.Descendants().Where(s=>s.GetAttributeValue("class","").Equals("tag no_ch")).Select(s=>s.InnerHtml).ToList();
+							if(newPost.Tags.Count<=0){
+								var test123 = String.Empty;
+							}
 							//var test = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("detailDate"));
 							var textType = post.Descendants().Where(s=>s.GetAttributeValue("id","").Equals("textDiv"+newPost.Id)).FirstOrDefault();
 							if(textType!=null){
@@ -255,4 +458,5 @@ namespace Pikabu
 
 
 	}
+
 }

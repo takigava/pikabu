@@ -9,4 +9,6 @@
 	<string name="best_title">Лучшее</string>
 	<string name="new_title">Свежее</string>
 	<string name="profile">Профиль</string>
+	<string name="currentPosition">0</string>
+	<string name="imageUrl"></string>
 </resources>
