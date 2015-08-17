@@ -108,49 +108,8 @@ namespace Pikabu
 
 			Task.Factory.StartNew (async () => {
 				try{
-					var htmlPage = String.Empty;
-					htmlPage = await WebClient.GetHot (1);
-					HtmlDocument htmlDoc = new HtmlDocument ();
-					htmlDoc.OptionFixNestedTags = true;
-					htmlDoc.LoadHtml (htmlPage);
-					var root = htmlDoc.DocumentNode;
-					var commonPosts = root.Descendants().Where(n => n.GetAttributeValue("class", "").Equals("b-story inner_wrap"));
-
-					//_Adapter.NotifyDataSetChanged();
 					var newPostList = new List<Post>();
-					foreach(var post in commonPosts)
-					{
-						var newPost = new Post();
-						newPost.Id = Int32.Parse(post.Attributes.FirstOrDefault(s=>s.Name=="data-story-id").Value);
-						var rating=0;
-						var result = Int32.TryParse(post.Descendants().Where(s=>s.GetAttributeValue("class","").Equals("b-rating__count curs")).FirstOrDefault().InnerHtml,out rating);
-						newPost.Rating = result==true?rating:0;
-						var header = post.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("b-story__main-header"));
-						newPost.AuthorName = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("href","").Contains("profile")).InnerHtml;
-
-						newPost.Comments = Int32.Parse(header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("b-link b-link_type_open-story")).InnerHtml.Split(' ')[0]);
-
-						newPost.Title = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("b-story__header-info story_head")).ChildNodes[1].InnerHtml.Replace("\n","").Replace("\t","");
-
-						var desc = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("short"));
-						newPost.Description = desc!=null?desc.InnerHtml:String.Empty;
-						newPost.Tags = header.Descendants().Where(s=>s.GetAttributeValue("class","").Equals("tag no_ch")).Select(s=>s.InnerText).ToList();
-						var textType = post.Descendants().Where(s=>s.GetAttributeValue("id","").Equals("textDiv"+newPost.Id)).FirstOrDefault();
-						if(textType!=null){
-							newPost.PostType = PostType.Text;
-							newPost.Text = textType.InnerText;
-						}
-						var imageType = post.Descendants().Where(s=>s.GetAttributeValue("id","").Equals("picDiv"+newPost.Id)).FirstOrDefault();
-						if(imageType!=null){
-							newPost.PostType = PostType.Image;
-							var attr = imageType.Descendants().Where(s=>s.GetAttributeValue("src","").Contains("http://")).FirstOrDefault();
-							newPost.Url = attr.Attributes["src"].Value;
-						}
-						newPost.PostTime = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("detailDate")).InnerHtml;
-						newPostList.Add(newPost);
-						//_Posts.Add(newPost);
-						//_RecyclerView.GetAdapter().NotifyItemInserted(_Posts.Count);
-					}
+					await WebClient.LoadPosts(newPostList,1);
 					_Posts.AddRange(newPostList);
 
 

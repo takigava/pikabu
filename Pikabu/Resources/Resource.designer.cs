@@ -1489,17 +1489,17 @@ namespace Pikabu
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f070056
+			public const int LoginAnonymus = 2131165270;
+			
 			// aapt resource value: 0x7f070055
-			public const int LoginAnonymus = 2131165269;
+			public const int LoginButton = 2131165269;
 			
 			// aapt resource value: 0x7f070054
-			public const int LoginButton = 2131165268;
+			public const int Password = 2131165268;
 			
 			// aapt resource value: 0x7f070053
-			public const int Password = 2131165267;
-			
-			// aapt resource value: 0x7f070052
-			public const int UserName = 2131165266;
+			public const int UserName = 2131165267;
 			
 			// aapt resource value: 0x7f070041
 			public const int action_bar = 2131165249;
@@ -1633,8 +1633,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070029
 			public const int image = 2131165225;
 			
-			// aapt resource value: 0x7f070051
-			public const int imageView1 = 2131165265;
+			// aapt resource value: 0x7f070052
+			public const int imageView1 = 2131165266;
 			
 			// aapt resource value: 0x7f070067
 			public const int imageView2 = 2131165287;
@@ -1762,8 +1762,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070012
 			public const int showTitle = 2131165202;
 			
-			// aapt resource value: 0x7f070056
-			public const int splashImage = 2131165270;
+			// aapt resource value: 0x7f070057
+			public const int splashImage = 2131165271;
 			
 			// aapt resource value: 0x7f070008
 			public const int split_action_bar = 2131165192;
@@ -1798,8 +1798,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070030
 			public const int title_template = 2131165232;
 			
-			// aapt resource value: 0x7f070057
-			public const int toolbar = 2131165271;
+			// aapt resource value: 0x7f070051
+			public const int toolbar = 2131165265;
 			
 			// aapt resource value: 0x7f07002f
 			public const int topPanel = 2131165231;
@@ -2508,6 +2508,9 @@ namespace Pikabu
 			
 			// aapt resource value: 0x7f090002
 			public const int CardView_Light = 2131296258;
+			
+			// aapt resource value: 0x7f090121
+			public const int ImageViewTheme = 2131296545;
 			
 			// aapt resource value: 0x7f090120
 			public const int MyDrawerArrowStyle = 2131296544;

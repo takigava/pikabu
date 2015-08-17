@@ -59,6 +59,19 @@ namespace Pikabu
 				//
 
 			//};
+			ISharedPreferences pref = PreferenceManager.GetDefaultSharedPreferences(this);
+			var userName = pref.GetString ("UserName", String.Empty);
+			var password = pref.GetString ("Password", String.Empty);
+			if (String.IsNullOrEmpty (userName)) {
+				userName = FindViewById<EditText> (Resource.Id.UserName).Text.Trim ();
+			} else {
+				FindViewById<EditText> (Resource.Id.UserName).Text = userName;
+			}
+			if (String.IsNullOrEmpty (password)) {
+				password = FindViewById<EditText> (Resource.Id.Password).Text.Trim ();
+			} else {
+				FindViewById<EditText> (Resource.Id.Password).Text = password;
+			}
 
 
 			button.Click += delegate {
@@ -68,8 +81,8 @@ namespace Pikabu
 					try
 					{
 						WebClient.Initialize();
-						var userName = FindViewById<EditText> (Resource.Id.UserName).Text.Trim();
-						var password = FindViewById<EditText> (Resource.Id.Password).Text.Trim();
+
+
 						var result = await WebClient.Authorize(new LoginInfo(){
 							mode = "login",
 							password = password,
@@ -80,7 +93,7 @@ namespace Pikabu
 						if(result.logined==1)
 						{
 							//ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo",FileCreationMode.Private);
-							ISharedPreferences pref = PreferenceManager.GetDefaultSharedPreferences(this);
+
 							ISharedPreferencesEditor editor = pref.Edit();
 							editor.PutString("UserName",userName);
 							editor.PutString("Password",password);

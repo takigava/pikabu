@@ -5,6 +5,9 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.Generic;
+using HtmlAgilityPack;
+using System.Linq;
 
 
 namespace Pikabu
@@ -111,6 +114,91 @@ namespace Pikabu
 				}
 			}
 			return result;
+		}
+
+		public static async Task LoadPosts(List<Post> newPostList,int currentPage){
+			var htmlPage = String.Empty;
+			htmlPage = await WebClient.GetHot (currentPage);
+			HtmlDocument htmlDoc = new HtmlDocument ();
+			htmlDoc.OptionFixNestedTags = true;
+			htmlDoc.LoadHtml (htmlPage);
+			var root = htmlDoc.DocumentNode;
+			var commonPosts = root.Descendants().Where(n => n.GetAttributeValue("class", "").Equals("b-story inner_wrap"));
+
+			//_Adapter.NotifyDataSetChanged();
+
+			foreach(var post in commonPosts)
+			{
+				var newPost = new Post();
+				newPost.Id = Int32.Parse(post.Attributes.FirstOrDefault(s=>s.Name=="data-story-id").Value);
+				var rating=0;
+				var result = Int32.TryParse(post.Descendants().Where(s=>s.GetAttributeValue("class","").Equals("b-rating__count curs")).FirstOrDefault().InnerHtml,out rating);
+				newPost.Rating = result==true?rating:0;
+				var header = post.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("b-story__main-header"));
+				newPost.AuthorName = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("href","").Contains("profile")).InnerHtml;
+
+				newPost.Comments = Int32.Parse(header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("b-link b-link_type_open-story")).InnerHtml.Split(' ')[0]);
+
+				newPost.Title = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("b-story__header-info story_head")).ChildNodes[1].InnerText.Replace("\n","").Replace("\t","").Replace("&quot;","\"");
+				var desc = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("short"));
+				if(desc!=null){
+					//newPost.Description = String.Empty;
+					newPost.Description = desc.InnerText;
+					newPost.FormattedDescription = new List<Tuple<string, string>>();
+					if(desc.ChildNodes.Count>1){
+
+						foreach(var d in desc.ChildNodes){
+							if(d.Name=="a"){
+								//newPost.FormattedDescription.Add("textLink",d.InnerText);
+								//newPost.FormattedDescription.Add("url",
+								newPost.FormattedDescription.Add(new Tuple<string, string>("textLink",d.InnerText));
+								newPost.FormattedDescription.Add(new Tuple<string, string>("url",d.Attributes["href"].Value));
+							}else{
+								//newPost.FormattedDescription.Add("text",d.InnerHtml);
+								newPost.FormattedDescription.Add(new Tuple<string, string>("text",d.InnerText));
+							}
+							if(d.Name=="#text"){
+								newPost.FormattedDescription.Add(new Tuple<string, string>("text",d.InnerText));
+							}
+						}
+					}else{
+						newPost.FormattedDescription.Add(new Tuple<string, string>("text",desc.InnerText));
+					}
+				}
+
+				newPost.Tags = header.Descendants().Where(s=>s.GetAttributeValue("class","").Equals("tag no_ch")).Select(s=>s.InnerHtml).ToList();
+				if(newPost.Tags.Count<=0){
+					var test123 = String.Empty;
+				}
+				//var test = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("detailDate"));
+				var textType = post.Descendants().Where(s=>s.GetAttributeValue("id","").Equals("textDiv"+newPost.Id)).FirstOrDefault();
+				if(textType!=null){
+					newPost.PostType = PostType.Text;
+					newPost.Text = textType.InnerText.Replace("\n\t\t\t\t\t","");
+				}
+				var imageType = post.Descendants().Where(s=>s.GetAttributeValue("id","").Equals("picDiv"+newPost.Id)).FirstOrDefault();
+				if(imageType!=null){
+					newPost.PostType = PostType.Image;
+					var attr = imageType.Descendants().Where(s=>s.GetAttributeValue("src","").Contains("http://")).FirstOrDefault();
+					//var image = Picasso.With (Android.App.Application.Context).Load (attr.Attributes["src"].Value).Get ();
+					//Bitmap resultImage;
+					//if(image.Height>3000 || image.Width>3000)
+					//{
+					//	int size = Math.Min(image.Width, image.Height);
+					//	int x = (image.Width - size) / 3;
+					//	int y = (image.Height - size) / 3;
+					//	resultImage = Bitmap.CreateBitmap(image, x, y, size, size);
+					//	image = resultImage;
+					//}
+					//newPost.Bitmap = image;
+					newPost.Url = attr.Attributes["src"].Value;
+				}
+				newPost.PostTime = header.Descendants().FirstOrDefault(s=>s.GetAttributeValue("class","").Equals("detailDate")).InnerHtml;
+				newPostList.Add(newPost);
+				//(recyclerView.GetAdapter()as PostViewAdapter)._Posts.Add(newPost);
+				//(recyclerView.GetAdapter()as PostViewAdapter).NotifyItemInserted((recyclerView.GetAdapter()as PostViewAdapter)._Posts.Count);
+			}
+
 		}
 	}
 

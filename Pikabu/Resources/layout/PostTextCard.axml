@@ -52,7 +52,6 @@
             </RelativeLayout>
             <TextView
                 android:id="@+id/postHeader"
-                android:text="Заголовок поста который должен быть очень длинным для теста и в несколько строк"
                 android:layout_gravity="left"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,7 +61,6 @@
                 android:textAppearance="?android:attr/textAppearanceLarge" />
             <TextView
                 android:id="@+id/postDescription"
-                android:text="дополнительное описание которое тоже может быть длинным"
                 android:layout_gravity="left"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -71,7 +69,6 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
             <TextView
                 android:id="@+id/postTags"
-                android:text="дополнительное описание которое тоже может быть длинным"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left"
@@ -79,9 +76,9 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
             <TextView
                 android:id="@+id/postText"
-                android:text="RelativeLayout is a ViewGroup that displays child View elements in relative positions. The position of a View can be specified as relative to sibling elements (such as to the left-of or below a given element) or in positions relative to the RelativeLayout area (such as aligned to the bottom, left of center)."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxHeight="300dp"
                 android:textColor="@android:color/black"
                 android:gravity="left"
                 android:paddingTop="5dp"

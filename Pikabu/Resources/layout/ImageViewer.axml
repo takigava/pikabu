@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -11,10 +12,19 @@
         android:layout_gravity="center"
         android:layout_centerHorizontal="true"
         android:background="@android:color/black" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginTop="24dp"
+        android:background="#10000000"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        android:elevation="4dp" />
 <!--<com.refractored.monodroidtoolkit.ScaleImageView
   android:layout_width="fill_parent"
     android:layout_height="fill_parent"
   	android:gravity="center"
   android:id="@+id/AnimateImage">
 </com.refractored.monodroidtoolkit.ScaleImageView>-->
-</LinearLayout>
+</RelativeLayout>

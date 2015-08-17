@@ -11,11 +11,13 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Webkit;
+using Android.Support.V7.App;
+using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace Pikabu
 {
-	[Activity (Label = "ImageView",Theme="@style/Theme.NoActionBar")]			
-	public class ImageViewer : Activity
+	[Activity (Label = "ImageView",Theme="@style/ImageViewTheme")]			
+	public class ImageViewer : AppCompatActivity
 	{
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -23,7 +25,8 @@ namespace Pikabu
 
 			// Create your application here
 			SetContentView (Resource.Layout.ImageViewer);
-
+			var mToolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
+			SetSupportActionBar(mToolbar);
 			WebView view = FindViewById<WebView>(Resource.Id.webViewImage);
 
 			if (view != null)
@@ -43,6 +46,7 @@ namespace Pikabu
 				var loadString = String.Format("<!DOCTYPE html><html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=1\"><style>html, body, #wrapper {{height:100%; width: 100%; margin: 0; padding: 0; border: 0; background-color: #000000;}} #wrapper td {{ vertical-align: middle; text-align: center; }}</style></head><body><table id=\"wrapper\"><tr><td><img src=\"{0}\" style=\"width:100%\"/></td></tr></table></body></html>",text);
 				//view.LoadUrl("http://cs6.pikabu.ru/post_img/2014/12/29/10/1419870935_2035225649.png");
 				view.LoadData(loadString,"text/html","utf-8");
+
 				//view.LoadDataWithBaseURL("","<img src='https://hashtagnerdswag.files.wordpress.com/2014/04/anime_wallpaper_v1_by_jontewftnd4ye097.jpg'/>","text/html", "UTF-8", "");
 			}
 
@@ -59,6 +63,11 @@ namespace Pikabu
 				});
 			});
 			*/
+		}
+		public override bool OnCreateOptionsMenu (IMenu menu)
+		{
+			MenuInflater.Inflate (Resource.Menu.action_menu, menu);
+			return base.OnCreateOptionsMenu (menu);
 		}
 	}
 }
