@@ -1,28 +1,12 @@
 ﻿using System;
-
 using Android.App;
 using Android.Content;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Android.Content.PM;
 using System.Threading.Tasks;
-
-using System.Net;
-using System.Net.Http;
-
-
-using System.Json;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-
-using System.Text;
-using System.IO;
-using System.Collections;
-using System.Net.Http.Headers;
 using Xamarin;
-using System.Threading;
 using Android.Accounts;
 using Android.Preferences;
 
@@ -30,7 +14,7 @@ using Android.Preferences;
 
 namespace Pikabu
 {
-	[Activity (Label = "Login",Theme="@style/Theme.NoActionBar",
+    [Activity (Label = "Login",Theme="@style/Theme.NoActionBar",
 		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,ScreenOrientation=ScreenOrientation.Portrait)]
 	public class Login : Activity
 	{
@@ -53,25 +37,16 @@ namespace Pikabu
 
 			// Get our button from the layout resource,
 			// and attach an event to it
-			Button button = FindViewById<Button> (Resource.Id.LoginButton);
-			TextView text = FindViewById<TextView> (Resource.Id.LoginAnonymus);
+			var button = FindViewById<Button> (Resource.Id.LoginButton);
+			
 			//text.Click += delegate {
 				//
 
 			//};
-			ISharedPreferences pref = PreferenceManager.GetDefaultSharedPreferences(this);
-			var userName = pref.GetString ("UserName", String.Empty);
-			var password = pref.GetString ("Password", String.Empty);
-			if (String.IsNullOrEmpty (userName)) {
-				userName = FindViewById<EditText> (Resource.Id.UserName).Text.Trim ();
-			} else {
-				FindViewById<EditText> (Resource.Id.UserName).Text = userName;
-			}
-			if (String.IsNullOrEmpty (password)) {
-				password = FindViewById<EditText> (Resource.Id.Password).Text.Trim ();
-			} else {
-				FindViewById<EditText> (Resource.Id.Password).Text = password;
-			}
+			var pref = PreferenceManager.GetDefaultSharedPreferences(this);
+			var userName = pref.GetString ("UserName", string.Empty);
+			var password = pref.GetString ("Password", string.Empty);
+			
 
 
 			button.Click += delegate {
@@ -81,26 +56,41 @@ namespace Pikabu
 					try
 					{
 						WebClient.Initialize();
+                        if (string.IsNullOrEmpty(userName))
+                        {
+                            userName = FindViewById<EditText>(Resource.Id.UserName).Text.Trim();
+                        }
+                        else
+                        {
+                            FindViewById<EditText>(Resource.Id.UserName).Text = userName;
+                        }
+                        if (string.IsNullOrEmpty(password))
+                        {
+                            password = FindViewById<EditText>(Resource.Id.Password).Text.Trim();
+                        }
+                        else
+                        {
+                            FindViewById<EditText>(Resource.Id.Password).Text = password;
+                        }
 
-
-						var result = await WebClient.Authorize(new LoginInfo(){
-							mode = "login",
-							password = password,
-							username = userName,
-							remember = "0"
+                        var result = await WebClient.Authorize(new LoginInfo(){
+							Mode = "login",
+							Password = password,
+							Username = userName,
+							Remember = "0"
 						});
-						var message = String.Empty;
-						if(result.logined==1)
+						var message = string.Empty;
+						if(result.Logined==1)
 						{
 							//ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo",FileCreationMode.Private);
 
-							ISharedPreferencesEditor editor = pref.Edit();
+							var editor = pref.Edit();
 							editor.PutString("UserName",userName);
 							editor.PutString("Password",password);
 							editor.Apply();
-							Intent intent = new Intent (this, typeof(MainView));
-							this.StartActivity (intent);
-							this.Finish();
+							var intent = new Intent (this, typeof(MainView));
+                            StartActivity(intent);
+                            Finish();
 						}
 						else
 						{
@@ -110,7 +100,7 @@ namespace Pikabu
 						RunOnUiThread(()=>{
 							
 							prog.Dismiss();
-							if(!String.IsNullOrEmpty(message))
+							if(!string.IsNullOrEmpty(message))
 							{
 								Toast.MakeText(this,message,ToastLength.Long).Show();
 							}

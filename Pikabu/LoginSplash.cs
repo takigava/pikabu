@@ -1,16 +1,8 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using System;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using System.Threading.Tasks;
 using Android.Preferences;
 
 namespace Pikabu
@@ -26,48 +18,48 @@ namespace Pikabu
 			// Create your application here
 			//ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo",FileCreationMode.Private);
 			ISharedPreferences pref = PreferenceManager.GetDefaultSharedPreferences(this);
-			var userName = pref.GetString ("UserName", String.Empty);
-			var password = pref.GetString ("Password", String.Empty);
+			var userName = pref.GetString ("UserName", string.Empty);
+			var password = pref.GetString ("Password", string.Empty);
 
-			if (String.IsNullOrEmpty (userName) || String.IsNullOrEmpty (password)) {
-				Intent intent = new Intent (this, typeof(Login));
-				this.StartActivity (intent);
+			if (string.IsNullOrEmpty (userName) || string.IsNullOrEmpty (password)) {
+				var intent = new Intent (this, typeof(Login));
+				StartActivity (intent);
 			} 
 			else 
 			{
-				LoginResponse result = new LoginResponse();
+				LoginResponse result;
 				Task.Factory.StartNew (async() => {
 					try
 					{
 						WebClient.Initialize();
 						result = await WebClient.Authorize(new LoginInfo(){
-							mode = "login",
-							password = password,
-							username = userName,
-							remember = "0"
+							Mode = "login",
+							Password = password,
+							Username = userName,
+							Remember = "0"
 						});
-						if (result.logined == 1) 
+						if (result.Logined == 1) 
 						{
 							//успешно
-							Intent intent = new Intent (this, typeof(MainView));
-							this.StartActivity (intent);
-							this.Finish ();
+							var intent = new Intent (this, typeof(MainView));
+							StartActivity (intent);
+							Finish ();
 						} 
 						else 
 						{
-							ISharedPreferencesEditor editor = pref.Edit();
+							var editor = pref.Edit();
 							editor.Clear ();
 							editor.Apply ();
-							Intent intent = new Intent (this, typeof(Login));
-							this.StartActivity (intent);
-							this.Finish ();
+							var intent = new Intent (this, typeof(Login));
+							StartActivity (intent);
+							Finish ();
 						}
 					}
-					catch(Exception ex)
+					catch(Exception)
 					{
-						Intent intent = new Intent (this, typeof(Login));
-						this.StartActivity (intent);
-						this.Finish ();
+						var intent = new Intent (this, typeof(Login));
+						StartActivity (intent);
+						Finish ();
 					}
 
 				});

@@ -1,42 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Android.Text;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
+using Android.Graphics;
+using Android.Support.V7.Widget;
+using Android.Text;
+using Android.Text.Style;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V7.Widget;
-using System.Threading.Tasks;
-using HtmlAgilityPack;
+using Java.Lang;
 using Square.Picasso;
-using Android.Graphics;
-using Android.Text.Style;
-
+using Exception = System.Exception;
+using Math = System.Math;
+using Object = Java.Lang.Object;
 
 namespace Pikabu
 {
-	public class PostViewAdapter : Android.Support.V7.Widget.RecyclerView.Adapter
+	public class PostViewAdapter : RecyclerView.Adapter
 	{
 		
-		public List<Post> _Posts{ get; set; }
-		public RecyclerView _RecyclerView { get; set; }
-		private Context _Context;
+		public List<Post> Posts{ get; set; }
+		public RecyclerView RecyclerView { get; set; }
+		private readonly Context _context;
 
 
 		public void SetRecyclerView(RecyclerView recyclerView)
 		{
-			_RecyclerView = recyclerView;
+			RecyclerView = recyclerView;
 		}
 
 		public PostViewAdapter(List<Post> posts, RecyclerView recyclerView, Context context)
 		{
-			_Posts = posts;
-			_RecyclerView = recyclerView;
-			_Context = context;
+			Posts = posts;
+			RecyclerView = recyclerView;
+			_context = context;
 
 
 		}
@@ -46,7 +44,7 @@ namespace Pikabu
 		public override int GetItemViewType(int position)
 		{
 			
-			switch (_Posts [position].PostType) {
+			switch (Posts [position].PostType) {
 			case PostType.Text:
 				return Resource.Layout.PostTextCard;
 			case PostType.Image:
@@ -56,32 +54,39 @@ namespace Pikabu
 			}
 		}
 		public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
-		{	
-			if (viewType == Resource.Layout.PostTextCard) {
-				View row = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.PostTextCard, parent, false);
-				PostTextViewHolder vh = new PostTextViewHolder(row);
-				return vh;
-			}
-			if (viewType == Resource.Layout.PostImageCard) {
-				View row = LayoutInflater.From (parent.Context).Inflate (Resource.Layout.PostImageCard, parent, false);
-				PostImageViewHolder vh = new PostImageViewHolder (row);
-				return vh;
-			} else {
-				View row = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.PostTextCard, parent, false);
-				PostTextViewHolder vh = new PostTextViewHolder(row);
-				return vh;
-			}
+		{
+		    switch (viewType)
+		    {
+		        case Resource.Layout.PostTextCard:
+		        {
+		            var row = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.PostTextCard, parent, false);
+		            var vh = new PostTextViewHolder(row);
+		            return vh;
+		        }
+		        case Resource.Layout.PostImageCard:
+		        {
+		            var row = LayoutInflater.From (parent.Context).Inflate (Resource.Layout.PostImageCard, parent, false);
+		            var vh = new PostImageViewHolder (row);
+		            return vh;
+		        }
+		        default:
+		        {
+		            var row = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.PostTextCard, parent, false);
+		            var vh = new PostTextViewHolder(row);
+		            return vh;
+		        }
+		    }
 		}
 
-		public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
+	    public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
 		{
 			if (holder is PostTextViewHolder)
 			{
-				PostTextViewHolder vh = holder as PostTextViewHolder;
+				var vh = (PostTextViewHolder) holder;
 				FillTextPost (vh, position);
 			}
 			if (holder is PostImageViewHolder) {
-				PostImageViewHolder vh = holder as PostImageViewHolder;
+				var vh = (PostImageViewHolder) holder;
 				FillImagePost (vh, position);
 
 
@@ -91,281 +96,281 @@ namespace Pikabu
 
 		public void ShowImage(object sender, EventArgs e){
 		}
-		public override int ItemCount
+		public override int ItemCount => Posts.Count;
+
+	    public override long GetItemId (int position)
 		{
-			get { return _Posts.Count; }
-		}
-		public override long GetItemId (int position)
-		{
-			return _Posts [position].Id;
+			return Posts [position].Id;
 		}
 		public static SpannableString BuildBackgroundColorSpan(SpannableString spannableString,
-			String text, String searchString, Color color) {
+			string text, string searchString, Color color) {
 
-			int indexOf = text.ToUpperInvariant().IndexOf(searchString.ToUpperInvariant());
+			var indexOf = text.ToUpperInvariant().IndexOf(searchString.ToUpperInvariant(), StringComparison.Ordinal);
 
 			try {
 				spannableString.SetSpan(new BackgroundColorSpan(color), indexOf,
 					(indexOf + searchString.Length),SpanTypes.ExclusiveExclusive);
-			} catch (Exception e) {
-
+			}
+			catch (Exception)
+			{
+			    // ignored
 			}
 
 
-			return spannableString;
+		    return spannableString;
 		}
 		public void FillTextPost(PostTextViewHolder vh,int position){
 			try{
-				vh._AuthorName.Text = _Posts[position].AuthorName;
-				var context = Android.App.Application.Context;
-				vh._HeaderRating.Text = _Posts [position].Rating.ToString ();
-				vh._BottomRating.Text = _Posts [position].Rating.ToString ();
-				if (_Posts [position].Rating > 0) {
-					vh._HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
-					vh._BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
-					var text = " + "+_Posts[position].Rating;
-					vh._HeaderRating.Text = text;
-					vh._BottomRating.Text = text;
+				vh.AuthorName.Text = Posts[position].AuthorName;
+				var context = Application.Context;
+				vh.HeaderRating.Text = Posts [position].Rating.ToString ();
+				vh.BottomRating.Text = Posts [position].Rating.ToString ();
+				if (Posts [position].Rating > 0) {
+					vh.HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
+					vh.BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
+					var text = " + "+Posts[position].Rating;
+					vh.HeaderRating.Text = text;
+					vh.BottomRating.Text = text;
 				}
-				if (_Posts [position].Rating < 0) {
-					vh._HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
-					vh._BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
-					var text = " - "+_Posts[position].Rating;
-					vh._HeaderRating.Text = text;
-					vh._BottomRating.Text = text;
+				if (Posts [position].Rating < 0) {
+					vh.HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
+					vh.BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
+					var text = " - "+Posts[position].Rating;
+					vh.HeaderRating.Text = text;
+					vh.BottomRating.Text = text;
 				}
-				vh._PostTime.Text = _Posts[position].PostTime;
-				vh._Title.Text = _Posts[position].Title;
-				if(_Posts[position].FormattedDescription!=null && _Posts[position].FormattedDescription.Count>0){
-					SpannableStringBuilder descriptionBulder = new SpannableStringBuilder();
-					Color descTextColorDarkGray = context.Resources.GetColor(Resource.Color.darkGray);
-					Color descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
-					Color descBackgroundColor = new Color(255,255,255,0);
-					foreach(var des in _Posts[position].FormattedDescription){
+				vh.PostTime.Text = Posts[position].PostTime;
+				vh.Title.Text = Posts[position].Title;
+				if(Posts[position].FormattedDescription!=null && Posts[position].FormattedDescription.Count>0){
+					var descriptionBulder = new SpannableStringBuilder();
+					var descTextColorDarkGray = context.Resources.GetColor(Resource.Color.darkGray);
+					var descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
+					var descBackgroundColor = new Color(255,255,255,0);
+					foreach(var des in Posts[position].FormattedDescription){
 						if(des.Item1 == "text"){
 							SpannableString tag1 = new SpannableString(des.Item2);
 							descriptionBulder.Append(tag1);
 							descriptionBulder.SetSpan(new TagSpan(descBackgroundColor, descTextColorGray), descriptionBulder.Length() - tag1.Length(), descriptionBulder.Length(), SpanTypes.ExclusiveExclusive);
 						}
-						if(des.Item1 == "textLink"){
-							SpannableString tag2 = new SpannableString(des.Item2);
-							descriptionBulder.Append(tag2);
-							descriptionBulder.SetSpan(new TagSpan(descBackgroundColor, descTextColorDarkGray), descriptionBulder.Length() - tag2.Length(), descriptionBulder.Length(), SpanTypes.ExclusiveExclusive);
-						}
+					    if (des.Item1 != "textLink") continue;
+					    var tag2 = new SpannableString(des.Item2);
+					    descriptionBulder.Append(tag2);
+					    descriptionBulder.SetSpan(new TagSpan(descBackgroundColor, descTextColorDarkGray), descriptionBulder.Length() - tag2.Length(), descriptionBulder.Length(), SpanTypes.ExclusiveExclusive);
 					}
-					vh._Description.TextFormatted = descriptionBulder;
+					vh.Description.TextFormatted = descriptionBulder;
 				}else{
 					//vh._Description.Visibility = ViewStates.Invisible;
 				}
 				//vh._Description.Text = _Posts[position].Description;
-				SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
-				Color textColor = context.Resources.GetColor(Resource.Color.mainGreen);
-				Color backgroundColor = new Color(255,255,255,0);
-				foreach (var tag in _Posts[position].Tags) {
-					SpannableString tag1 = new SpannableString("#"+tag);
+				var stringBuilder = new SpannableStringBuilder();
+				var textColor = context.Resources.GetColor(Resource.Color.mainGreen);
+				var backgroundColor = new Color(255,255,255,0);
+				foreach (var tag in Posts[position].Tags) {
+					var tag1 = new SpannableString("#"+tag);
 					stringBuilder.Append(tag1);
 					stringBuilder.SetSpan(new TagSpan(backgroundColor, textColor), stringBuilder.Length() - tag1.Length(), stringBuilder.Length(), SpanTypes.ExclusiveExclusive);
 
-					SpannableString tag2 = new SpannableString("");
+					var tag2 = new SpannableString("");
 					stringBuilder.Append(tag2);
 					stringBuilder.SetSpan(new TagSpan(backgroundColor, backgroundColor), stringBuilder.Length() - tag2.Length(), stringBuilder.Length(), SpanTypes.ExclusiveExclusive);
 				}
-				vh._Tags.TextFormatted = stringBuilder;
-				vh._Comments.Text = _Posts[position].Comments.ToString();
-				vh._Text.Text = _Posts [position].Text;
-			}catch(Exception ex){
-				var text = ex.Message;
+				vh.Tags.TextFormatted = stringBuilder;
+				vh.Comments.Text = Posts[position].Comments.ToString();
+				vh.Text.Text = Posts [position].Text;
+			}
+			catch (Exception)
+			{
+			    // ignored
 			}
 		}
 
 		public void FillImagePost(PostImageViewHolder vh,int position){
 			try{
-				vh._AuthorName.Text = _Posts[position].AuthorName;
-				var context = Android.App.Application.Context;
-				vh._HeaderRating.Text = _Posts [position].Rating.ToString ();
-				vh._BottomRating.Text = _Posts [position].Rating.ToString ();
-				if (_Posts [position].Rating > 0) {
-					vh._HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
-					vh._BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
-					var text = " + "+_Posts[position].Rating;
-					vh._HeaderRating.Text = text;
-					vh._BottomRating.Text = text;
+				vh.AuthorName.Text = Posts[position].AuthorName;
+				var context = Application.Context;
+				vh.HeaderRating.Text = Posts [position].Rating.ToString ();
+				vh.BottomRating.Text = Posts [position].Rating.ToString ();
+				if (Posts [position].Rating > 0) {
+					vh.HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
+					vh.BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.mainGreen));
+					var text = " + "+Posts[position].Rating;
+					vh.HeaderRating.Text = text;
+					vh.BottomRating.Text = text;
 				}
-				if (_Posts [position].Rating < 0) {
-					vh._HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
-					vh._BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
-					var text = " - "+_Posts[position].Rating;
-					vh._HeaderRating.Text = text;
-					vh._BottomRating.Text = text;
+				if (Posts [position].Rating < 0) {
+					vh.HeaderRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
+					vh.BottomRating.SetTextColor (context.Resources.GetColor(Resource.Color.red));
+					var text = " - "+Posts[position].Rating;
+					vh.HeaderRating.Text = text;
+					vh.BottomRating.Text = text;
 				}
-				vh._PostTime.Text = _Posts[position].PostTime;
-				vh._Title.Text = _Posts[position].Title;
-				if(_Posts[position].FormattedDescription!=null && _Posts[position].FormattedDescription.Count>0){
-					SpannableStringBuilder descriptionBulder = new SpannableStringBuilder();
-					Color descTextColorDarkGray = context.Resources.GetColor(Resource.Color.darkGray);
-					Color descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
-					Color descBackgroundColor = new Color(255,255,255,0);
-					foreach(var des in _Posts[position].FormattedDescription){
+				vh.PostTime.Text = Posts[position].PostTime;
+				vh.Title.Text = Posts[position].Title;
+				if(Posts[position].FormattedDescription!=null && Posts[position].FormattedDescription.Count>0){
+					var descriptionBulder = new SpannableStringBuilder();
+					var descTextColorDarkGray = context.Resources.GetColor(Resource.Color.darkGray);
+					var descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
+					var descBackgroundColor = new Color(255,255,255,0);
+					foreach(var des in Posts[position].FormattedDescription){
 						if(des.Item1 == "text"){
-							SpannableString tag1 = new SpannableString(des.Item2);
+							var tag1 = new SpannableString(des.Item2);
 							descriptionBulder.Append(tag1);
 							descriptionBulder.SetSpan(new TagSpan(descBackgroundColor, descTextColorGray), descriptionBulder.Length() - tag1.Length(), descriptionBulder.Length(), SpanTypes.ExclusiveExclusive);
 						}
-						if(des.Item1 == "textLink"){
-							SpannableString tag2 = new SpannableString(des.Item2);
-							descriptionBulder.Append(tag2);
-							descriptionBulder.SetSpan(new TagSpan(descBackgroundColor, descTextColorDarkGray), descriptionBulder.Length() - tag2.Length(), descriptionBulder.Length(), SpanTypes.ExclusiveExclusive);
-						}
+					    if (des.Item1 != "textLink") continue;
+					    var tag2 = new SpannableString(des.Item2);
+					    descriptionBulder.Append(tag2);
+					    descriptionBulder.SetSpan(new TagSpan(descBackgroundColor, descTextColorDarkGray), descriptionBulder.Length() - tag2.Length(), descriptionBulder.Length(), SpanTypes.ExclusiveExclusive);
 					}
-					vh._Description.TextFormatted = descriptionBulder;
+					vh.Description.TextFormatted = descriptionBulder;
 				}else{
 					//vh._Description.Visibility = ViewStates.Invisible;
 				}
 				//vh._Description.Text = _Posts[position].Description;
 				//vh._Description.Text = _Posts[position].Description;
-				SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
-				Color textColor = context.Resources.GetColor(Resource.Color.mainGreen);
-				Color backgroundColor = new Color(255,255,255,0);
+				var stringBuilder = new SpannableStringBuilder();
+				var textColor = context.Resources.GetColor(Resource.Color.mainGreen);
+				var backgroundColor = new Color(255,255,255,0);
 
-				foreach (var tag in _Posts[position].Tags) {
-					SpannableString tag1 = new SpannableString("#"+tag);
+				foreach (var tag in Posts[position].Tags) {
+					var tag1 = new SpannableString("#"+tag);
 					stringBuilder.Append(tag1);
 					stringBuilder.SetSpan(new TagSpan(backgroundColor, textColor), stringBuilder.Length() - tag1.Length(), stringBuilder.Length(), SpanTypes.ExclusiveExclusive);
 
-					SpannableString tag2 = new SpannableString("");
+					var tag2 = new SpannableString("");
 					stringBuilder.Append(tag2);
 					stringBuilder.SetSpan(new TagSpan(backgroundColor, backgroundColor), stringBuilder.Length() - tag2.Length(), stringBuilder.Length(), SpanTypes.ExclusiveExclusive);
 				}
-				vh._Tags.TextFormatted = stringBuilder;
-				vh._Comments.Text = _Posts[position].Comments.ToString();
-				if (vh._Image != null) {
-					vh._Image.SetTag (Resource.String.currentPosition, vh.AdapterPosition.ToString ());
-					vh._Image.SetTag (Resource.String.imageUrl, _Posts [vh.AdapterPosition].Url);
-					EventHandler handler = (object sender, EventArgs e) => {
-						var image = sender as ImageView;
-						//Rivets.AppLinks.Navigator.Navigate("http://static.kremlin.ru/media/events/video/ru/video_high/QVrS7FkL9R89xxB9frxsAtnvu9ANx6Od.mp4");
-						Intent intent = new Intent (_Context, typeof(ImageViewer));
-						intent.PutExtra ("url", image.GetTag (Resource.String.imageUrl).ToString ());
-						_Context.StartActivity (intent);
+				vh.Tags.TextFormatted = stringBuilder;
+				vh.Comments.Text = Posts[position].Comments.ToString();
+			    if (vh.Image == null) return;
+                
+			    vh.Image.SetTag (Resource.String.currentPosition, vh.AdapterPosition.ToString ());
+			    vh.Image.SetTag (Resource.String.imageUrl, Posts [vh.AdapterPosition].Url);
+			    EventHandler handler = (sender, e) => {
+			                                              var image = sender as ImageView;
+			                                              //Rivets.AppLinks.Navigator.Navigate("http://static.kremlin.ru/media/events/video/ru/video_high/QVrS7FkL9R89xxB9frxsAtnvu9ANx6Od.mp4");
+			                                              var intent = new Intent (_context, typeof(ImageViewer));
+			                                              if (image != null)
+			                                                  intent.PutExtra ("url", image.GetTag (Resource.String.imageUrl).ToString ());
+			                                              _context.StartActivity (intent);
 
 
 
 
-					};
-					vh._Image.Click -= handler;
-					vh._Image.Click += handler;
-					Picasso.With(Android.App.Application.Context)
-						.Load(_Posts[position].Url)
-						.Transform(new CropSquareTransformation())
-						.Into(vh._Image);
-				}
+			    };
+			    vh.Image.Click -= handler;
+			    vh.Image.Click += handler;
 
-
-			}catch(Exception ex){
-				var text = ex.Message;
+                Picasso.With(Application.Context)
+			        .Load(Posts[position].Url)
+			        .Transform(new CropSquareTransformation())
+			        .Into(vh.Image);
+			}
+			catch (Exception)
+			{
+			    // ignored
 			}
 		}
 	}
 	public class TagSpan: ReplacementSpan {
-		private static float PADDING = 25.0f;
-		private RectF mRect;
-		private Color mBackgroundColor;
-		private Color mForegroundColor;
+		private static readonly float _padding = 25.0f;
+		private readonly RectF _mRect;
+		private readonly Color _mBackgroundColor;
+		private readonly Color _mForegroundColor;
 
 		public TagSpan(Color backgroundColor, Color foregroundColor) {
-			this.mRect = new RectF();
-			this.mBackgroundColor = backgroundColor;
-			this.mForegroundColor = foregroundColor;
+			_mRect = new RectF();
+			_mBackgroundColor = backgroundColor;
+			_mForegroundColor = foregroundColor;
 		}
-		public override void Draw (Canvas canvas, Java.Lang.ICharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
+		public override void Draw (Canvas canvas, ICharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
 		{
-			mRect.Set(x, top, x + paint.MeasureText(text, start, end) + PADDING, bottom);
-			paint.Color = mBackgroundColor;
-			canvas.DrawRect(mRect, paint);
+			_mRect.Set(x, top, x + paint.MeasureText(text, start, end) + _padding, bottom);
+			paint.Color = _mBackgroundColor;
+			canvas.DrawRect(_mRect, paint);
 
 			// Text
-			paint.Color = mForegroundColor;
-			int xPos = (int)Math.Round(x + (PADDING / 2));
-			int yPos = (int) ((canvas.Height / 2) - ((paint.Descent() + paint.Ascent()) / 2)) ;
+			paint.Color = _mForegroundColor;
+			var xPos = (int)Math.Round(x + (_padding / 2));
+		    // ReSharper disable once PossibleLossOfFraction
+			var yPos = (int) ((canvas.Height / 2) - ((paint.Descent() + paint.Ascent()) / 2)) ;
 			canvas.DrawText(text, start, end, xPos, yPos, paint);
 		}
 
-		public override int GetSize (Paint paint, Java.Lang.ICharSequence text, int start, int end, Paint.FontMetricsInt fm)
+		public override int GetSize (Paint paint, ICharSequence text, int start, int end, Paint.FontMetricsInt fm)
 		{
-			return (int)Math.Round(paint.MeasureText(text, start, end) + PADDING);
+			return (int)Math.Round(paint.MeasureText(text, start, end) + _padding);
 		}
 
 
 
 	}
-	public class CropSquareTransformation : Java.Lang.Object, ITransformation
+	public class CropSquareTransformation : Object, ITransformation
 	{
 		public Bitmap Transform(Bitmap source)
 		{
-			Bitmap result = source;
-			if(source.Height>3000 || source.Width>3000)
-			{
-				int size = Math.Min(source.Width, source.Height);
-				int x = (source.Width - size) / 3;
-				int y = (source.Height - size) / 3;
-				result = Bitmap.CreateBitmap(source, x, y, size, size);
-				if (result != source) {
-					source.Recycle();
-				}
-			}
-			return result;
+			var result = source;
+		    if (source.Height <= 3000 && source.Width <= 3000) return result;
+		    var size = Math.Min(source.Width, source.Height);
+		    var x = (source.Width - size) / 3;
+		    var y = (source.Height - size) / 3;
+		    result = Bitmap.CreateBitmap(source, x, y, size, size);
+		    if (result != source) {
+		        source.Recycle();
+		    }
+		    return result;
 		}
 
-		public string Key
-		{
-			get { return "square()"; } 
-		}
+		public string Key => "square()";
 	}
 	
 	public class MyScrollListener 
 		: RecyclerView.OnScrollListener
 	{
-		private int visibleThreshold = 6;
-		private int lastVisibleItem, totalItemCount;
-		private bool IsLoading = false;
-		private int currentPage=1;
+	    private const int VisibleThreshold = 6;
+	    private int _lastVisibleItem, _totalItemCount;
+		private bool _isLoading;
+		private int _currentPage=1;
 		public override void OnScrolled (RecyclerView recyclerView, int dx, int dy)
 		{
-			LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.GetLayoutManager ();
-			int lastVisibleItem = linearLayoutManager.FindLastVisibleItemPosition();
-			int totalItemCount = recyclerView.GetAdapter().ItemCount;
+			var linearLayoutManager = (LinearLayoutManager)recyclerView.GetLayoutManager ();
+            _lastVisibleItem = linearLayoutManager.FindLastVisibleItemPosition();
+            _totalItemCount = recyclerView.GetAdapter().ItemCount;
 
-			if (!IsLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-				// End has been reached
-				// Do something
-				currentPage++;
-				IsLoading = true;
-				Task.Factory.StartNew (async () => {
+		    if (_isLoading || _totalItemCount > (_lastVisibleItem + VisibleThreshold)) return;
+		    // End has been reached
+		    // Do something
+		    _currentPage++;
+		    _isLoading = true;
+		    Task.Factory.StartNew (async () => {
 					
-					try{
-						var newPostList = new List<Post>();
-						await WebClient.LoadPosts(newPostList,currentPage);
+		                                           try{
+		                                               var newPostList = new List<Post>();
+		                                               await WebClient.LoadPosts(newPostList,_currentPage);
 
 
-						(recyclerView.GetAdapter()as PostViewAdapter)._Posts.AddRange(newPostList);
-						//recyclerView.GetAdapter().HasStableIds = true;
+		                                               var postViewAdapter = recyclerView.GetAdapter()as PostViewAdapter;
+		                                               if (postViewAdapter != null)
+		                                                   postViewAdapter.Posts.AddRange(newPostList);
+		                                               //recyclerView.GetAdapter().HasStableIds = true;
 
 
-						Application.SynchronizationContext.Post (_ => {recyclerView.GetAdapter().NotifyDataSetChanged();}, null);
-						//recyclerView.GetAdapter().NotifyItemRangeInserted(recyclerView.GetAdapter().ItemCount,newPostList.Count);
-					}catch(Exception ex){
-						var text = ex.Message;
-					}
+		                                               Application.SynchronizationContext.Post (_ => {recyclerView.GetAdapter().NotifyDataSetChanged();}, null);
+		                                               //recyclerView.GetAdapter().NotifyItemRangeInserted(recyclerView.GetAdapter().ItemCount,newPostList.Count);
+		                                           }
+		                                           catch (Exception)
+		                                           {
+		                                               // ignored
+		                                           }
 
 
-					IsLoading = false;
-				});
-
-			}
+		                                           _isLoading = false;
+		    });
 		}
 		public override void OnScrollStateChanged (RecyclerView recyclerView, int newState)
 		{
-			Picasso picasso = Picasso.With(Android.App.Application.Context);
+			var picasso = Picasso.With(Application.Context);
 			//if ((Android.Widget.ScrollState)recyclerView.ScrollState != ScrollState.Idle || (Android.Widget.ScrollState)recyclerView.ScrollState != ScrollState.TouchScroll) {
 			//	picasso.ResumeTag(Android.App.Application.Context);
 			//} else {
@@ -373,13 +378,13 @@ namespace Pikabu
 			//}
 			switch (newState) {
 			case RecyclerView.ScrollStateIdle:
-				picasso.ResumeTag(Android.App.Application.Context);
+				picasso.ResumeTag(Application.Context);
 				break;
 			case RecyclerView.ScrollStateDragging:
-				picasso.PauseTag(Android.App.Application.Context);
+				picasso.PauseTag(Application.Context);
 				break;
 			case RecyclerView.ScrollStateSettling:
-				picasso.PauseTag(Android.App.Application.Context);
+				picasso.PauseTag(Application.Context);
 				break;
 			}
 
