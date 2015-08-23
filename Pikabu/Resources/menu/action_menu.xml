@@ -3,28 +3,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:myapp="http://schemas.android.com/apk/res-auto">
      
-	<item android:id="@+id/action_help"
-		android:icon="@drawable/ic_search_64"
-		android:title="Help"
-		myapp:showAsAction="always"/>
+	
 
 	<item
       android:id="@+id/add"
-      android:title="New"
+      android:title="Сохранить"
       android:icon="@drawable/ic_search_64"
       android:showAsAction="always"/>
 
 	<item android:id="@+id/action_fragment1"
-		android:title="Fragment1"
+		android:title="Копировать ссылку"
 		myapp:showAsAction="never"/>
 
-	<item android:id="@+id/action_fragment2"
-		android:title="Fragment2"
-		myapp:showAsAction="never"/>
-
-	<item android:id="@+id/action_fragment3"
-		android:title="Fragment3"
-		myapp:showAsAction="never"/>
+	
 
 </menu>
 

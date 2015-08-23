@@ -1525,17 +1525,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070042
 			public const int action_context_bar = 2131165250;
 			
-			// aapt resource value: 0x7f07006b
-			public const int action_fragment1 = 2131165291;
-			
-			// aapt resource value: 0x7f07006c
-			public const int action_fragment2 = 2131165292;
-			
-			// aapt resource value: 0x7f07006d
-			public const int action_fragment3 = 2131165293;
-			
-			// aapt resource value: 0x7f070069
-			public const int action_help = 2131165289;
+			// aapt resource value: 0x7f07006a
+			public const int action_fragment1 = 2131165290;
 			
 			// aapt resource value: 0x7f070003
 			public const int action_menu_divider = 2131165187;
@@ -1555,8 +1546,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070027
 			public const int activity_chooser_view_content = 2131165223;
 			
-			// aapt resource value: 0x7f07006a
-			public const int add = 2131165290;
+			// aapt resource value: 0x7f070069
+			public const int add = 2131165289;
 			
 			// aapt resource value: 0x7f070031
 			public const int alertTitle = 2131165233;

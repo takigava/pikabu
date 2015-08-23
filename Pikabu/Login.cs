@@ -17,9 +17,13 @@ namespace Pikabu
     [Activity (Label = "Login",Theme="@style/Theme.NoActionBar",
 		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,ScreenOrientation=ScreenOrientation.Portrait)]
 	public class Login : Activity
-	{
+    {
+        private string _userName;
+        private string _password;
+        private EditText _userNameTextView;
+        private EditText _userPasswordTextView;
 
-		protected override void OnCreate (Bundle bundle)
+        protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
 			Insights.HasPendingCrashReport += (sender, isStartupCrash) => {
@@ -38,45 +42,44 @@ namespace Pikabu
 			// Get our button from the layout resource,
 			// and attach an event to it
 			var button = FindViewById<Button> (Resource.Id.LoginButton);
-			
-			//text.Click += delegate {
-				//
+		    _userNameTextView = FindViewById<EditText>(Resource.Id.UserName);
+		    _userPasswordTextView = FindViewById<EditText>(Resource.Id.Password);
 
-			//};
-			var pref = PreferenceManager.GetDefaultSharedPreferences(this);
-			var userName = pref.GetString ("UserName", string.Empty);
-			var password = pref.GetString ("Password", string.Empty);
-			
+            //text.Click += delegate {
+            //
+
+            //};
+            var pref = PreferenceManager.GetDefaultSharedPreferences(this);
+			_userName = pref.GetString ("UserName", string.Empty);
+			_password = pref.GetString ("Password", string.Empty);
+            if (!string.IsNullOrEmpty(_userName))
+            {
+                _userNameTextView.Text = _userName;
+            }
+            if (!string.IsNullOrEmpty(_password))
+            {
+                _userPasswordTextView.Text = _password;
+            }
 
 
-			button.Click += delegate {
+            button.Click += delegate {
 				var prog = ProgressDialog.Show(this,"Авторизация","Выполняем вход...",false,false);
-
-				Task.Factory.StartNew(async() => {
+                
+                Task.Factory.StartNew(async() => {
 					try
 					{
 						WebClient.Initialize();
-                        if (string.IsNullOrEmpty(userName))
-                        {
-                            userName = FindViewById<EditText>(Resource.Id.UserName).Text.Trim();
-                        }
-                        else
-                        {
-                            FindViewById<EditText>(Resource.Id.UserName).Text = userName;
-                        }
-                        if (string.IsNullOrEmpty(password))
-                        {
-                            password = FindViewById<EditText>(Resource.Id.Password).Text.Trim();
-                        }
-                        else
-                        {
-                            FindViewById<EditText>(Resource.Id.Password).Text = password;
-                        }
+                        
+                            _userName = _userNameTextView.Text.Trim();
+                        
+                        
+                            _password = _userPasswordTextView.Text.Trim();
+                        
 
                         var result = await WebClient.Authorize(new LoginInfo(){
 							Mode = "login",
-							Password = password,
-							Username = userName,
+							Password = _password,
+							Username = _userName,
 							Remember = "0"
 						});
 						var message = string.Empty;
@@ -85,8 +88,8 @@ namespace Pikabu
 							//ISharedPreferences pref = Application.Context.GetSharedPreferences("UserInfo",FileCreationMode.Private);
 
 							var editor = pref.Edit();
-							editor.PutString("UserName",userName);
-							editor.PutString("Password",password);
+							editor.PutString("UserName",_userName);
+							editor.PutString("Password",_password);
 							editor.Apply();
 							var intent = new Intent (this, typeof(MainView));
                             StartActivity(intent);
