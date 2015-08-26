@@ -36,47 +36,49 @@ namespace Pikabu
 			if (acc.Length > 0) {
 				Insights.Identify (acc [0].Name, Insights.Traits.Email, acc [0].Name);
 			}
+			var i18 = new I18N.Other.CP1251 ();
+
 			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Login);
 
 			// Get our button from the layout resource,
 			// and attach an event to it
 			var button = FindViewById<Button> (Resource.Id.LoginButton);
-		    _userNameTextView = FindViewById<EditText>(Resource.Id.UserName);
-		    _userPasswordTextView = FindViewById<EditText>(Resource.Id.Password);
+			_userNameTextView = FindViewById<EditText>(Resource.Id.UserName);
+			_userPasswordTextView = FindViewById<EditText>(Resource.Id.Password);
 
-            //text.Click += delegate {
-            //
+			//text.Click += delegate {
+			//
 
-            //};
-            var pref = PreferenceManager.GetDefaultSharedPreferences(this);
+			//};
+			var pref = PreferenceManager.GetDefaultSharedPreferences(this);
 			_userName = pref.GetString ("UserName", string.Empty);
 			_password = pref.GetString ("Password", string.Empty);
-            if (!string.IsNullOrEmpty(_userName))
-            {
-                _userNameTextView.Text = _userName;
-            }
-            if (!string.IsNullOrEmpty(_password))
-            {
-                _userPasswordTextView.Text = _password;
-            }
+			if (!string.IsNullOrEmpty(_userName))
+			{
+				_userNameTextView.Text = _userName;
+			}
+			if (!string.IsNullOrEmpty(_password))
+			{
+				_userPasswordTextView.Text = _password;
+			}
 
 
-            button.Click += delegate {
+			button.Click += delegate {
 				var prog = ProgressDialog.Show(this,"Авторизация","Выполняем вход...",false,false);
-                
-                Task.Factory.StartNew(async() => {
+
+				Task.Factory.StartNew(async() => {
 					try
 					{
 						WebClient.Initialize();
-                        
-                            _userName = _userNameTextView.Text.Trim();
-                        
-                        
-                            _password = _userPasswordTextView.Text.Trim();
-                        
 
-                        var result = await WebClient.Authorize(new LoginInfo(){
+						_userName = _userNameTextView.Text.Trim();
+
+
+						_password = _userPasswordTextView.Text.Trim();
+
+
+						var result = await WebClient.Authorize(new LoginInfo(){
 							Mode = "login",
 							Password = _password,
 							Username = _userName,
@@ -92,8 +94,8 @@ namespace Pikabu
 							editor.PutString("Password",_password);
 							editor.Apply();
 							var intent = new Intent (this, typeof(MainView));
-                            StartActivity(intent);
-                            Finish();
+							StartActivity(intent);
+							Finish();
 						}
 						else
 						{
@@ -101,7 +103,7 @@ namespace Pikabu
 						}
 
 						RunOnUiThread(()=>{
-							
+
 							prog.Dismiss();
 							if(!string.IsNullOrEmpty(message))
 							{
@@ -122,5 +124,7 @@ namespace Pikabu
 				});
 			};
 		}
+
+
 	}
 }

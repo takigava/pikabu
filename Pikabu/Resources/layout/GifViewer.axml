@@ -4,8 +4,8 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <android.webkit.WebView
-        android:id="@+id/webViewImage"
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifViewImage"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center"

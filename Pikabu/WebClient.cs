@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Android.App;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
+using Android.Widget;
 
 namespace Pikabu
 {
@@ -105,7 +106,8 @@ namespace Pikabu
             using (var response = await request.GetResponseAsync())
             {
                 CookieContainer = request.CookieContainer;
-                using (var reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding(1251)))
+
+                using (var reader = new StreamReader(response.GetResponseStream(), Encoding.GetEncoding("windows-1251")))
                 {
                     var responseResult = reader.ReadToEnd();
 
@@ -132,7 +134,14 @@ namespace Pikabu
             foreach (var post in commonPosts)
             {
                 var postId = post.Attributes.FirstOrDefault(s => s.Name == "data-story-id");
+
                 if (postId == null) continue;
+				if (newPostList.Where (s => s.Id == int.Parse(postId.Value)).ToList ().Count > 1) {
+					Application.SynchronizationContext.Post (_ => {
+						Toast.MakeText(Application.Context,"Повтор",ToastLength.Short).Show();
+					}, null);
+					continue;
+				}
                 var newPost = new Post
                 {
                     Id = int.Parse(postId.Value)

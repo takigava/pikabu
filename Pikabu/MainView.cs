@@ -11,6 +11,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
+using Xamarin;
 
 namespace Pikabu
 {
@@ -68,6 +69,7 @@ namespace Pikabu
 			SupportActionBar.SetHomeButtonEnabled(true);
 			SupportActionBar.SetDisplayShowTitleEnabled(true);
 			SupportActionBar.SetDisplayHomeAsUpEnabled (true);
+
 			//SupportActionBar.NavigationMode = (int)ActionBarNavigationMode.Standard;
 
 			_mDrawerToggle.SyncState();
@@ -115,9 +117,11 @@ namespace Pikabu
 						_adapter.NotifyDataSetChanged();
 					});
 				}
-				catch (Exception)
+				catch (Exception ex)
 				{
 				    // ignored
+					Insights.Report(ex,new Dictionary<string,string>{{"Message",ex.Message}},Insights.Severity.Error);
+					Toast.MakeText(this,ex.Message,ToastLength.Short).Show();
 				}
 			});
 
@@ -135,7 +139,7 @@ namespace Pikabu
 		        "Left Item 1",
                 "Left Item 2"
 		    };
-		    _mLeftAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, _mLeftDataSet);
+			_mLeftAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, _mLeftDataSet);
 			_mLeftDrawer.Adapter = _mLeftAdapter;
 
 

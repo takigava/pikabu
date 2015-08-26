@@ -5,6 +5,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Webkit;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
+using System;
 
 namespace Pikabu
 {
@@ -40,7 +41,7 @@ namespace Pikabu
 		    //view.Settings.SetLayoutAlgorithm (WebSettings.LayoutAlgorithm.SingleColumn);
 		    //view.LoadUrl(imageUrl);
 		    var loadString =
-		        $"<!DOCTYPE html><html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=1\"><style>html, body, #wrapper {{height:100%; width: 100%; margin: 0; padding: 0; border: 0; background-color: #000000;}} #wrapper td {{ vertical-align: middle; text-align: center; }}</style></head><body><table id=\"wrapper\"><tr><td><img src=\"{text}\" style=\"width:100%\"/></td></tr></table></body></html>";
+				String.Format("<!DOCTYPE html><html><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=1\"><style>html, body, #wrapper {{height:100%; width: 100%; margin: 0; padding: 0; border: 0; background-color: #000000;}} #wrapper td {{ vertical-align: middle; text-align: center; }}</style></head><body><table id=\"wrapper\"><tr><td><img src=\"{0}\" style=\"width:100%\"/></td></tr></table></body></html>",text);
 		    //view.LoadUrl("http://cs6.pikabu.ru/post_img/2014/12/29/10/1419870935_2035225649.png");
 		    view.LoadData(loadString,"text/html","utf-8");
 
