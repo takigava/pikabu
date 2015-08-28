@@ -29,6 +29,8 @@ namespace Pikabu
 		public List<Tuple<string,string>> FormattedDescription{ get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+		public string GifUrl { get; set; }
+		public string VideoUrl{ get; set; }
 	}
 }
 

@@ -4,6 +4,8 @@
 	<string name="host">pikabu.ru</string>
 	<string name="origin">http://pikabu.ru/</string>
 	<string name="hot_url">http://pikabu.ru/hot?page=</string>
+	<string name="best_url">http://pikabu.ru/best?page=</string>
+	<string name="new_url">http://pikabu.ru/new?page=</string>
 	<string name="loginPath">ajax/ajax_login.php</string>
 	<string name="hot_title">Горячее</string>
 	<string name="best_title">Лучшее</string>

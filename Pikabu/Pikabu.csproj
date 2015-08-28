@@ -13,7 +13,7 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
     <AssemblyName>Pikabu</AssemblyName>
     <TargetFrameworkVersion>v5.1</TargetFrameworkVersion>
   </PropertyGroup>
@@ -90,9 +90,6 @@
     </Reference>
     <Reference Include="I18N" />
     <Reference Include="I18N.Other" />
-    <Reference Include="AndHUD">
-      <HintPath>..\Components\AndHUD-1.3.1\lib\android\AndHUD.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Resources\Resource.designer.cs" />
@@ -108,6 +105,8 @@
     <Compile Include="PostTextViewHolder.cs" />
     <Compile Include="ImageViewer.cs" />
     <Compile Include="GifViewer.cs" />
+    <Compile Include="VideoViewer.cs" />
+    <Compile Include="RoundedImageView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -115,6 +114,8 @@
     <None Include="Assets\AboutAssets.txt" />
     <None Include="packages.config" />
     <None Include="LICENSE.txt" />
+    <None Include="lib\arm64-v8a\libpl_droidsonroids_gif.so" />
+    <None Include="lib\arm64-v8a\libpl_droidsonroids_gif_surface.so" />
     <None Include="lib\armeabi\libpl_droidsonroids_gif.so" />
     <None Include="lib\armeabi\libpl_droidsonroids_gif_surface.so" />
     <None Include="lib\armeabi-v7a\libpl_droidsonroids_gif.so" />
@@ -203,6 +204,8 @@
     <AndroidResource Include="Resources\drawable\CardButton.xml" />
     <AndroidResource Include="Resources\layout\ImageViewer.axml" />
     <AndroidResource Include="Resources\layout\GifViewer.axml" />
+    <AndroidResource Include="Resources\layout\VideoViewer.axml" />
+    <AndroidResource Include="Resources\layout\DrawerListHeader.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Insights.1.10.6\build\MonoAndroid10\Xamarin.Insights.targets" Condition="Exists('..\packages\Xamarin.Insights.1.10.6\build\MonoAndroid10\Xamarin.Insights.targets')" />
@@ -217,10 +220,6 @@
     </XamarinComponentReference>
     <XamarinComponentReference Include="rivets">
       <Version>1.0.5.1</Version>
-      <Visible>False</Visible>
-    </XamarinComponentReference>
-    <XamarinComponentReference Include="AndHUD">
-      <Version>1.3.1</Version>
       <Visible>False</Visible>
     </XamarinComponentReference>
   </ItemGroup>
@@ -239,6 +238,7 @@
     <Folder Include="Resources\drawable\" />
     <Folder Include="Resources\menu\" />
     <Folder Include="lib\" />
+    <Folder Include="lib\arm64-v8a\" />
     <Folder Include="lib\armeabi\" />
     <Folder Include="lib\armeabi-v7a\" />
     <Folder Include="lib\x86\" />

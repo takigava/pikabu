@@ -90,7 +90,7 @@ namespace Pikabu
         {
             string result;
             var context = Application.Context;
-            var uri = new Uri(context.GetString(Resource.String.hot_url) + page);
+			var uri = new Uri(context.GetString(Resource.String.new_url) + page);
 
             var request = (HttpWebRequest)WebRequest.Create(uri);
             request.Headers.Add("Accept-Language", "en-US,en;q=0.8");
@@ -100,7 +100,7 @@ namespace Pikabu
             request.Timeout = 3000;
             request.CookieContainer = CookieContainer;
             request.Host = context.GetString(Resource.String.host);
-            request.Referer = context.GetString(Resource.String.origin) + "/hot";
+            request.Referer = context.GetString(Resource.String.origin) + "/new";
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
             using (var response = await request.GetResponseAsync())
@@ -130,7 +130,7 @@ namespace Pikabu
             var commonPosts = root.Descendants().Where(n => n.GetAttributeValue("class", "").Equals("b-story inner_wrap"));
 
             //_Adapter.NotifyDataSetChanged();
-
+			if(commonPosts.Count()<=0)return;
             foreach (var post in commonPosts)
             {
                 var postId = post.Attributes.FirstOrDefault(s => s.Name == "data-story-id");
@@ -218,9 +218,11 @@ namespace Pikabu
                         var gifNode = imageType.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Equals("b-gifx__player"));
                         if (gifNode != null)
                         {
+							var attr = imageType.Descendants().FirstOrDefault(s => s.GetAttributeValue("src", "").Contains("http://"));
                             var gifSource = gifNode.Attributes["data-src"].Value;
-                            newPost.PostType = PostType.Image;
-                            newPost.Url = gifSource;
+                            newPost.PostType = PostType.Gif;
+							newPost.GifUrl = gifSource;
+							newPost.Url = attr.Attributes["src"].Value;
                         }
                         else
                         {
@@ -247,6 +249,20 @@ namespace Pikabu
 
 
                     }
+
+					var videoType = post.Descendants().FirstOrDefault(s => s.GetAttributeValue("id", "").Equals("videoDiv" + newPost.Id));
+					if (videoType != null) {
+						var videoNode = videoType.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Equals("b-video"));
+						if (videoNode != null) {
+							newPost.PostType = PostType.Video;
+							newPost.VideoUrl = videoNode.Attributes ["data-url"].Value;
+							var imagePreviewNode = videoType.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Contains("b-video__preview"));
+							if (imagePreviewNode != null) {
+								var style = imagePreviewNode.Attributes ["style"].Value;
+								newPost.Url = style.Split ('(') [1].Split (')') [0].Replace("'","");
+							}
+						}
+					}
                     var time = header.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Equals("detailDate"));
                     if (time != null)
                         newPost.PostTime = time.InnerHtml;

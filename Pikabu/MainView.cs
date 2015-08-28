@@ -141,7 +141,7 @@ namespace Pikabu
 		    };
 			_mLeftAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, _mLeftDataSet);
 			_mLeftDrawer.Adapter = _mLeftAdapter;
-
+			_mLeftDrawer.AddHeaderView (LayoutInflater.Inflate (Resource.Layout.DrawerListHeader, null),null,false);
 
 
 

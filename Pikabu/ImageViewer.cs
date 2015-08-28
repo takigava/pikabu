@@ -21,7 +21,7 @@ namespace Pikabu
 			var mToolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
             
 			SetSupportActionBar(mToolbar);
-		    SupportActionBar.Title = string.Empty;
+		    SupportActionBar.Title = "";
             SupportActionBar.SetHomeButtonEnabled(true);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             

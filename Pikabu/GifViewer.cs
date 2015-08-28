@@ -9,7 +9,7 @@ using System;
 using PL.Droidsonroids.Gif;
 using System.ComponentModel;
 using System.Net;
-using AndroidHUD;
+
 using System.IO;
 
 namespace Pikabu
@@ -20,16 +20,17 @@ namespace Pikabu
 		private string _fileUrl = String.Empty;
 		private byte[] _rawGifBytes;
 		GifImageView _gifTextureView;
+		private ProgressDialog progress;
 		protected override void OnCreate (Bundle bundle)
 		{
 			base.OnCreate (bundle);
 
 			// Create your application here
-			SetContentView (Resource.Layout.ImageViewer);
+			SetContentView (Resource.Layout.GifViewer);
 			var mToolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
 
 			SetSupportActionBar(mToolbar);
-			SupportActionBar.Title = string.Empty;
+			SupportActionBar.Title = "";
 			SupportActionBar.SetHomeButtonEnabled(true);
 			SupportActionBar.SetDisplayHomeAsUpEnabled(true);
 
@@ -38,9 +39,15 @@ namespace Pikabu
 			if (_gifTextureView == null) return;
 			//String imageUrl = "file:///android_asset/anime.jpeg";
 			_fileUrl = Intent.GetStringExtra ("url") ?? string.Empty;
-
+			progress = new ProgressDialog (this);
+			progress.SetMessage ("Загрузка...");
+			progress.Show();
 			startDownload ();
 				
+		}
+		protected override void OnStart ()
+		{
+			base.OnStart ();
 		}
 		public override bool OnCreateOptionsMenu (IMenu menu)
 		{
@@ -75,15 +82,21 @@ namespace Pikabu
 			double totalBytes = double.Parse(e.TotalBytesToReceive.ToString());
 			double percentage = bytesIn / totalBytes * 100;
 			var pers = int.Parse(Math.Truncate(percentage).ToString());
-			AndHUD.Shared.Show(this, String.Format("Загрузка...{0}",pers), pers);
-
+			//AndHUD.Shared.Show(this, String.Format("Загрузка...{0}",pers), pers);
+			RunOnUiThread (() => {
+				//progress.(pers);	
+			});
 		}
 		void client_DownloadFileCompleted(object sender, DownloadDataCompletedEventArgs e)
 		{
 			_rawGifBytes = e.Result;
-			AndHUD.Shared.Dismiss(this);
+			//AndHUD.Shared.Dismiss(this);
 			GifDrawable gifFromBytes = new GifDrawable( _rawGifBytes );
+			RunOnUiThread(()=>{
+				progress.Dismiss();
+			});
 			_gifTextureView.SetImageDrawable (gifFromBytes);
+
 
 		}
 	}
