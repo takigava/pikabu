@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="drawerListIcons">
+        <item>@drawable/ic_message_100</item>
+        <item>@drawable/ic_page_overview_100</item>
+        <item>@drawable/ic_comments_filled_100</item>
+        <item>@drawable/ic_new_document_100</item>
+        <item>@drawable/ic_star_filled_100</item>
+        <item>@drawable/ic_give_way_100_up</item>
+        <item>@drawable/ic_settings_100</item>
+    </array>
+    <string-array name="drawerListItems">
+        <item>Сообщения</item>
+        <item>Моя лента</item>
+        <item>Мои комментарии</item>
+        <item>Мои посты</item>
+        <item>Избранное</item>
+        <item>Мои оценки</item>
+        <item>Настройки</item>
+    </string-array>
+</resources>

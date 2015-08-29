@@ -134,13 +134,11 @@ namespace Pikabu
 
 
 
-		    _mLeftDataSet = new List<string>
-		    {
-		        "Left Item 1",
-                "Left Item 2"
-		    };
-			_mLeftAdapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, _mLeftDataSet);
-			_mLeftDrawer.Adapter = _mLeftAdapter;
+			int [] prgmImages={Resource.Drawable.ic_camera_64,Resource.Drawable.ic_star_64,Resource.Drawable.ic_comments_64,Resource.Drawable.ic_menu_64};
+			String [] prgmNameList={"Сообщения","Избранное","Моя лента","Мои коммнтарии"};
+			var drawerAdapter = new DrawerListAdapter (this, Resource.Array.drawerListItems, Resource.Array.drawerListIcons, new DrawerListBadges{ Feed = 0, Messages = 0 });
+			_mLeftDrawer.Adapter = drawerAdapter;
+			_mLeftDrawer.DividerHeight = 0;
 			_mLeftDrawer.AddHeaderView (LayoutInflater.Inflate (Resource.Layout.DrawerListHeader, null),null,false);
 
 
