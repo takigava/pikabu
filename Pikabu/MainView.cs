@@ -12,6 +12,8 @@ using Android.Views;
 using Android.Widget;
 using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 using Xamarin;
+using Android.Content;
+using Android.Util;
 
 namespace Pikabu
 {
@@ -47,12 +49,36 @@ namespace Pikabu
 
 
 			_mToolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
-			_mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-			_mLeftDrawer = FindViewById<ListView>(Resource.Id.left_drawer);
 
+			// Inflate the "decor.xml"
+			//LayoutInflater inflater = (LayoutInflater) GetSystemService(Context.LayoutInflaterService);
+			//_mDrawerLayout = (DrawerLayout) inflater.Inflate(Resource.Layout.DrawerView, null); // "null" is important.
+
+			var view1 = LayoutInflater.From (this).Inflate (Resource.Layout.DrawerView, null, false);
+			// HACK: "steal" the first child of decor view
+			_mDrawerLayout = view1.FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+			ViewGroup decor = (ViewGroup) Window.DecorView;
+			View child = decor.GetChildAt(0);
+			decor.RemoveView(child);
+			_container = _mDrawerLayout.FindViewById<LinearLayout>(Resource.Id.fragmentContainer);
+			var container = (FrameLayout) _mDrawerLayout.FindViewById(Resource.Id.container); // This is the container we defined just now.
+			container.AddView(child);
+
+			// Make the drawer replace the first child
+			decor.AddView(_mDrawerLayout);
+
+			//_mDrawerLayout = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+			_mLeftDrawer = _mDrawerLayout.FindViewById<ListView>(Resource.Id.left_drawer);
+			DisplayMetrics displayMetrics = Resources.DisplayMetrics;
+			Android.Views.ViewGroup.LayoutParams lp = (Android.Views.ViewGroup.LayoutParams) _mLeftDrawer.LayoutParameters;
+			lp.Height = displayMetrics.HeightPixels;
+			_mLeftDrawer.LayoutParameters = lp;
+			//_mLeftDrawer.SetMinimumHeight (displayMetrics.HeightPixels+GetStatusBarHeight()+(int)(48*displayMetrics.Density));
 			//mToolbar.SystemUiVisibility =
 			//	(StatusBarVisibility)Android.Views.SystemUiFlags.LowProfile;
 
+			_mToolbar.SetPadding(0,GetStatusBarHeight (),0,0);
+			_mToolbar.LayoutParameters.Height = (int)(52*displayMetrics.Density)+GetStatusBarHeight ();
 			SetSupportActionBar(_mToolbar);
 
 
@@ -74,7 +100,7 @@ namespace Pikabu
 
 			_mDrawerToggle.SyncState();
 
-			_container = FindViewById<LinearLayout>(Resource.Id.fragmentContainer);
+			//_container = FindViewById<LinearLayout>(Resource.Id.fragmentContainer);
 
 
 			_posts = new List<Post>();
@@ -136,7 +162,7 @@ namespace Pikabu
 
 			int [] prgmImages={Resource.Drawable.ic_camera_64,Resource.Drawable.ic_star_64,Resource.Drawable.ic_comments_64,Resource.Drawable.ic_menu_64};
 			String [] prgmNameList={"Сообщения","Избранное","Моя лента","Мои коммнтарии"};
-			var drawerAdapter = new DrawerListAdapter (this, Resource.Array.drawerListItems, Resource.Array.drawerListIcons, new DrawerListBadges{ Feed = 0, Messages = 0 });
+			var drawerAdapter = new DrawerListAdapter (this, Resource.Array.drawerListItems, Resource.Array.drawerListIcons, new DrawerListBadges{ Feed = 0, Messages = 1 });
 			_mLeftDrawer.Adapter = drawerAdapter;
 			_mLeftDrawer.DividerHeight = 0;
 			_mLeftDrawer.AddHeaderView (LayoutInflater.Inflate (Resource.Layout.DrawerListHeader, null),null,false);
@@ -162,11 +188,11 @@ namespace Pikabu
 
 
 
-		//public override bool OnCreateOptionsMenu (IMenu menu)
-		//{
-		//	//MenuInflater.Inflate (Resource.Menu.action_menu, menu);
-		//	return base.OnCreateOptionsMenu (menu);
-		//}
+		public override bool OnCreateOptionsMenu (IMenu menu)
+		{
+			MenuInflater.Inflate (Resource.Menu.main_view_menu, menu);
+			return base.OnCreateOptionsMenu (menu);
+		}
 
 		protected override void OnSaveInstanceState (Bundle outState)
 		{
@@ -185,6 +211,60 @@ namespace Pikabu
 		{
 			base.OnConfigurationChanged (newConfig);
 			_mDrawerToggle.OnConfigurationChanged(newConfig);
+			/*if (newConfig.Orientation == Android.Content.Res.Orientation.Landscape) {
+				Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show();
+			} else if (newConfig.Orientation == Android.Content.Res.Orientation.Portrait){
+				Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show();
+			}*/
+			DisplayMetrics displayMetrics = Resources.DisplayMetrics;
+			if (_mLeftDrawer != null) {
+				
+				Android.Views.ViewGroup.LayoutParams lp = (Android.Views.ViewGroup.LayoutParams)_mLeftDrawer.LayoutParameters;
+				lp.Height = displayMetrics.HeightPixels;
+				_mLeftDrawer.LayoutParameters = lp;
+			}
+			if (_mToolbar != null) {
+				_mToolbar.SetPadding(0,GetStatusBarHeight (),0,0);
+				_mToolbar.LayoutParameters.Height = (int)(52*displayMetrics.Density)+GetStatusBarHeight ();
+			}
+			if (newConfig.Orientation == Android.Content.Res.Orientation.Landscape) {
+				Android.Views.ViewGroup.MarginLayoutParams lp = (Android.Views.ViewGroup.MarginLayoutParams)_container.LayoutParameters;
+				lp.RightMargin = GetNavBarWidth();
+				_container.LayoutParameters = lp;
+			} else if (newConfig.Orientation == Android.Content.Res.Orientation.Portrait){
+				Android.Views.ViewGroup.MarginLayoutParams lp = (Android.Views.ViewGroup.MarginLayoutParams)_container.LayoutParameters;
+				lp.RightMargin = 0;
+				_container.LayoutParameters = lp;
+			}
+		}
+		public override void OnBackPressed ()
+		{
+			if (_mDrawerLayout.IsDrawerOpen ((int)GravityFlags.Left)) {
+				_mDrawerLayout.CloseDrawers ();
+			} else {
+				base.OnBackPressed ();
+			}
+
+		}
+
+
+
+
+		public int GetStatusBarHeight() {
+			int result = 0;
+			int resourceId = Resources.GetIdentifier("status_bar_height", "dimen", "android");
+			if (resourceId > 0) {
+				result = Resources.GetDimensionPixelSize(resourceId);
+			}
+			return result;
+		}
+		public int GetNavBarWidth(){
+			int result = 0;
+			int resourceId = Resources.GetIdentifier("navigation_bar_width", "dimen", "android");
+			if (resourceId > 0) {
+				return Resources.GetDimensionPixelSize(resourceId);
+			}
+			return result;
 		}
 	}
 

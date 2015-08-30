@@ -6,11 +6,11 @@
     android:background="@drawable/rippleeffect">
     <ImageView
         android:id="@+id/drawerListIcon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginLeft="16dp"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginLeft="8dp"
         android:src="@drawable/ic_camera_64"
-        android:scaleType="center"
+        android:scaleType="centerInside"
         android:layout_centerVertical="true" />
     <TextView
         android:id="@+id/drawerListText"
@@ -18,7 +18,7 @@
         android:text="Настройки"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="72dp"
+        android:layout_marginLeft="64dp"
         android:layout_centerVertical="true"
         android:textColor="@color/activeProfile" />
     <TextView
@@ -27,7 +27,6 @@
         android:layout_height="24dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="5555"
         android:textSize="12sp"
         android:gravity="center"
         android:background="@drawable/drawerlistbadgebutton"

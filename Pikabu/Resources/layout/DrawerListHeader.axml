@@ -1,15 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="240dp"
-    android:layout_height="100dp">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="164dp"
+        android:src="@drawable/listheaderbackground"
+        android:cropToPadding="true"
+        android:scaleType="centerCrop" />
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="24dp">
         <Pikabu.RoundedImageView
             android:layout_height="60dp"
             android:layout_width="60dp"
-            android:id="@+id/profileImage" />
+            android:id="@+id/profileImage"
+            android:src="@drawable/profileicon"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="\@Takigawa"
+            android:layout_gravity="center_vertical"
+            android:paddingTop="16dp"
+            android:paddingLeft="30dp"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="114dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Рейтинг"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="16dp"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Подписчиков"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="80dp"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Комментариев"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="180dp"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="134dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="174К"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="16dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1784"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="80dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13К"
+            android:textColor="@android:color/white"
+            android:layout_marginLeft="180dp"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/rippleeffect"
+        android:layout_marginTop="164dp"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/drawerListIcon"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_fire_element_100"
+            android:scaleType="centerInside"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:id="@+id/drawerListText"
+            android:textSize="16sp"
+            android:text="Горячее"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/activeProfile" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/rippleeffect"
+        android:layout_marginTop="212dp"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/drawerListIcon"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_birthday_cake_100"
+            android:scaleType="centerInside"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:id="@+id/drawerListText"
+            android:textSize="16sp"
+            android:text="Лучшее"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/activeProfile" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/rippleeffect"
+        android:layout_marginTop="260dp"
+        android:clickable="true">
+        <ImageView
+            android:id="@+id/drawerListIcon"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/ic_towel_100"
+            android:scaleType="centerInside"
+            android:layout_centerVertical="true" />
+        <TextView
+            android:id="@+id/drawerListText"
+            android:textSize="16sp"
+            android:text="Свежее"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="64dp"
+            android:layout_centerVertical="true"
+            android:textColor="@color/activeProfile" />
+    </RelativeLayout>
+    <LinearLayout
+        android:background="@drawable/bordertop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="316dp"
+        android:layout_marginBottom="8dp" />
+</RelativeLayout>

@@ -8,30 +8,9 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginTop="24dp"
         android:background="?attr/colorPrimary"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
-        android:elevation="4dp" />
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    <!-- The Main Content View -->
-        <LinearLayout
-            android:id="@+id/fragmentContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="6dp"
-            android:paddingRight="6dp" />
-    <!-- The Left Navigation Drawer -->
-        <ListView
-            android:id="@+id/left_drawer"
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:choiceMode="singleChoice"
-            android:drawSelectorOnTop="true"
-            android:background="@android:color/white" />
-    </android.support.v4.widget.DrawerLayout>
+        android:elevation="8dp" />
+<!--android:layout_marginTop="24dp"-->
 </LinearLayout>

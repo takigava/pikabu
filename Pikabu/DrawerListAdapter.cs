@@ -34,8 +34,14 @@ namespace Pikabu
 			row.Click+= (object sender, EventArgs e) => {
 				Toast.MakeText(_Context,"23523",ToastLength.Short).Show();
 			};
-			if (position == 2) {
-				vh.Badge.Visibility = ViewStates.Invisible;
+			vh.Badge.Visibility = ViewStates.Invisible;
+			if (position == 0 && _badges.Messages>0) {
+				vh.Badge.Visibility = ViewStates.Visible;
+				vh.Badge.Text = ""+_badges.Messages;
+			}
+			if (position == 1 && _badges.Feed>0) {
+				vh.Badge.Visibility = ViewStates.Visible;
+				vh.Badge.Text = ""+_badges.Feed;
 			}
 			return row;
 		}

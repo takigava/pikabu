@@ -268,6 +268,23 @@
     <AndroidResource Include="Resources\drawable-xhdpi\ic_page_overview_100.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\ic_page_overview_100.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\ic_page_overview_100.png" />
+    <AndroidResource Include="Resources\drawable\listHeaderBackground.jpg" />
+    <AndroidResource Include="Resources\drawable\profileIcon.jpg" />
+    <AndroidResource Include="Resources\layout\DrawerView.xml" />
+    <AndroidResource Include="Resources\menu\main_view_menu.xml" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_action_refresh_64.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_action_refresh_64.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_action_refresh_64.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_action_refresh_64.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_action_refresh_64.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\ic_cached_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\ic_cached_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_cached_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_cached_white_36dp.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_cached_white_36dp.png" />
+    <AndroidResource Include="Resources\layout\CommentsView.axml" />
+    <AndroidResource Include="Resources\drawable\anime.png" />
+    <AndroidResource Include="Resources\drawable\anime2.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Insights.1.10.6\build\MonoAndroid10\Xamarin.Insights.targets" Condition="Exists('..\packages\Xamarin.Insights.1.10.6\build\MonoAndroid10\Xamarin.Insights.targets')" />

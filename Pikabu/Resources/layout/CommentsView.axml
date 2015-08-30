@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
-    <android.support.v7.widget.CardView xmlns:tools="http://schemas.android.com/tools"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00FFFFFF"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardUseCompatPadding="true"
-        card_view:cardElevation="2dp">
+        android:background="#00FFFFFF">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,18 +77,12 @@
                 android:id="@+id/postImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:maxHeight="400dp"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop" />
-            <LinearLayout
-                android:background="@drawable/bordertop"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp" />
+                android:src="@drawable/anime" />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -154,5 +145,11 @@
                     android:scaleType="centerInside" />
             </RelativeLayout>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
-</FrameLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:background="@drawable/bordertop"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp" />
+</LinearLayout>
