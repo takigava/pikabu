@@ -249,6 +249,7 @@ namespace Pikabu
 					//recyclerView.GetAdapter().NotifyDataSetChanged();
 					//_RecyclerView.GetAdapter().NotifyDataSetChanged();
 					RunOnUiThread(()=>{
+						_recyclerView.ScrollToPosition(0);
 						_adapter.NotifyDataSetChanged();
 					});
 				}

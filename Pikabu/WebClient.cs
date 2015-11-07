@@ -186,7 +186,7 @@ namespace Pikabu
                     Id = int.Parse(postId.Value)
                 };
                 var rating = 0;
-                var ratingNode = post.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Equals("b-rating__count curs"));
+				var ratingNode = post.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Equals("b-rating__count"));
                 var result = ratingNode != null && int.TryParse(ratingNode.InnerHtml, out rating);
                 newPost.Rating = result ? rating : 0;
                 var header = post.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Equals("b-story__main-header"));
