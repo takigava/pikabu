@@ -89,7 +89,8 @@ namespace Pikabu
 				this,							//Host Activity
 				_mDrawerLayout,					//DrawerLayout
 				Resource.String.profile,		//Opened Message
-				Resource.String.hot_title		//Closed Message
+				Resource.String.hot_title,		//Closed Message
+				pref
 			);
 
 			_mDrawerLayout.SetDrawerListener(_mDrawerToggle);
@@ -116,7 +117,7 @@ namespace Pikabu
 			//recyclerView.SetItemAnimator(new DefaultItemAnimator());
 			_recyclerView.SetLayoutManager(new LinearLayoutManager(this));
 			//recyclerView.AddItemDecoration(new DividerItemDecoration(Activity, DividerItemDecoration.HorizontalList));
-
+			_recyclerView.NestedScrollingEnabled = false;
 
 			//mEmails.Add(new Email() { Name = "tom", Subject = "Wanna hang out?", Message = "I'll be around tomorrow!!" });
 
@@ -132,6 +133,7 @@ namespace Pikabu
 					var newPostList = new List<Post>();
 					var editor = pref.Edit();
 					editor.PutString("CurrentPage","0");
+					editor.PutString("CurrentChanel",Resource.Id.hotRowLayout.ToString());
 					editor.Apply();
 					await WebClient.LoadPosts(newPostList,1);
 					_posts.AddRange(newPostList);
@@ -162,14 +164,46 @@ namespace Pikabu
 			_mLeftDrawer.Tag = 0;
 			//mRightDrawer.Tag = 1;
 
+			EventHandler headerClick = (object sender, EventArgs e) => {
+				var layout = (RelativeLayout)sender;
+				var currentChanel = String.Empty;
+				switch(layout.Id){
+				case Resource.Id.hotRowLayout:
+					currentChanel = Resource.Id.hotRowLayout.ToString();
 
+					break;
+				case Resource.Id.bestRowLayout:
+					currentChanel = Resource.Id.bestRowLayout.ToString();
+
+					break;
+				case Resource.Id.newRowLayout:
+					currentChanel = Resource.Id.newRowLayout.ToString();
+
+					break;
+					default:
+					currentChanel = Resource.Id.hotRowLayout.ToString();
+					break;
+				}
+				var editor = pref.Edit();
+				editor.PutString("CurrentChanel",currentChanel);
+				editor.Apply();
+				_mDrawerLayout.CloseDrawers ();
+				Reload();
+			};
 
 			int [] prgmImages={Resource.Drawable.ic_camera_64,Resource.Drawable.ic_star_64,Resource.Drawable.ic_comments_64,Resource.Drawable.ic_menu_64};
 			String [] prgmNameList={"Сообщения","Избранное","Моя лента","Мои коммнтарии"};
 			var drawerAdapter = new DrawerListAdapter (this, Resource.Array.drawerListItems, Resource.Array.drawerListIcons, new DrawerListBadges{ Feed = 0, Messages = 1 });
 			_mLeftDrawer.Adapter = drawerAdapter;
 			_mLeftDrawer.DividerHeight = 0;
-			_mLeftDrawer.AddHeaderView (LayoutInflater.Inflate (Resource.Layout.DrawerListHeader, null),null,false);
+			var drawerListHeader = LayoutInflater.Inflate (Resource.Layout.DrawerListHeader, null);
+			var hotRowLayout = drawerListHeader.FindViewById<RelativeLayout> (Resource.Id.hotRowLayout);
+			var bestRowLayout = drawerListHeader.FindViewById<RelativeLayout> (Resource.Id.bestRowLayout);
+			var newRowLayout = drawerListHeader.FindViewById<RelativeLayout> (Resource.Id.newRowLayout);
+			hotRowLayout.Click += headerClick;
+			bestRowLayout.Click += headerClick;
+			newRowLayout.Click += headerClick;
+			_mLeftDrawer.AddHeaderView (drawerListHeader,null,false);
 
 
 
@@ -184,34 +218,7 @@ namespace Pikabu
 		{		
 			switch (item.ItemId) {
 			case Resource.Id.reload:
-				Task.Factory.StartNew (async () => {
-					try{
-						var newPostList = new List<Post>();
-						var editor = pref.Edit();
-						editor.PutString("CurrentPage","0");
-						editor.Apply();
-						await WebClient.LoadPosts(newPostList,1);
-						_posts.Clear();
-						_posts.AddRange(newPostList);
-
-
-						//(_RecyclerView.GetAdapter()as PostViewAdapter)._Posts.AddRange(newPostList);
-
-						//_RecyclerView.GetAdapter().NotifyItemRangeInserted(_RecyclerView.GetAdapter().ItemCount,newPostList.Count);
-						//recyclerView.GetAdapter().HasStableIds = true;
-						//recyclerView.GetAdapter().NotifyDataSetChanged();
-						//_RecyclerView.GetAdapter().NotifyDataSetChanged();
-						RunOnUiThread(()=>{
-							_adapter.NotifyDataSetChanged();
-						});
-					}
-					catch (Exception ex)
-					{
-						// ignored
-						Insights.Report(ex,new Dictionary<string,string>{{"Message",ex.Message}},Insights.Severity.Error);
-						Toast.MakeText(this,ex.Message,ToastLength.Short).Show();
-					}
-				});
+				Reload ();
 				break;
 			default:
 				_mDrawerToggle.OnOptionsItemSelected (item);
@@ -223,7 +230,36 @@ namespace Pikabu
 		}
 
 
+		public void Reload(){
+			Task.Factory.StartNew (async () => {
+				try{
+					var newPostList = new List<Post>();
+					var editor = pref.Edit();
+					editor.PutString("CurrentPage","0");
+					editor.Apply();
+					await WebClient.LoadPosts(newPostList,1);
+					_posts.Clear();
+					_posts.AddRange(newPostList);
 
+
+					//(_RecyclerView.GetAdapter()as PostViewAdapter)._Posts.AddRange(newPostList);
+
+					//_RecyclerView.GetAdapter().NotifyItemRangeInserted(_RecyclerView.GetAdapter().ItemCount,newPostList.Count);
+					//recyclerView.GetAdapter().HasStableIds = true;
+					//recyclerView.GetAdapter().NotifyDataSetChanged();
+					//_RecyclerView.GetAdapter().NotifyDataSetChanged();
+					RunOnUiThread(()=>{
+						_adapter.NotifyDataSetChanged();
+					});
+				}
+				catch (Exception ex)
+				{
+					// ignored
+					Insights.Report(ex,new Dictionary<string,string>{{"Message",ex.Message}},Insights.Severity.Error);
+					Toast.MakeText(this,ex.Message,ToastLength.Short).Show();
+				}
+			});
+		}
 
 
 		public override bool OnCreateOptionsMenu (IMenu menu)

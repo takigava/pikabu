@@ -9,16 +9,20 @@ using Android.App;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Android.Widget;
+using Android.Content;
+using Android.Preferences;
 
 namespace Pikabu
 {
     public static class WebClient
     {
         public static CookieContainer CookieContainer;
+		private static ISharedPreferences pref;
 
         public static void Initialize()
         {
             CookieContainer = new CookieContainer();
+			pref = PreferenceManager.GetDefaultSharedPreferences(Application.Context);
         }
 
         public static async Task<LoginResponse> Authorize(LoginInfo loginInfo)
@@ -101,11 +105,31 @@ namespace Pikabu
             return result;
         }
 
-        public static async Task<string> GetHot(int page)
+        public static async Task<string> GetPosts(int page)
         {
             string result;
             var context = Application.Context;
-			var uri = new Uri(context.GetString(Resource.String.new_url) + page);
+			var chanelUrl = String.Empty;
+			var currentChanel = pref.GetString ("CurrentChanel", string.Empty);
+			if (!String.IsNullOrEmpty (currentChanel)) {
+				switch (Int32.Parse (currentChanel)) {
+				case Resource.Id.hotRowLayout:
+					chanelUrl = context.GetString (Resource.String.hot_url);
+					break;
+				case Resource.Id.bestRowLayout:
+					chanelUrl = context.GetString (Resource.String.best_url);
+					break;
+				case Resource.Id.newRowLayout:
+					chanelUrl = context.GetString (Resource.String.new_url);
+					break;
+				default:
+					break;
+				}
+			} else {
+				chanelUrl = context.GetString (Resource.String.hot_url);
+			}
+
+			var uri = new Uri (chanelUrl + page);
 
             var request = (HttpWebRequest)WebRequest.Create(uri);
             request.Headers.Add("Accept-Language", "en-US,en;q=0.8");
@@ -115,7 +139,7 @@ namespace Pikabu
             request.Timeout = 3000;
             request.CookieContainer = CookieContainer;
             request.Host = context.GetString(Resource.String.host);
-            request.Referer = context.GetString(Resource.String.origin) + "/new";
+            //request.Referer = context.GetString(Resource.String.origin) + "/new";
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
             using (var response = await request.GetResponseAsync())
@@ -135,7 +159,7 @@ namespace Pikabu
 
         public static async Task LoadPosts(List<Post> newPostList, int currentPage)
         {
-            var htmlPage = await GetHot(currentPage);
+            var htmlPage = await GetPosts(currentPage);
             var htmlDoc = new HtmlDocument
             {
                 OptionFixNestedTags = true

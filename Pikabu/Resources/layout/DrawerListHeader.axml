@@ -84,6 +84,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/hotRowLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -109,6 +110,7 @@
             android:textColor="@color/activeProfile" />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/bestRowLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -134,6 +136,7 @@
             android:textColor="@color/activeProfile" />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/newRowLayout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="48dp"

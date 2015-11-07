@@ -1576,14 +1576,14 @@ namespace Pikabu
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f07006a
-			public const int LoginButton = 2131165290;
+			// aapt resource value: 0x7f07006d
+			public const int LoginButton = 2131165293;
 			
-			// aapt resource value: 0x7f070069
-			public const int Password = 2131165289;
+			// aapt resource value: 0x7f07006c
+			public const int Password = 2131165292;
 			
-			// aapt resource value: 0x7f070068
-			public const int UserName = 2131165288;
+			// aapt resource value: 0x7f07006b
+			public const int UserName = 2131165291;
 			
 			// aapt resource value: 0x7f070041
 			public const int action_bar = 2131165249;
@@ -1636,6 +1636,9 @@ namespace Pikabu
 			// aapt resource value: 0x7f070014
 			public const int beginning = 2131165204;
 			
+			// aapt resource value: 0x7f070060
+			public const int bestRowLayout = 2131165280;
+			
 			// aapt resource value: 0x7f070037
 			public const int buttonPanel = 2131165239;
 			
@@ -1645,14 +1648,14 @@ namespace Pikabu
 			// aapt resource value: 0x7f070018
 			public const int collapseActionView = 2131165208;
 			
-			// aapt resource value: 0x7f070061
-			public const int container = 2131165281;
+			// aapt resource value: 0x7f070064
+			public const int container = 2131165284;
 			
 			// aapt resource value: 0x7f070032
 			public const int contentPanel = 2131165234;
 			
-			// aapt resource value: 0x7f070071
-			public const int copy_link = 2131165297;
+			// aapt resource value: 0x7f070074
+			public const int copy_link = 2131165300;
 			
 			// aapt resource value: 0x7f070036
 			public const int custom = 2131165238;
@@ -1672,17 +1675,17 @@ namespace Pikabu
 			// aapt resource value: 0x7f07000d
 			public const int disableHome = 2131165197;
 			
-			// aapt resource value: 0x7f07005f
-			public const int drawerListBadge = 2131165279;
-			
-			// aapt resource value: 0x7f07005d
-			public const int drawerListIcon = 2131165277;
+			// aapt resource value: 0x7f070062
+			public const int drawerListBadge = 2131165282;
 			
 			// aapt resource value: 0x7f07005e
-			public const int drawerListText = 2131165278;
+			public const int drawerListIcon = 2131165278;
 			
-			// aapt resource value: 0x7f070060
-			public const int drawer_layout = 2131165280;
+			// aapt resource value: 0x7f07005f
+			public const int drawerListText = 2131165279;
+			
+			// aapt resource value: 0x7f070063
+			public const int drawer_layout = 2131165283;
 			
 			// aapt resource value: 0x7f07001d
 			public const int dropdown = 2131165213;
@@ -1699,17 +1702,20 @@ namespace Pikabu
 			// aapt resource value: 0x7f070038
 			public const int expanded_menu = 2131165240;
 			
-			// aapt resource value: 0x7f070062
-			public const int fragmentContainer = 2131165282;
+			// aapt resource value: 0x7f070065
+			public const int fragmentContainer = 2131165285;
 			
-			// aapt resource value: 0x7f070064
-			public const int gifViewImage = 2131165284;
+			// aapt resource value: 0x7f070067
+			public const int gifViewImage = 2131165287;
 			
 			// aapt resource value: 0x7f070005
 			public const int home = 2131165189;
 			
 			// aapt resource value: 0x7f07000e
 			public const int homeAsUp = 2131165198;
+			
+			// aapt resource value: 0x7f07005d
+			public const int hotRowLayout = 2131165277;
 			
 			// aapt resource value: 0x7f07002c
 			public const int icon = 2131165228;
@@ -1720,8 +1726,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070029
 			public const int image = 2131165225;
 			
-			// aapt resource value: 0x7f070067
-			public const int imageView1 = 2131165287;
+			// aapt resource value: 0x7f07006a
+			public const int imageView1 = 2131165290;
 			
 			// aapt resource value: 0x7f07005b
 			public const int imageView2 = 2131165275;
@@ -1729,8 +1735,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070000
 			public const int item_touch_helper_previous_elevation = 2131165184;
 			
-			// aapt resource value: 0x7f070063
-			public const int left_drawer = 2131165283;
+			// aapt resource value: 0x7f070066
+			public const int left_drawer = 2131165286;
 			
 			// aapt resource value: 0x7f07000a
 			public const int listMode = 2131165194;
@@ -1744,11 +1750,14 @@ namespace Pikabu
 			// aapt resource value: 0x7f07001f
 			public const int multiply = 2131165215;
 			
-			// aapt resource value: 0x7f07006e
-			public const int myButton = 2131165294;
+			// aapt resource value: 0x7f070071
+			public const int myButton = 2131165297;
 			
 			// aapt resource value: 0x7f07001a
 			public const int never = 2131165210;
+			
+			// aapt resource value: 0x7f070061
+			public const int newRowLayout = 2131165281;
 			
 			// aapt resource value: 0x7f07000f
 			public const int none = 2131165199;
@@ -1777,14 +1786,14 @@ namespace Pikabu
 			// aapt resource value: 0x7f070056
 			public const int postImage = 2131165270;
 			
-			// aapt resource value: 0x7f07006c
-			public const int postRecycleView = 2131165292;
+			// aapt resource value: 0x7f07006f
+			public const int postRecycleView = 2131165295;
 			
 			// aapt resource value: 0x7f070055
 			public const int postTags = 2131165269;
 			
-			// aapt resource value: 0x7f07006d
-			public const int postText = 2131165293;
+			// aapt resource value: 0x7f070070
+			public const int postText = 2131165296;
 			
 			// aapt resource value: 0x7f070051
 			public const int postTime = 2131165265;
@@ -1804,11 +1813,11 @@ namespace Pikabu
 			// aapt resource value: 0x7f07003b
 			public const int radio = 2131165243;
 			
-			// aapt resource value: 0x7f070073
-			public const int reload = 2131165299;
+			// aapt resource value: 0x7f070076
+			public const int reload = 2131165302;
 			
-			// aapt resource value: 0x7f070070
-			public const int save_image = 2131165296;
+			// aapt resource value: 0x7f070073
+			public const int save_image = 2131165299;
 			
 			// aapt resource value: 0x7f070020
 			public const int screen = 2131165216;
@@ -1816,8 +1825,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070033
 			public const int scrollView = 2131165235;
 			
-			// aapt resource value: 0x7f070072
-			public const int search = 2131165298;
+			// aapt resource value: 0x7f070075
+			public const int search = 2131165301;
 			
 			// aapt resource value: 0x7f070045
 			public const int search_badge = 2131165253;
@@ -1864,8 +1873,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070012
 			public const int showTitle = 2131165202;
 			
-			// aapt resource value: 0x7f07006b
-			public const int splashImage = 2131165291;
+			// aapt resource value: 0x7f07006e
+			public const int splashImage = 2131165294;
 			
 			// aapt resource value: 0x7f070008
 			public const int split_action_bar = 2131165192;
@@ -1882,8 +1891,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f07004c
 			public const int submit_area = 2131165260;
 			
-			// aapt resource value: 0x7f07006f
-			public const int surface_view = 2131165295;
+			// aapt resource value: 0x7f070072
+			public const int surface_view = 2131165298;
 			
 			// aapt resource value: 0x7f07000c
 			public const int tabMode = 2131165196;
@@ -1903,8 +1912,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070030
 			public const int title_template = 2131165232;
 			
-			// aapt resource value: 0x7f070065
-			public const int toolbar = 2131165285;
+			// aapt resource value: 0x7f070068
+			public const int toolbar = 2131165288;
 			
 			// aapt resource value: 0x7f07002f
 			public const int topPanel = 2131165231;
@@ -1915,8 +1924,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f070013
 			public const int useLogo = 2131165203;
 			
-			// aapt resource value: 0x7f070066
-			public const int webViewImage = 2131165286;
+			// aapt resource value: 0x7f070069
+			public const int webViewImage = 2131165289;
 			
 			// aapt resource value: 0x7f07001b
 			public const int withText = 2131165211;
