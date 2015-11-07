@@ -11,6 +11,8 @@ using System.ComponentModel;
 using System.Net;
 
 using System.IO;
+using System.Threading.Tasks;
+using Android.Widget;
 
 namespace Pikabu
 {
@@ -61,6 +63,32 @@ namespace Pikabu
 			{
 			case Android.Resource.Id.Home:
 				OnBackPressed();
+				break;
+			case Resource.Id.save_image:
+				progress = new ProgressDialog (this);
+				progress.SetMessage ("Загрузка...");
+				progress.Show();
+				Task.Factory.StartNew (async () => {
+					try{
+
+						await WebClient.CreateRealFileAsync(_fileUrl);
+						RunOnUiThread(()=>{
+							progress.Dismiss();
+						});
+					}
+					catch (Exception ex)
+					{
+						RunOnUiThread(()=>{
+							progress.Dismiss();
+							Toast.MakeText(Application.Context,"Ошибка сохранения",ToastLength.Short).Show();
+						});
+					}
+				});
+				break;
+			case Resource.Id.copy_link:
+				ClipboardManager clipManager = (ClipboardManager)GetSystemService (ClipboardService);
+				ClipData clip = ClipData.NewPlainText ("url", _fileUrl);
+				clipManager.PrimaryClip = clip;
 				break;
 			default:
 				return base.OnOptionsItemSelected(item);

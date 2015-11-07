@@ -14,6 +14,7 @@ using SupportToolbar = Android.Support.V7.Widget.Toolbar;
 using Xamarin;
 using Android.Content;
 using Android.Util;
+using Android.Preferences;
 
 namespace Pikabu
 {
@@ -36,7 +37,7 @@ namespace Pikabu
 
 
 		//private RecyclerView mRecyclerView;
-
+		private ISharedPreferences pref;
 
 		protected override void OnCreate (Bundle bundle)
 		{
@@ -46,7 +47,7 @@ namespace Pikabu
 
 			SetContentView (Resource.Layout.MainView);
 
-
+			pref = PreferenceManager.GetDefaultSharedPreferences(this);
 
 			_mToolbar = FindViewById<SupportToolbar>(Resource.Id.toolbar);
 
@@ -129,6 +130,9 @@ namespace Pikabu
 			Task.Factory.StartNew (async () => {
 				try{
 					var newPostList = new List<Post>();
+					var editor = pref.Edit();
+					editor.PutString("CurrentPage","0");
+					editor.Apply();
 					await WebClient.LoadPosts(newPostList,1);
 					_posts.AddRange(newPostList);
 
@@ -178,8 +182,42 @@ namespace Pikabu
 
 		public override bool OnOptionsItemSelected (IMenuItem item)
 		{		
+			switch (item.ItemId) {
+			case Resource.Id.reload:
+				Task.Factory.StartNew (async () => {
+					try{
+						var newPostList = new List<Post>();
+						var editor = pref.Edit();
+						editor.PutString("CurrentPage","0");
+						editor.Apply();
+						await WebClient.LoadPosts(newPostList,1);
+						_posts.Clear();
+						_posts.AddRange(newPostList);
 
-				_mDrawerToggle.OnOptionsItemSelected(item);
+
+						//(_RecyclerView.GetAdapter()as PostViewAdapter)._Posts.AddRange(newPostList);
+
+						//_RecyclerView.GetAdapter().NotifyItemRangeInserted(_RecyclerView.GetAdapter().ItemCount,newPostList.Count);
+						//recyclerView.GetAdapter().HasStableIds = true;
+						//recyclerView.GetAdapter().NotifyDataSetChanged();
+						//_RecyclerView.GetAdapter().NotifyDataSetChanged();
+						RunOnUiThread(()=>{
+							_adapter.NotifyDataSetChanged();
+						});
+					}
+					catch (Exception ex)
+					{
+						// ignored
+						Insights.Report(ex,new Dictionary<string,string>{{"Message",ex.Message}},Insights.Severity.Error);
+						Toast.MakeText(this,ex.Message,ToastLength.Short).Show();
+					}
+				});
+				break;
+			default:
+				_mDrawerToggle.OnOptionsItemSelected (item);
+				break;
+			}
+				
 				return base.OnOptionsItemSelected (item);
 
 		}

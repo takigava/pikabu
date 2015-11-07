@@ -17,6 +17,7 @@ using Android.Graphics;
 using Android.Text.Style;
 using Xamarin;
 using Android.Graphics.Drawables;
+using Android.Preferences;
 
 
 namespace Pikabu
@@ -430,8 +431,10 @@ namespace Pikabu
 		private bool IsLoading = false;
 		private int currentPage=1;
 		private bool _messageShown = false;
+		private ISharedPreferences pref;
 		public override void OnScrolled (RecyclerView recyclerView, int dx, int dy)
 		{
+			pref = PreferenceManager.GetDefaultSharedPreferences(Application.Context);
 			LinearLayoutManager linearLayoutManager = (LinearLayoutManager)recyclerView.GetLayoutManager ();
 			int lastVisibleItem = linearLayoutManager.FindLastVisibleItemPosition();
 			int totalItemCount = recyclerView.GetAdapter().ItemCount;
@@ -439,7 +442,21 @@ namespace Pikabu
 			if (!IsLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
 				// End has been reached
 				// Do something
-				currentPage++;
+				var currPrefPage = pref.GetString ("CurrentPage", string.Empty);
+				if (!String.IsNullOrEmpty (currPrefPage)) {
+					if (Int32.Parse (currPrefPage) > 0) {
+						currentPage++;
+					} else {
+						currentPage = 2;
+					}
+				} else {
+					currentPage++;
+
+				}
+				var editor = pref.Edit();
+				editor.PutString("CurrentPage",currentPage.ToString());
+				editor.Apply();
+
 				IsLoading = true;
 				Task.Factory.StartNew (async () => {
 					

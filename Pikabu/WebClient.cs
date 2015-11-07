@@ -311,6 +311,43 @@ namespace Pikabu
 			}
 			return result;
 		}
+
+		public static async Task CreateRealFileAsync(string path)
+		{
+			// get hold of the file system
+
+			//IFolder rootFolder = FileSystem.Current.LocalStorage;
+
+			// create a folder, if one does not exist already
+			//IFolder folder = await rootFolder.CreateFolderAsync("Pikabu", CreationCollisionOption.OpenIfExists);
+
+			// create a file, overwriting any existing file
+			var fileName = path.Split('/').Last();
+			//IFile file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+			string path1 = Android.OS.Environment.ExternalStorageDirectory.Path;
+			path1 = Path.Combine(path1, Android.OS.Environment.DirectoryDownloads);
+			string filename = Path.Combine(path1, fileName);
+			// populate the file with some text
+			//await file.WriteAllTextAsync("Sample Text...");
+			//var test = await file.OpenAsync(FileAccess.ReadAndWrite);
+			var webClient = new System.Net.WebClient();
+			var bytes = webClient.DownloadData(new Uri(path));
+			if (bytes != null && bytes.Length > 0)
+			{
+				// do something with bytes (save etc)
+				System.IO.File.WriteAllBytes (filename,bytes);
+			}
+			//var fileContent = await WebClient.DownloadFile (path);
+			//if (fileContent.Length > 0) {
+			//test.Write (fileContent, 0, fileContent.Length);
+			//using (var streamWriter = new FileStream(filename,FileMode.CreateNew))
+			//{
+			//	streamWriter.Write(fileContent, 0, fileContent.Length);
+			//}
+			//}
+			//test.Close ();
+
+		}
     }
 	class UrlCheckWebClient : System.Net.WebClient
 	{
