@@ -146,32 +146,39 @@ namespace Pikabu
 				}
 				vh.PostTime.Text = _Posts[position].PostTime;
 				vh.Title.Text = _Posts[position].Title;
-				if(_Posts[position].FormattedDescription!=null && _Posts[position].FormattedDescription.Count>0){
-					SpannableStringBuilder descriptionBulder = new SpannableStringBuilder();
-					Color descTextColorDarkGray = context.Resources.GetColor(Resource.Color.darkGray);
-					Color descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
-
-					foreach(var des in _Posts[position].FormattedDescription){
-						if(des.Item1 == "text"){
-							SpannableString tag1 = new SpannableString(des.Item2);
-
-							tag1.SetSpan(new ForegroundColorSpan(descTextColorGray), 0, tag1.Length(), SpanTypes.ExclusiveExclusive);
-							descriptionBulder.Append(tag1);
-						}
-						if(des.Item1 == "textLink"){
-							SpannableString tag2 = new SpannableString(des.Item2);
-
-							tag2.SetSpan(new ForegroundColorSpan(descTextColorDarkGray), 0, tag2.Length(), SpanTypes.ExclusiveExclusive);
-							descriptionBulder.Append(tag2);
-						}
-					}
-					if(descriptionBulder.Count()>0){
-						vh.Description.SetText(descriptionBulder,TextView.BufferType.Spannable);
-					}
+				if(_Posts[position].Description!=null && !String.IsNullOrEmpty(_Posts[position].Description.ToString())){
+					vh.Description.Text = _Posts[position].Description.ToString();
+					vh.Description.Visibility = ViewStates.Visible;
 				}else{
+					vh.Description.Text = String.Empty;
 					vh.Description.Visibility = ViewStates.Gone;
-
 				}
+//				if(_Posts[position].FormattedDescription!=null && _Posts[position].FormattedDescription.Count>0){
+//					SpannableStringBuilder descriptionBulder = new SpannableStringBuilder();
+//					Color descTextColorDarkGray = context.Resources.GetColor(Resource.Color.darkGray);
+//					Color descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
+//
+//					foreach(var des in _Posts[position].FormattedDescription){
+//						if(des.Item1 == "text"){
+//							SpannableString tag1 = new SpannableString(des.Item2);
+//
+//							tag1.SetSpan(new ForegroundColorSpan(descTextColorGray), 0, tag1.Length(), SpanTypes.ExclusiveExclusive);
+//							descriptionBulder.Append(tag1);
+//						}
+//						if(des.Item1 == "textLink"){
+//							SpannableString tag2 = new SpannableString(des.Item2);
+//
+//							tag2.SetSpan(new ForegroundColorSpan(descTextColorDarkGray), 0, tag2.Length(), SpanTypes.ExclusiveExclusive);
+//							descriptionBulder.Append(tag2);
+//						}
+//					}
+//					if(descriptionBulder.Count()>0){
+//						vh.Description.SetText(descriptionBulder,TextView.BufferType.Spannable);
+//					}
+//				}else{
+//					vh.Description.Visibility = ViewStates.Gone;
+//
+//				}
 				//vh._Description.Text = _Posts[position].Description;
 				SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
 				Color textColor = context.Resources.GetColor(Resource.Color.mainGreen);
@@ -218,38 +225,45 @@ namespace Pikabu
 				}
 				vh.PostTime.Text = _Posts[position].PostTime;
 				vh.Title.Text = _Posts[position].Title;
-				if(_Posts[position].FormattedDescription!=null && _Posts[position].FormattedDescription.Count>0){
-					SpannableStringBuilder descriptionBulder = new SpannableStringBuilder();
-					Color descTextColorDarkGray = context.Resources.GetColor(Resource.Color.darkGray);
-					Color descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
-
-					foreach(var des in _Posts[position].FormattedDescription){
-						if(des.Item1 == "text"){
-							SpannableString tag1 = new SpannableString(des.Item2);
-
-							tag1.SetSpan(new ForegroundColorSpan(descTextColorGray), 0, tag1.Length(), SpanTypes.ExclusiveExclusive);
-							descriptionBulder.Append(tag1);
-						}
-						if(des.Item1 == "textLink"){
-							SpannableString tag2 = new SpannableString(des.Item2);
-
-							tag2.SetSpan(new ForegroundColorSpan(descTextColorDarkGray), 0, tag2.Length(), SpanTypes.ExclusiveExclusive);
-							descriptionBulder.Append(tag2);
-						}
-					}
-					if(descriptionBulder.Count()>0){
-						//vh.Description.TextFormatted = descriptionBulder;
-						vh.Description.SetText(descriptionBulder,TextView.BufferType.Spannable);
-					}
+				if(_Posts[position].Description!=null && !String.IsNullOrEmpty(_Posts[position].Description.ToString())){
+					vh.Description.Text = _Posts[position].Description.ToString();
+					vh.Description.Visibility = ViewStates.Visible;
 				}else{
-					vh.Description.Visibility = ViewStates.Invisible;
-					vh.Description.Text = null;
+					vh.Description.Text = String.Empty;
+					vh.Description.Visibility = ViewStates.Gone;
 				}
+//				if(_Posts[position].FormattedDescription!=null && _Posts[position].FormattedDescription.Count>0){
+//					SpannableStringBuilder descriptionBulder = new SpannableStringBuilder();
+//					Color descTextColorDarkGray = context.Resources.GetColor(Resource.Color.darkGray);
+//					Color descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
+//
+//					foreach(var des in _Posts[position].FormattedDescription){
+//						if(des.Item1 == "text"){
+//							SpannableString tag1 = new SpannableString(des.Item2);
+//
+//							tag1.SetSpan(new ForegroundColorSpan(descTextColorGray), 0, tag1.Length(), SpanTypes.ExclusiveExclusive);
+//							descriptionBulder.Append(tag1);
+//						}
+//						if(des.Item1 == "textLink"){
+//							SpannableString tag2 = new SpannableString(des.Item2);
+//
+//							tag2.SetSpan(new ForegroundColorSpan(descTextColorDarkGray), 0, tag2.Length(), SpanTypes.ExclusiveExclusive);
+//							descriptionBulder.Append(tag2);
+//						}
+//					}
+//					if(descriptionBulder.Count()>0){
+//						//vh.Description.TextFormatted = descriptionBulder;
+//						vh.Description.SetText(descriptionBulder,TextView.BufferType.Spannable);
+//					}
+//				}else{
+//					vh.Description.Visibility = ViewStates.Invisible;
+//					vh.Description.Text = null;
+//				}
 				//vh._Description.Text = _Posts[position].Description;
 				//vh._Description.Text = _Posts[position].Description;
 				SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
 				Color textColor = context.Resources.GetColor(Resource.Color.mainGreen);
-
+				var tagsBuilder = new StringBuilder();
 
 				foreach (var tag in _Posts[position].Tags) {
 					SpannableString tag1 = new SpannableString("#"+tag);
@@ -260,9 +274,11 @@ namespace Pikabu
 					//SpannableString tag2 = new SpannableString(" ");
 					//stringBuilder.Append(tag2);
 					//stringBuilder.SetSpan(new TagSpan(backgroundColor, backgroundColor), stringBuilder.Length() - tag2.Length(), stringBuilder.Length(), SpanTypes.ExclusiveExclusive);
+					//tagsBuilder.Append("#"+tag+" ");
 				}
 
 				vh.Tags.SetText(stringBuilder,TextView.BufferType.Spannable);
+				//vh.Tags.Text = tagsBuilder.ToString();
 				//vh.Tags.TextFormatted = stringBuilder;
 				vh.Comments.Text = _Posts[position].Comments.ToString();
 				vh.Image.Click -= videoHandler;
@@ -287,6 +303,7 @@ namespace Pikabu
 				if (vh.Image != null) {
 					vh.Image.SetTag (Resource.String.currentPosition, vh.AdapterPosition.ToString ());
 					vh.Image.SetTag (Resource.String.imageUrl, _Posts [vh.AdapterPosition].Url);
+					vh.Image.SetTag (Resource.String.isbiggeravailable,_Posts [vh.AdapterPosition].IsBiggerAvailable);
 
 						vh.Image.Click -= videoHandler;
 						vh.Image.Click -= gifHandler;
@@ -366,7 +383,13 @@ namespace Pikabu
 			var image = sender as ImageView;
 			//Rivets.AppLinks.Navigator.Navigate("http://static.kremlin.ru/media/events/video/ru/video_high/QVrS7FkL9R89xxB9frxsAtnvu9ANx6Od.mp4");
 			Intent intent = new Intent (_Context, typeof(ImageViewer));
-			intent.PutExtra ("url", image.GetTag (Resource.String.imageUrl).ToString ());
+			if(bool.Parse(image.GetTag (Resource.String.isbiggeravailable).ToString())){
+				var url = image.GetTag (Resource.String.imageUrl).ToString ().Replace("post_img/","post_img/big/");
+				intent.PutExtra ("url", url);
+			}else{
+				intent.PutExtra ("url", image.GetTag (Resource.String.imageUrl).ToString ());
+			}
+
 			_Context.StartActivity (intent);
 
 

@@ -27,13 +27,28 @@ namespace Pikabu
             var context = Application.Context;
             var uri = new Uri(context.GetString(Resource.String.origin));
             var request = (HttpWebRequest)WebRequest.Create(uri);
-            request.ContentType = "text/html";
+			request.Headers.Add("Accept-Language", "en-US,en;q=0.8");
+			request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
+			request.ContentType = "text/html; charset=windows-1251";
             request.Method = "GET";
             request.Timeout = 3000;
+
+
+			//request.Headers.Add("Origin", context.GetString(Resource.String.origin));
+			//request.Host = context.GetString(Resource.String.host);
+			//request.Referer = context.GetString(Resource.String.origin);
+			//request.UserAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.153 Safari/537.36";
+			request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
             request.CookieContainer = CookieContainer;
 
-            using (await request.GetResponseAsync())
+			using (var response = await request.GetResponseAsync())
             {
+				var temp = (HttpWebResponse)response;
+				using (var reader = new StreamReader(response.GetResponseStream()))
+				{
+					var responseResult = reader.ReadToEnd();
+
+				}
                 CookieContainer = request.CookieContainer;
             }
 
@@ -172,35 +187,35 @@ namespace Pikabu
                     if (desc != null)
                     {
                         //newPost.Description = String.Empty;
-                        newPost.Description = desc.InnerText;
-                        newPost.FormattedDescription = new List<Tuple<string, string>>();
-                        if (desc.ChildNodes.Count > 1)
-                        {
-
-                            foreach (var d in desc.ChildNodes)
-                            {
-                                if (d.Name == "a")
-                                {
-                                    //newPost.FormattedDescription.Add("textLink",d.InnerText);
-                                    //newPost.FormattedDescription.Add("url",
-                                    newPost.FormattedDescription.Add(new Tuple<string, string>("textLink", d.InnerText));
-                                    newPost.FormattedDescription.Add(new Tuple<string, string>("url", d.Attributes["href"].Value));
-                                }
-                                else
-                                {
-                                    //newPost.FormattedDescription.Add("text",d.InnerHtml);
-                                    newPost.FormattedDescription.Add(new Tuple<string, string>("text", d.InnerText));
-                                }
-                                if (d.Name == "#text")
-                                {
-                                    newPost.FormattedDescription.Add(new Tuple<string, string>("text", d.InnerText));
-                                }
-                            }
-                        }
-                        else
-                        {
-                            newPost.FormattedDescription.Add(new Tuple<string, string>("text", desc.InnerText));
-                        }
+						newPost.Description = desc.InnerHtml;
+//                        newPost.FormattedDescription = new List<Tuple<string, string>>();
+//                        if (desc.ChildNodes.Count > 1)
+//                        {
+//
+//                            foreach (var d in desc.ChildNodes)
+//                            {
+//                                if (d.Name == "a")
+//                                {
+//                                    //newPost.FormattedDescription.Add("textLink",d.InnerText);
+//                                    //newPost.FormattedDescription.Add("url",
+//                                    newPost.FormattedDescription.Add(new Tuple<string, string>("textLink", d.InnerText));
+//                                    newPost.FormattedDescription.Add(new Tuple<string, string>("url", d.Attributes["href"].Value));
+//                                }
+//                                else
+//                                {
+//                                    //newPost.FormattedDescription.Add("text",d.InnerHtml);
+//                                    newPost.FormattedDescription.Add(new Tuple<string, string>("text", d.InnerText));
+//                                }
+//                                if (d.Name == "#text")
+//                                {
+//                                    newPost.FormattedDescription.Add(new Tuple<string, string>("text", d.InnerText));
+//                                }
+//                            }
+//                        }
+//                        else
+//                        {
+//                            newPost.FormattedDescription.Add(new Tuple<string, string>("text", desc.InnerText));
+//                        }
                     }
 
                     newPost.Tags = header.Descendants().Where(s => s.GetAttributeValue("class", "").Equals("tag no_ch")).Select(s => s.InnerHtml).ToList();
@@ -244,6 +259,7 @@ namespace Pikabu
                                 newPost.Url = attr.Attributes["src"].Value;
                                 newPost.Width = int.Parse(attr.Attributes["width"].Value);
                                 newPost.Height = int.Parse(attr.Attributes["height"].Value);
+								newPost.IsBiggerAvailable = attr.Attributes ["isbiggeravailable"].Value=="1"?true:false;
                             }
                         }
 
@@ -272,7 +288,43 @@ namespace Pikabu
                 //(recyclerView.GetAdapter()as PostViewAdapter).NotifyItemInserted((recyclerView.GetAdapter()as PostViewAdapter)._Posts.Count);
             }
         }
+
+		public static async Task<byte[]> DownloadFile(string path){
+			var result = new byte[0];
+			try{
+				HttpWebRequest request = (HttpWebRequest)WebRequest.Create(path);
+				request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+				request.Method = "GET";
+				request.Timeout = 3000;
+				if (request != null){
+					var response = request.GetResponse();
+					if (response != null){
+						var remoteStream = response.GetResponseStream();
+						result = new byte[remoteStream.Length];
+						await remoteStream.ReadAsync(result,0,(int)remoteStream.Length);
+						remoteStream.Close();
+						response.Close();
+					}
+				}
+			}
+			catch(Exception ex){
+			}
+			return result;
+		}
     }
+	class UrlCheckWebClient : System.Net.WebClient
+	{
+		public bool HeadOnly { get; set; }
+		protected override WebRequest GetWebRequest(Uri address)
+		{
+			WebRequest req = base.GetWebRequest(address);
+			if (HeadOnly && req.Method == "GET")
+			{
+				req.Method = "HEAD";
+			}
+			return req;
+		}
+	}
 
     public class LoginInfo
     {

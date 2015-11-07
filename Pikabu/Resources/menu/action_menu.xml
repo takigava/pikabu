@@ -6,12 +6,12 @@
 	
 
 	<item
-      android:id="@+id/add"
+      android:id="@+id/save_image"
       android:title="Сохранить"
       android:icon="@drawable/ic_search_64"
       android:showAsAction="always"/>
 
-	<item android:id="@+id/action_fragment1"
+	<item android:id="@+id/copy_link"
 		android:title="Копировать ссылку"
 		myapp:showAsAction="never"/>
 

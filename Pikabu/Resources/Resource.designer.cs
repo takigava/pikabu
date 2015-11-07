@@ -26,6 +26,8 @@ namespace Pikabu
 		
 		public static void UpdateIdValues()
 		{
+			global::PCLStorage.Resource.String.ApplicationName = global::Pikabu.Resource.String.ApplicationName;
+			global::PCLStorage.Resource.String.Hello = global::Pikabu.Resource.String.Hello;
 		}
 		
 		public partial class Animation
@@ -1607,9 +1609,6 @@ namespace Pikabu
 			// aapt resource value: 0x7f070042
 			public const int action_context_bar = 2131165250;
 			
-			// aapt resource value: 0x7f070071
-			public const int action_fragment1 = 2131165297;
-			
 			// aapt resource value: 0x7f070003
 			public const int action_menu_divider = 2131165187;
 			
@@ -1627,9 +1626,6 @@ namespace Pikabu
 			
 			// aapt resource value: 0x7f070027
 			public const int activity_chooser_view_content = 2131165223;
-			
-			// aapt resource value: 0x7f070070
-			public const int add = 2131165296;
 			
 			// aapt resource value: 0x7f070031
 			public const int alertTitle = 2131165233;
@@ -1654,6 +1650,9 @@ namespace Pikabu
 			
 			// aapt resource value: 0x7f070032
 			public const int contentPanel = 2131165234;
+			
+			// aapt resource value: 0x7f070071
+			public const int copy_link = 2131165297;
 			
 			// aapt resource value: 0x7f070036
 			public const int custom = 2131165238;
@@ -1807,6 +1806,9 @@ namespace Pikabu
 			
 			// aapt resource value: 0x7f070073
 			public const int reload = 2131165299;
+			
+			// aapt resource value: 0x7f070070
+			public const int save_image = 2131165296;
 			
 			// aapt resource value: 0x7f070020
 			public const int screen = 2131165216;
@@ -2131,6 +2133,12 @@ namespace Pikabu
 		public partial class String
 		{
 			
+			// aapt resource value: 0x7f0c0012
+			public const int ApplicationName = 2131492882;
+			
+			// aapt resource value: 0x7f0c0011
+			public const int Hello = 2131492881;
+			
 			// aapt resource value: 0x7f0c0000
 			public const int abc_action_bar_home_description = 2131492864;
 			
@@ -2182,44 +2190,47 @@ namespace Pikabu
 			// aapt resource value: 0x7f0c0010
 			public const int abc_toolbar_collapse_description = 2131492880;
 			
-			// aapt resource value: 0x7f0c0011
-			public const int app_name = 2131492881;
-			
-			// aapt resource value: 0x7f0c0019
-			public const int best_title = 2131492889;
-			
-			// aapt resource value: 0x7f0c0015
-			public const int best_url = 2131492885;
-			
-			// aapt resource value: 0x7f0c001c
-			public const int currentPosition = 2131492892;
-			
-			// aapt resource value: 0x7f0c0012
-			public const int host = 2131492882;
-			
-			// aapt resource value: 0x7f0c0018
-			public const int hot_title = 2131492888;
-			
-			// aapt resource value: 0x7f0c0014
-			public const int hot_url = 2131492884;
-			
-			// aapt resource value: 0x7f0c001d
-			public const int imageUrl = 2131492893;
-			
-			// aapt resource value: 0x7f0c0017
-			public const int loginPath = 2131492887;
-			
-			// aapt resource value: 0x7f0c001a
-			public const int new_title = 2131492890;
-			
-			// aapt resource value: 0x7f0c0016
-			public const int new_url = 2131492886;
-			
 			// aapt resource value: 0x7f0c0013
-			public const int origin = 2131492883;
+			public const int app_name = 2131492883;
 			
 			// aapt resource value: 0x7f0c001b
-			public const int profile = 2131492891;
+			public const int best_title = 2131492891;
+			
+			// aapt resource value: 0x7f0c0017
+			public const int best_url = 2131492887;
+			
+			// aapt resource value: 0x7f0c001e
+			public const int currentPosition = 2131492894;
+			
+			// aapt resource value: 0x7f0c0014
+			public const int host = 2131492884;
+			
+			// aapt resource value: 0x7f0c001a
+			public const int hot_title = 2131492890;
+			
+			// aapt resource value: 0x7f0c0016
+			public const int hot_url = 2131492886;
+			
+			// aapt resource value: 0x7f0c001f
+			public const int imageUrl = 2131492895;
+			
+			// aapt resource value: 0x7f0c0020
+			public const int isbiggeravailable = 2131492896;
+			
+			// aapt resource value: 0x7f0c0019
+			public const int loginPath = 2131492889;
+			
+			// aapt resource value: 0x7f0c001c
+			public const int new_title = 2131492892;
+			
+			// aapt resource value: 0x7f0c0018
+			public const int new_url = 2131492888;
+			
+			// aapt resource value: 0x7f0c0015
+			public const int origin = 2131492885;
+			
+			// aapt resource value: 0x7f0c001d
+			public const int profile = 2131492893;
 			
 			static String()
 			{

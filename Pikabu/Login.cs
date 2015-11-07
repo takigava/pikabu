@@ -18,8 +18,8 @@ namespace Pikabu
 		ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,ScreenOrientation=ScreenOrientation.Portrait)]
 	public class Login : Activity
     {
-        private string _userName;
-        private string _password;
+		public string _userName = String.Empty;
+		public string _password= String.Empty;
         private EditText _userNameTextView;
         private EditText _userPasswordTextView;
 

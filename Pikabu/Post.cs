@@ -31,6 +31,7 @@ namespace Pikabu
         public int Height { get; set; }
 		public string GifUrl { get; set; }
 		public string VideoUrl{ get; set; }
+		public bool IsBiggerAvailable{ get; set; }
 	}
 }
 

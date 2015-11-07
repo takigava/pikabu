@@ -13,4 +13,5 @@
 	<string name="profile">Профиль</string>
 	<string name="currentPosition">0</string>
 	<string name="imageUrl"></string>
+	<string name="isbiggeravailable"></string>
 </resources>
