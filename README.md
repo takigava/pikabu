@@ -1,4 +1,5 @@
-# pikabu [![Build status](https://ci.appveyor.com/api/projects/status/ffawgx4uewti7vix?svg=true)](https://ci.appveyor.com/project/takigava/pikabu)
+# pikabu 
+
 Android client for pikabu.ru website.
 
 # Лицензия
