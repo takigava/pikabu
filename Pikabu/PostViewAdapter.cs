@@ -58,7 +58,9 @@ namespace Pikabu
 				return Resource.Layout.PostImageCard;
 			case PostType.Video:
 				return Resource.Layout.PostImageCard;
-				default:
+			case PostType.MultiImage:
+				return Resource.Layout.PostMultiImageCard;
+			default:
 				return Resource.Layout.PostTextCard;
 			}
 		}

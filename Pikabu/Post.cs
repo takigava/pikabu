@@ -10,7 +10,8 @@ namespace Pikabu
 		Text =1,
 		Gif =2,
 		Video =3,
-		Coub =4
+		Coub =4,
+		MultiImage=5
 	}
 	public class Post
 	{
@@ -32,6 +33,7 @@ namespace Pikabu
 		public string GifUrl { get; set; }
 		public string VideoUrl{ get; set; }
 		public bool IsBiggerAvailable{ get; set; }
+		public List<string> Images { get; set; }
 	}
 }
 

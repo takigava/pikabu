@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="24dp">
-        <Pikabu.RoundedImageView
+        <Pikabu.CircleImageView
             android:layout_height="60dp"
             android:layout_width="60dp"
             android:id="@+id/profileImage"
