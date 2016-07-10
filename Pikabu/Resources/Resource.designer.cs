@@ -3255,23 +3255,23 @@ namespace Pikabu
 			// aapt resource value: 0x7f0f002e
 			public const int always = 2131689518;
 			
-			// aapt resource value: 0x7f0f0113
-			public const int background_color = 2131689747;
+			// aapt resource value: 0x7f0f0114
+			public const int background_color = 2131689748;
 			
 			// aapt resource value: 0x7f0f00d3
 			public const int background_container = 2131689683;
 			
+			// aapt resource value: 0x7f0f0117
+			public const int background_dim = 2131689751;
+			
 			// aapt resource value: 0x7f0f0116
-			public const int background_dim = 2131689750;
+			public const int background_imagein = 2131689750;
 			
 			// aapt resource value: 0x7f0f0115
-			public const int background_imagein = 2131689749;
+			public const int background_imageout = 2131689749;
 			
-			// aapt resource value: 0x7f0f0114
-			public const int background_imageout = 2131689748;
-			
-			// aapt resource value: 0x7f0f0112
-			public const int background_theme = 2131689746;
+			// aapt resource value: 0x7f0f0113
+			public const int background_theme = 2131689747;
 			
 			// aapt resource value: 0x7f0f002b
 			public const int beginning = 2131689515;
@@ -3378,8 +3378,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f0f00e8
 			public const int controls_dock = 2131689704;
 			
-			// aapt resource value: 0x7f0f0118
-			public const int copy_link = 2131689752;
+			// aapt resource value: 0x7f0f0119
+			public const int copy_link = 2131689753;
 			
 			// aapt resource value: 0x7f0f00e3
 			public const int current_time = 2131689699;
@@ -3747,8 +3747,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f0f0026
 			public const int multiply = 2131689510;
 			
-			// aapt resource value: 0x7f0f0110
-			public const int myButton = 2131689744;
+			// aapt resource value: 0x7f0f0111
+			public const int myButton = 2131689745;
 			
 			// aapt resource value: 0x7f0f00d7
 			public const int navigator_container = 2131689687;
@@ -3801,14 +3801,17 @@ namespace Pikabu
 			// aapt resource value: 0x7f0f007c
 			public const int postImage = 2131689596;
 			
+			// aapt resource value: 0x7f0f010f
+			public const int postMultiImage = 2131689743;
+			
 			// aapt resource value: 0x7f0f010e
 			public const int postRecycleView = 2131689742;
 			
 			// aapt resource value: 0x7f0f007b
 			public const int postTags = 2131689595;
 			
-			// aapt resource value: 0x7f0f010f
-			public const int postText = 2131689743;
+			// aapt resource value: 0x7f0f0110
+			public const int postText = 2131689744;
 			
 			// aapt resource value: 0x7f0f0077
 			public const int postTime = 2131689591;
@@ -3828,8 +3831,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f0f0061
 			public const int radio = 2131689569;
 			
-			// aapt resource value: 0x7f0f011a
-			public const int reload = 2131689754;
+			// aapt resource value: 0x7f0f011b
+			public const int reload = 2131689755;
 			
 			// aapt resource value: 0x7f0f0044
 			public const int right = 2131689540;
@@ -3840,8 +3843,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f0f00c6
 			public const int row_header = 2131689670;
 			
-			// aapt resource value: 0x7f0f0117
-			public const int save_image = 2131689751;
+			// aapt resource value: 0x7f0f0118
+			public const int save_image = 2131689752;
 			
 			// aapt resource value: 0x7f0f00ec
 			public const int scale_frame = 2131689708;
@@ -3858,8 +3861,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f0f0059
 			public const int scrollView = 2131689561;
 			
-			// aapt resource value: 0x7f0f0119
-			public const int search = 2131689753;
+			// aapt resource value: 0x7f0f011a
+			public const int search = 2131689754;
 			
 			// aapt resource value: 0x7f0f006b
 			public const int search_badge = 2131689579;
@@ -3945,8 +3948,8 @@ namespace Pikabu
 			// aapt resource value: 0x7f0f0072
 			public const int submit_area = 2131689586;
 			
-			// aapt resource value: 0x7f0f0111
-			public const int surface_view = 2131689745;
+			// aapt resource value: 0x7f0f0112
+			public const int surface_view = 2131689746;
 			
 			// aapt resource value: 0x7f0f001d
 			public const int tabMode = 2131689501;

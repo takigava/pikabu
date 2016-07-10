@@ -2,6 +2,7 @@
 using Android.Views;
 using Android.Widget;
 using Com.Syncfusion.Rotator;
+using Android.Support.V4.View;
 
 namespace Pikabu
 {
@@ -14,10 +15,10 @@ namespace Pikabu
 		public TextView Title { get; private set; }
 		public TextView Description { get; private set; }
 		public TextView Tags { get; private set; }
-		public TextView Text { get; private set; }
 		//public WebView _Url{ get; private set; }
 		public TextView Comments { get; private set; }
 		//public ImageView Image { get; private set; }
+		public ViewPager Rotator { get; private set;}
 
 
 		public PostMultiImageViewHolder(View itemView) : base(itemView)
@@ -31,6 +32,7 @@ namespace Pikabu
 			//Image = itemView.FindViewById<ImageView>(Resource.Id.postImage);
 			Comments = itemView.FindViewById<TextView>(Resource.Id.postComments);
 			Tags = itemView.FindViewById<TextView>(Resource.Id.postTags);
+			Rotator = itemView.FindViewById<ViewPager>(Resource.Id.postMultiImage);
 		}
 	}
 }

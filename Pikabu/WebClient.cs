@@ -291,12 +291,13 @@ namespace Pikabu
 
 
 						var imageType = header.Descendants().FirstOrDefault(s => s.GetAttributeValue("data-story-type", "").Equals("image"));
+						var gifNode = post.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Equals("b-gifx__player"));
 						if (imageType != null)
 						{
 							var isLongPost = bool.Parse(imageType.Attributes["data-story-long"].Value);
 							if (!isLongPost)
 							{
-								var gifNode = post.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Equals("b-gifx__player"));
+								
 								if (gifNode != null)
 								{
 									var attr = post.Descendants().FirstOrDefault(s => s.GetAttributeValue("src", "").Contains("http://"));
@@ -322,8 +323,36 @@ namespace Pikabu
 										}
 										newPostList.Add(newPost);
 									}
+									else
+									{
+										var block = post.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Equals("b-story__content b-story-blocks"));
+										var images = block.Descendants().Where(s => s.GetAttributeValue("src", "").Contains("http://")).ToList();
+										newPost.Images = new List<string>();
+										foreach (var image in images)
+										{
+											newPost.PostType = PostType.MultiImage;
+											newPost.Images.Add(image.Attributes["src"].Value);
+										}
+										newPostList.Add(newPost);
+									}
 
 								}
+							}
+							else 
+							{
+								if (gifNode == null)
+								{
+									var block = post.Descendants().FirstOrDefault(s => s.GetAttributeValue("class", "").Equals("b-story__content b-story-blocks"));
+									var images = block.Descendants().Where(s => s.GetAttributeValue("src", "").Contains("http://")).ToList();
+									newPost.Images = new List<string>();
+									foreach (var image in images)
+									{
+										newPost.PostType = PostType.MultiImage;
+										newPost.Images.Add(image.Attributes["src"].Value);
+									}
+									newPostList.Add(newPost);
+								}
+
 							}
 
 

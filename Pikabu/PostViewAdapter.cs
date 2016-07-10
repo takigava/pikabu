@@ -18,7 +18,7 @@ using Android.Text.Style;
 using Xamarin;
 using Android.Graphics.Drawables;
 using Android.Preferences;
-
+using Com.Syncfusion.Rotator;
 
 namespace Pikabu
 {
@@ -75,7 +75,14 @@ namespace Pikabu
 				View row = LayoutInflater.From (parent.Context).Inflate (Resource.Layout.PostImageCard, parent, false);
 				PostImageViewHolder vh = new PostImageViewHolder (row);
 				return vh;
-			} else {
+			} 
+			if (viewType == Resource.Layout.PostMultiImageCard)
+			{
+				View row = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.PostMultiImageCard, parent, false);
+				PostMultiImageViewHolder vh = new PostMultiImageViewHolder(row);
+				return vh;
+			}
+			else {
 				View row = LayoutInflater.From(parent.Context).Inflate(Resource.Layout.PostTextCard, parent, false);
 				PostTextViewHolder vh = new PostTextViewHolder(row);
 				return vh;
@@ -91,10 +98,12 @@ namespace Pikabu
 			}
 			if (holder is PostImageViewHolder) {
 				PostImageViewHolder vh = holder as PostImageViewHolder;
-				FillImagePost (vh, position);
-
-
-
+				FillImagePost(vh, position);
+			}
+			if (holder is PostMultiImageViewHolder)
+			{
+				PostMultiImageViewHolder vh = holder as PostMultiImageViewHolder;
+				FillMultiImagePost(vh, position);
 			}
 		}
 
@@ -156,33 +165,7 @@ namespace Pikabu
 					vh.Description.Text = String.Empty;
 					vh.Description.Visibility = ViewStates.Gone;
 				}
-//				if(_Posts[position].FormattedDescription!=null && _Posts[position].FormattedDescription.Count>0){
-//					SpannableStringBuilder descriptionBulder = new SpannableStringBuilder();
-//					Color descTextColorDarkGray = context.Resources.GetColor(Resource.Color.darkGray);
-//					Color descTextColorGray = context.Resources.GetColor(Resource.Color.gray);
-//
-//					foreach(var des in _Posts[position].FormattedDescription){
-//						if(des.Item1 == "text"){
-//							SpannableString tag1 = new SpannableString(des.Item2);
-//
-//							tag1.SetSpan(new ForegroundColorSpan(descTextColorGray), 0, tag1.Length(), SpanTypes.ExclusiveExclusive);
-//							descriptionBulder.Append(tag1);
-//						}
-//						if(des.Item1 == "textLink"){
-//							SpannableString tag2 = new SpannableString(des.Item2);
-//
-//							tag2.SetSpan(new ForegroundColorSpan(descTextColorDarkGray), 0, tag2.Length(), SpanTypes.ExclusiveExclusive);
-//							descriptionBulder.Append(tag2);
-//						}
-//					}
-//					if(descriptionBulder.Count()>0){
-//						vh.Description.SetText(descriptionBulder,TextView.BufferType.Spannable);
-//					}
-//				}else{
-//					vh.Description.Visibility = ViewStates.Gone;
-//
-//				}
-				//vh._Description.Text = _Posts[position].Description;
+
 				SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
 				Color textColor = context.Resources.GetColor(Resource.Color.mainGreen);
 
@@ -202,6 +185,73 @@ namespace Pikabu
 			}catch(Exception ex){
 				Insights.Initialize("0637c26a1b2e27693e05298f7c3c3a04c102a3c7", Application.Context);
 				Insights.Report(ex,new Dictionary<string,string>{{"Message",ex.Message}},Insights.Severity.Error);
+				var text = ex.Message;
+			}
+		}
+
+		public void FillMultiImagePost(PostMultiImageViewHolder vh, int position)
+		{
+			try
+			{
+				vh.AuthorName.Text = _Posts[position].AuthorName;
+				var context = Android.App.Application.Context;
+				vh.HeaderRating.Text = _Posts[position].Rating.ToString();
+				vh.BottomRating.Text = _Posts[position].Rating.ToString();
+				if (_Posts[position].Rating > 0)
+				{
+					vh.HeaderRating.SetTextColor(context.Resources.GetColor(Resource.Color.mainGreen));
+					vh.BottomRating.SetTextColor(context.Resources.GetColor(Resource.Color.mainGreen));
+					var text = " + " + _Posts[position].Rating;
+					vh.HeaderRating.Text = text;
+					vh.BottomRating.Text = text;
+				}
+				if (_Posts[position].Rating < 0)
+				{
+					vh.HeaderRating.SetTextColor(context.Resources.GetColor(Resource.Color.red));
+					vh.BottomRating.SetTextColor(context.Resources.GetColor(Resource.Color.red));
+					var text = "" + _Posts[position].Rating;
+					vh.HeaderRating.Text = text;
+					vh.BottomRating.Text = text;
+				}
+				vh.PostTime.Text = _Posts[position].PostTime;
+				vh.Title.Text = _Posts[position].Title;
+				if (_Posts[position].Description != null && !String.IsNullOrEmpty(_Posts[position].Description.ToString()))
+				{
+					vh.Description.Text = _Posts[position].Description.ToString();
+					vh.Description.Visibility = ViewStates.Visible;
+				}
+				else {
+					vh.Description.Text = String.Empty;
+					vh.Description.Visibility = ViewStates.Gone;
+				}
+
+				SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
+				Color textColor = context.Resources.GetColor(Resource.Color.mainGreen);
+
+				foreach (var tag in _Posts[position].Tags)
+				{
+					SpannableString tag1 = new SpannableString("#" + tag);
+
+					tag1.SetSpan(new ForegroundColorSpan(textColor), 0, tag1.Length(), SpanTypes.ExclusiveExclusive);
+					stringBuilder.Append(tag1);
+					stringBuilder.Append("  ");
+					//SpannableString tag2 = new SpannableString(" ");
+					//stringBuilder.Append(tag2);
+					//stringBuilder.SetSpan(new TagSpan(backgroundColor, backgroundColor), stringBuilder.Length() - tag2.Length(), stringBuilder.Length(), SpanTypes.ExclusiveExclusive);
+				}
+				vh.Tags.SetText(stringBuilder, TextView.BufferType.Spannable);
+				vh.Comments.Text = _Posts[position].Comments.ToString();
+
+
+
+				ImageAdapter adapter = new ImageAdapter(context, _Posts[position].Images);
+				vh.Rotator.Adapter = adapter;
+
+			}
+			catch (Exception ex)
+			{
+				Insights.Initialize("0637c26a1b2e27693e05298f7c3c3a04c102a3c7", Application.Context);
+				Insights.Report(ex, new Dictionary<string, string> { { "Message", ex.Message } }, Insights.Severity.Error);
 				var text = ex.Message;
 			}
 		}

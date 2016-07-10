@@ -131,6 +131,7 @@
     <Compile Include="DrawerListViewHolder.cs" />
     <Compile Include="CircleImageView.cs" />
     <Compile Include="PostMultiImageViewHolder.cs" />
+    <Compile Include="ImageAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
