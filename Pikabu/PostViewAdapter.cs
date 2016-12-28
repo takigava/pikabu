@@ -335,14 +335,14 @@ namespace Pikabu
 				//vh.Tags.TextFormatted = stringBuilder;
 				vh.Comments.Text = _Posts[position].Comments.ToString();
 				vh.Image.Click -= videoHandler;
-				vh.Image.Click -= imageHandler;
+				vh.Image.Click -= _imageHandler;
 				vh.Image.Click -= gifHandler;
 				if(_Posts[position].PostType==PostType.Video){
 					if (vh.Image != null) {
 						vh.Image.SetTag (Resource.String.currentPosition, vh.AdapterPosition.ToString ());
 						vh.Image.SetTag (Resource.String.imageUrl, _Posts [vh.AdapterPosition].VideoUrl);
 
-						vh.Image.Click -= imageHandler;
+						vh.Image.Click -= _imageHandler;
 						vh.Image.Click -= gifHandler;
 						vh.Image.Click -= videoHandler;
 						vh.Image.Click += videoHandler;
@@ -360,8 +360,8 @@ namespace Pikabu
 
 						vh.Image.Click -= videoHandler;
 						vh.Image.Click -= gifHandler;
-						vh.Image.Click -= imageHandler;
-						vh.Image.Click += imageHandler;
+						vh.Image.Click -= _imageHandler;
+						vh.Image.Click += _imageHandler;
 					Picasso.With(Android.App.Application.Context)
 							.Load(_Posts[position].Url)
 						.Transform(new CropSquareTransformation())
@@ -374,7 +374,7 @@ namespace Pikabu
 						vh.Image.SetTag (Resource.String.imageUrl, _Posts [vh.AdapterPosition].GifUrl);
 
 						vh.Image.Click -= videoHandler;
-						vh.Image.Click -= imageHandler;
+						vh.Image.Click -= _imageHandler;
 						vh.Image.Click -= gifHandler;
 						vh.Image.Click += gifHandler;
 						Picasso.With(Android.App.Application.Context)
@@ -432,7 +432,8 @@ namespace Pikabu
 			intent.PutExtra ("url", image.GetTag (Resource.String.imageUrl).ToString ());
 			_Context.StartActivity (intent);
 		};
-		EventHandler imageHandler = (object sender, EventArgs e) => {
+
+	  private readonly EventHandler _imageHandler = (object sender, EventArgs e) => {
 			var image = sender as ImageView;
 			//Rivets.AppLinks.Navigator.Navigate("http://static.kremlin.ru/media/events/video/ru/video_high/QVrS7FkL9R89xxB9frxsAtnvu9ANx6Od.mp4");
 			Intent intent = new Intent (_Context, typeof(ImageViewer));
@@ -543,24 +544,24 @@ namespace Pikabu
 		}
 		public override void OnScrollStateChanged (RecyclerView recyclerView, int newState)
 		{
-			Picasso picasso = Picasso.With(Android.App.Application.Context);
+		  Picasso picasso = Picasso.With(Android.App.Application.Context);
 			//if ((Android.Widget.ScrollState)recyclerView.ScrollState != ScrollState.Idle || (Android.Widget.ScrollState)recyclerView.ScrollState != ScrollState.TouchScroll) {
 			//	picasso.ResumeTag(Android.App.Application.Context);
 			//} else {
 			//	picasso.PauseTag(Android.App.Application.Context);
 			//}
-			switch (newState) {
-			case RecyclerView.ScrollStateIdle:
-				picasso.ResumeTag(Android.App.Application.Context);
-				break;
-			case RecyclerView.ScrollStateDragging:
-				picasso.PauseTag(Android.App.Application.Context);
-				break;
-			case RecyclerView.ScrollStateSettling:
-				picasso.PauseTag(Android.App.Application.Context);
-				break;
-			}
-
+		  switch (newState)
+		  {
+		    case RecyclerView.ScrollStateIdle:
+		      picasso.ResumeTag(Android.App.Application.Context);
+		      break;
+		    case RecyclerView.ScrollStateDragging:
+		      picasso.PauseTag(Android.App.Application.Context);
+		      break;
+		    case RecyclerView.ScrollStateSettling:
+		      picasso.PauseTag(Android.App.Application.Context);
+		      break;
+		  }
 		}
 
 
